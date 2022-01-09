@@ -1,8 +1,8 @@
-import React, { Fragment, Suspense, SyntheticEvent, useState } from 'react'
+import { Suspense, SyntheticEvent, useState } from 'react'
 import { useImage } from 'react-image'
 import logo from '../../Images/logo.webp'
-import { Link } from 'react-router-dom'
-import { Motion, spring, presets } from 'react-motion'
+//import { Link } from 'react-router-dom'
+import { Motion, spring } from 'react-motion'
 
 const MyLogoComponent = () => {
     const { src } = useImage({
@@ -90,7 +90,7 @@ const Panel = (visible: any) => {
                 >
                    <div className={`mt-16 pt-4 grid grid-cols-3 items-center h-max text-sm font-semibold capitalize text-center`}>
                        {list.map((item, index) => (
-                           <a href={item.route} className={item.classList} onClick={item.click} key={index}>{item.text}</a>
+                           <a className={item.classList} onClick={item.click} key={index}>{item.text}</a>
                        ))}
                     </div> 
                     
@@ -129,7 +129,7 @@ export const NavAuthList = () => {
             <ul className='flex flex-row items-center justify-end'>
                 {list.map((item, index) => (
                     <li className={`capitalize mx-2 cursor-pointer ${item.styleList}`} key={index}>
-                        <a href={item.route} onClick={(e) => {
+                        <a onClick={(e) => {
                             setVisibility(item.click(e, visibility) ? true : false)
                         }}>
                             { item.text }
