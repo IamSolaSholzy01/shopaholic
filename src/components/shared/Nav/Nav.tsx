@@ -134,7 +134,7 @@ export const NavAuthList = () => {
             <div style={{ width: 320 }}>
                 <div className={`opacity-40 bg-black w-screen h-screen fixed top-0 left-0 ${visibility ? 'block' : 'hidden'}`} onClick={() => setVisibility(!visibility ? true : false)}></div>
                 <Panel visible={visibility} />
-                <Close className={`absolute top-5 left-[285px] cursor-pointer ${visibility ? 'block' : 'hidden'}`} onClick={() => setVisibility(!visibility ? true : false)} />
+                <Close className={`absolute top-5 left-[285px] cursor-pointer`} style={visibility ? {display: 'block'} : {display: 'none'}} onClick={() => setVisibility(!visibility ? true : false)} />
             </div>
             <ul className='flex flex-row items-center justify-end'>
                 {list.map((item, index) => (
