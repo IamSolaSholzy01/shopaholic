@@ -3,6 +3,7 @@ import { useImage } from 'react-image'
 import logo from '../../Images/logo.webp'
 //import { Link } from 'react-router-dom'
 import { Motion, spring } from 'react-motion'
+import { LoginTab, PocketTab, SocialTab } from './NavTabs'
 import Close from '@material-ui/icons/Close'
 
 const MyLogoComponent = () => {
@@ -90,14 +91,14 @@ const Panel = (visible: any) => {
                         opacity: currentStyles.opacity
                     }}
                 >
-                   <div className={`mt-16 pt-4 grid grid-cols-3 items-center h-max text-sm font-semibold capitalize text-center`}>
-                       {list.map((item, index) => (
-                           <a className={`uppercase ${item.classList}`} onClick={item.click} key={index}>{item.text}</a>
-                       ))}
-                    </div> 
-                    <div id="loginTab" className={login_active ? 'block' : 'hidden'}>
-                        Hey
+                    <div className={`mt-16 pt-4 grid grid-cols-3 items-center h-max text-sm font-semibold capitalize text-center`}>
+                        {list.map((item, index) => (
+                            <a className={`uppercase ${item.classList}`} onClick={item.click} key={index}>{item.text}</a>
+                        ))}
                     </div>
+                    <LoginTab visible={login_active} />
+                    <PocketTab visible={pocket_active} />
+                    <SocialTab visible={social_active} />
                 </div>
             )}
             </Motion>
@@ -130,9 +131,9 @@ export const NavAuthList = () => {
 
     return (
         <>
-            <div style={{width: 320}}>
+            <div style={{ width: 320 }}>
                 <div className={`opacity-40 bg-black w-screen h-screen fixed top-0 left-0 ${visibility ? 'block' : 'hidden'}`} onClick={() => setVisibility(!visibility ? true : false)}></div>
-                <Panel visible={visibility}/>
+                <Panel visible={visibility} />
                 <Close className={`absolute top-5 left-[285px] cursor-pointer ${visibility ? 'block' : 'hidden'}`} onClick={() => setVisibility(!visibility ? true : false)} />
             </div>
             <ul className='flex flex-row items-center justify-end'>
@@ -141,7 +142,7 @@ export const NavAuthList = () => {
                         <a onClick={(e) => {
                             setVisibility(item.click(e, visibility) ? true : false)
                         }}>
-                            { item.text }
+                            {item.text}
                         </a>
                     </li>
                 ))}
