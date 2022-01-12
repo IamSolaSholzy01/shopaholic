@@ -4,7 +4,7 @@ import logo from '../../Images/logo.webp'
 //import { Link } from 'react-router-dom'
 import { Motion, spring } from 'react-motion'
 import { LoginTab, PocketTab, SocialTab } from './NavTabs'
-import Close from '@material-ui/icons/Close'
+import Close from '@mui/icons-material/Close'
 
 const MyLogoComponent = () => {
     const { src } = useImage({
