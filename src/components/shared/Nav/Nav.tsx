@@ -4,13 +4,14 @@ import logo from '../../Images/logo.webp'
 //import { Link } from 'react-router-dom'
 import { Motion, spring } from 'react-motion'
 import { LoginTab, PocketTab, SocialTab } from './NavTabs'
+import Backdrop from '@mui/material/Backdrop'
 import Close from '@mui/icons-material/Close'
 
 const MyLogoComponent = () => {
     const { src } = useImage({
         srcList: logo,
     })
-    const classList = 'w-56'
+    const classList = 'w-1/3 md:w-32 lg:w-48'
 
     return <img src={src} alt="logo" className={classList} />
 }
@@ -108,21 +109,31 @@ const Panel = (visible: any) => {
 
 export const NavAuthList = () => {
     const [visibility, setVisibility] = useState(false)
+    const [open, setOpen] = useState(false)
+    const handleClose = () => {
+        setVisibility(!visibility ? true : false)
+        setOpen(false)
+    }
+    const handleOpen = () => {
+        setOpen(!open);
+    }
+
     const list = [
         {
             text: 'login',
-            styleList: 'px-4 py-2 bg-blue-100 border border-blue-300 rounded text-primary',
+            styleList: 'bg-blue-100 border border-blue-300 rounded text-primary',
             route: '/login',
             click: (event: SyntheticEvent, visibility: boolean) => {
                 event.preventDefault()
                 visibility = !visibility ? true : false
+                handleOpen()
                 return visibility;
             }
         },
         {
             text: 'register',
             route: '/register',
-            styleList: 'px-4 py-2 bg-blue-500 rounded text-white',
+            styleList: 'bg-blue-500 rounded text-white',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
             }
@@ -131,14 +142,18 @@ export const NavAuthList = () => {
 
     return (
         <>
-            <div style={{ width: 320 }}>
-                <div className={`opacity-40 bg-black w-screen h-screen fixed top-0 left-0 ${visibility ? 'block' : 'hidden'}`} onClick={() => setVisibility(!visibility ? true : false)}></div>
-                <Panel visible={visibility} />
-                <Close className={`absolute top-5 left-[285px] cursor-pointer`} style={visibility ? {display: 'block'} : {display: 'none'}} onClick={() => setVisibility(!visibility ? true : false)} />
+            <div>                
+                <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
+                    {/* Needed to close panel on click of the backdrop */}
+                    <div className={`opacity-0 w-screen h-screen fixed top-0 left-0`} onClick={handleClose}></div>
+                    <Panel visible={visibility} />
+                    <Close className={`absolute top-5 left-[285px] cursor-pointer text-black`} style={visibility ? {display: 'block'} : {display: 'none'}} onClick={handleClose} />
+                </Backdrop>
+                {/* <Panel visible={visibility} /> */}
             </div>
-            <ul className='flex flex-row items-center justify-end'>
+            <ul className='flex flex-row items-center md:justify-end'>
                 {list.map((item, index) => (
-                    <li className={`uppercase mx-2 cursor-pointer ${item.styleList}`} key={index}>
+                    <li className={`uppercase mx-1 text-sm px-3 py-1 sm:text-base sm:mx-2 sm:px-4 sm:py-2 cursor-pointer ${item.styleList}`} key={index}>
                         <a onClick={(e) => {
                             setVisibility(item.click(e, visibility) ? true : false)
                         }}>

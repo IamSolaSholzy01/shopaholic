@@ -3,7 +3,7 @@ import React from 'react';
 const footerTabStyle = 'w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1';
 
 const Footer = () => (
-  <footer className='block fixed inset-x-0 bottom-0 z-10 bg-white shadow'>
+  <footer className='block fixed inset-x-0 bottom-0 z-10 bg-white shadow-t'>
     <div id="tabs" className="flex justify-between">
 			<a href="#" className={footerTabStyle}>
       <svg xmlns="http://www.w3.org/2000/svg" className="inline-block mb-1" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><path d="M0 0h24v24H0V0z" fill="none"/><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
@@ -32,47 +32,6 @@ const Footer = () => (
 				<span className="tab tab-account block text-xs">Check</span>
 			</a>
 		</div>
-
-    {/* <div>
-      <div>
-        <div><button><svg><use href="/_nuxt/df605e5a12536d7053f3f9f19091bf29.svg#i-mobile"></use></svg>
-        <span>MOBILE APPLICATION</span></button>
-        <ul>
-          <li><a href="/">HOW TO PLAY</a></li>
-          <li><a href="/">ABOUT US</a></li>
-          <li><a href="/">T&amp;C</a></li>
-          <li><a href="/"> HELP</a></li>
-        </ul>
-        </div>
-      </div>
-    </div> */}
-{/* 
-<div><a><svg xmlns="http://www.w3.org/2000/svg">
-            <use href="/_nuxt/df605e5a12536d7053f3f9f19091bf29.svg#i-menu"></use>
-        </svg>
-        <div className="mt-1 subtitle-4">MENU</div>
-    </a> <a href="/"><svg xmlns="http://www.w3.org/2000/svg">
-            <use href="/_nuxt/df605e5a12536d7053f3f9f19091bf29.svg#i-statistics"></use>
-        </svg>
-        <div className="mt-1 subtitle-4">stat</div>
-    </a> <a className="relative flex flex-col items-center justify-center w-24 h-12 m"><svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-full h-full fill-current text-primary-transparent-600 icon sprite-icons">
-            <use href="/_nuxt/df605e5a12536d7053f3f9f19091bf29.svg#i-list"></use>
-        </svg> <svg xmlns="http://www.w3.org/2000/svg"
-            className="w-8 h-6 fill-current cart text-basic-100 icon sprite-icons">
-            <use href="/_nuxt/df605e5a12536d7053f3f9f19091bf29.svg#i-cart"></use>
-        </svg> <span className="counter">0</span> <span className="odds">0.00</span></a> <a className="link-primary"><svg
-            xmlns="http://www.w3.org/2000/svg" className="w-6 h-6 m-auto fill-current icon sprite-icons">
-            <use href="/_nuxt/df605e5a12536d7053f3f9f19091bf29.svg#i-betslip"></use>
-        </svg>
-        <div className="mt-1 subtitle-4">MY BETS</div>
-    </a> <a className="link-primary"><svg xmlns="http://www.w3.org/2000/svg"
-            className="w-6 h-6 m-auto fill-current icon sprite-icons">
-            <use href="/_nuxt/df605e5a12536d7053f3f9f19091bf29.svg#i-book-a-bet"></use>
-        </svg>
-        <div className="mt-1 subtitle-4">CHECK</div>
-    </a></div> */}
   </footer>
 );
 
