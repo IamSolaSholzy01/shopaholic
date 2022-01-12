@@ -3,6 +3,7 @@ import { useImage } from 'react-image'
 import logo from '../../Images/logo.webp'
 //import { Link } from 'react-router-dom'
 import { Motion, spring } from 'react-motion'
+import Close from '@material-ui/icons/Close'
 
 const MyLogoComponent = () => {
     const { src } = useImage({
@@ -32,6 +33,7 @@ const panelStyle = {
 }
 
 const Panel = (visible: any) => {
+
     const [login_active, setLoginActive] = useState(true)
     const [pocket_active, setPocketActive] = useState(false)
     const [social_active, setSocialActive] = useState(false)
@@ -40,7 +42,7 @@ const Panel = (visible: any) => {
     const list = [
         {
             text: 'log in',
-            classList: `border-r border-white py-2 ${login_active ? 'bg-white text-blue-600' : 'bg-blue-100'}`,
+            classList: `border-r border-white py-2 bg-white ${login_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
             route: '#',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
@@ -51,7 +53,7 @@ const Panel = (visible: any) => {
         },
         {
             text: 'pocket',
-            classList: `border-white py-2 ${pocket_active ? 'bg-white text-blue-600' : 'bg-blue-100'}`,
+            classList: `border-white py-2 bg-white ${pocket_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
             route: '#',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
@@ -62,7 +64,7 @@ const Panel = (visible: any) => {
         },
         {
             text: 'social',
-            classList: `border-l border-white py-2 ${social_active ? 'bg-white text-blue-600' : 'bg-blue-100'}`,
+            classList: `border-l border-white py-2 bg-white ${social_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
             route: '#',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
@@ -90,10 +92,12 @@ const Panel = (visible: any) => {
                 >
                    <div className={`mt-16 pt-4 grid grid-cols-3 items-center h-max text-sm font-semibold capitalize text-center`}>
                        {list.map((item, index) => (
-                           <a className={item.classList} onClick={item.click} key={index}>{item.text}</a>
+                           <a className={`uppercase ${item.classList}`} onClick={item.click} key={index}>{item.text}</a>
                        ))}
                     </div> 
-                    
+                    <div id="loginTab" className={login_active ? 'block' : 'hidden'}>
+                        Hey
+                    </div>
                 </div>
             )}
             </Motion>
@@ -106,7 +110,7 @@ export const NavAuthList = () => {
     const list = [
         {
             text: 'login',
-            styleList: 'px-4 py-2 bg-blue-100 border border-blue-300 rounded',
+            styleList: 'px-4 py-2 bg-blue-100 border border-blue-300 rounded text-primary',
             route: '/login',
             click: (event: SyntheticEvent, visibility: boolean) => {
                 event.preventDefault()
@@ -126,9 +130,14 @@ export const NavAuthList = () => {
 
     return (
         <>
+            <div style={{width: 320}}>
+                <div className={`opacity-40 bg-black w-screen h-screen fixed top-0 left-0 ${visibility ? 'block' : 'hidden'}`} onClick={() => setVisibility(!visibility ? true : false)}></div>
+                <Panel visible={visibility}/>
+                <Close className={`absolute top-5 left-[285px] cursor-pointer ${visibility ? 'block' : 'hidden'}`} onClick={() => setVisibility(!visibility ? true : false)} />
+            </div>
             <ul className='flex flex-row items-center justify-end'>
                 {list.map((item, index) => (
-                    <li className={`capitalize mx-2 cursor-pointer ${item.styleList}`} key={index}>
+                    <li className={`uppercase mx-2 cursor-pointer ${item.styleList}`} key={index}>
                         <a onClick={(e) => {
                             setVisibility(item.click(e, visibility) ? true : false)
                         }}>
@@ -137,16 +146,6 @@ export const NavAuthList = () => {
                     </li>
                 ))}
             </ul>
-            <div style={{width: 320}}>
-                <div className={`opacity-40 bg-black w-screen h-screen fixed top-0 left-0 ${visibility ? 'block' : 'hidden'}`} onClick={() => setVisibility(!visibility ? true : false)}></div>
-                <Panel visible={visibility}/>
-                <button className={`absolute top-3 left-[180px] ${visibility ? 'block' : 'hidden'}`}
-                    style={buttonStyle}
-                    onClick={() => setVisibility(!visibility ? true : false)}
-                >
-                    Close Panel
-                </button>
-            </div>
         </>
     )
 }

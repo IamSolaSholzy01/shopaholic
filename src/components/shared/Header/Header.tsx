@@ -1,4 +1,4 @@
-import Nav from '../Nav/Nav'
+import { Nav } from '../'
 
 const Header = () => (
     <header className='w-full px-3'>
