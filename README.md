@@ -2,6 +2,18 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Installation
+
+To install, first clone this project, and then run:
+
+### `npm install`
+
+to install all necessary dependencies.
+
+If you receive an error due to unresolved dependencies, use the parameter: <code>--legacy-peer-deps</code> as per:
+
+### `npm install --legacy-peer-deps`
+
 ## Available Scripts
 
 In the project directory, you can run:
