@@ -1,11 +1,12 @@
 import { Suspense, SyntheticEvent, useState } from 'react'
 import { useImage } from 'react-image'
+import { useNavigate } from 'react-router-dom'
+import Backdrop from '@mui/material/Backdrop'
+import Close from '@mui/icons-material/Close'
 import logo from '../../Images/logo.webp'
 //import { Link } from 'react-router-dom'
 import { Motion, spring } from 'react-motion'
 import { LoginTab, PocketTab, SocialTab } from './NavTabs'
-import Backdrop from '@mui/material/Backdrop'
-import Close from '@mui/icons-material/Close'
 
 const MyLogoComponent = () => {
     const { src } = useImage({
@@ -118,6 +119,8 @@ export const NavAuthList = () => {
         setOpen(!open);
     }
 
+    const navigate = useNavigate()
+
     const list = [
         {
             text: 'login',
@@ -136,6 +139,7 @@ export const NavAuthList = () => {
             styleList: 'bg-blue-500 rounded text-white',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
+                navigate('/register')
             }
         }
     ]
