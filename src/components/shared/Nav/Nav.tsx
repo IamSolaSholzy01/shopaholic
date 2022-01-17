@@ -125,7 +125,7 @@ export const NavAuthList = () => {
     const list = [
         {
             text: 'login',
-            styleList: 'bg-blue-100 border border-blue-300 rounded text-primary',
+            styleList: 'text-gray-500 hover:text-gray-900',
             route: '/login',
             click: (event: SyntheticEvent, visibility: boolean) => {
                 event.preventDefault()
@@ -137,7 +137,7 @@ export const NavAuthList = () => {
         {
             text: 'register',
             route: '/register',
-            styleList: 'bg-blue-500 rounded text-white',
+            styleList: 'ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
                 navigate('/register')
@@ -159,7 +159,7 @@ export const NavAuthList = () => {
             <ul className='flex flex-row items-center md:justify-end'>
                 {list.map((item, index) => (
                     <li key={index}>
-                        <button className={`uppercase mx-1 text-sm px-3 py-1 sm:text-base sm:mx-2 sm:px-4 sm:py-2 cursor-pointer ${item.styleList}`} onClick={(e) => {
+                        <button className={`uppercase whitespace-nowrap text-base font-medium ${item.styleList}`} onClick={(e) => {
                             setVisibility(item.click(e, visibility) ? true : false)
                         }}>
                             {item.text}
