@@ -19,6 +19,11 @@ const Register = () => {
           <header className='w-100 flex content-center top-0 absolute p-4'>
               <a href={'/'}><MyLogoComponent /></a>
           </header>
+          <div className="py-16">
+              <div className="flex flex-row">
+                  <button className="inline-flex items-center justify-center relative box-border bg-transparent"></button>
+              </div>
+          </div>
       </div>
   );
 }
