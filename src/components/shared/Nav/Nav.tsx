@@ -5,7 +5,8 @@ import Backdrop from '@mui/material/Backdrop'
 import Close from '@mui/icons-material/Close'
 import logo from '../../Images/logo.webp'
 //import { Link } from 'react-router-dom'
-import { Motion, spring } from 'react-motion'
+// import { Motion, spring } from ''
+import { Motion, spring } from '../../ReactMotion'
 import { LoginTab, PocketTab, SocialTab } from './NavTabs'
 
 const MyLogoComponent = () => {
@@ -17,18 +18,18 @@ const MyLogoComponent = () => {
     return <img src={src} alt="logo" className={classList} />
 }
 
-const buttonStyle = {
-    backgroundColor: 'transparent',
-    color: 'black',
-    border: '1px solid black',
-    borderRadius: 4,
-    height: 40,
-    lineHeight: 2.5,
-    paddingLeft: 16,
-    paddingRight: 16,
-    outline: 'none',
-    cursor: 'pointer'
-}
+// const buttonStyle = {
+//     backgroundColor: 'transparent',
+//     color: 'black',
+//     border: '1px solid black',
+//     borderRadius: 4,
+//     height: 40,
+//     lineHeight: 2.5,
+//     paddingLeft: 16,
+//     paddingRight: 16,
+//     outline: 'none',
+//     cursor: 'pointer'
+// }
 
 const panelStyle = {
     width: 320,
@@ -46,7 +47,7 @@ const Panel = (visible: any) => {
         {
             text: 'log in',
             classList: `border-r border-white py-2 bg-white ${login_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
-            route: '#',
+            route: '#login',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
                 setLoginActive(true)
@@ -57,7 +58,7 @@ const Panel = (visible: any) => {
         {
             text: 'pocket',
             classList: `border-white py-2 bg-white ${pocket_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
-            route: '#',
+            route: '#pocket',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
                 setLoginActive(false)
@@ -68,7 +69,7 @@ const Panel = (visible: any) => {
         {
             text: 'social',
             classList: `border-l border-white py-2 bg-white ${social_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
-            route: '#',
+            route: '#social',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
                 setLoginActive(false)
@@ -95,7 +96,7 @@ const Panel = (visible: any) => {
                 >
                     <div className={`mt-16 pt-4 grid grid-cols-3 items-center h-max text-sm font-semibold capitalize text-center`}>
                         {list.map((item, index) => (
-                            <a className={`uppercase ${item.classList}`} onClick={item.click} key={index}>{item.text}</a>
+                            <a href={`#${item.route}`} className={`uppercase ${item.classList}`} onClick={item.click} key={index}>{item.text}</a>
                         ))}
                     </div>
                     <LoginTab visible={login_active} />
@@ -157,12 +158,12 @@ export const NavAuthList = () => {
             </div>
             <ul className='flex flex-row items-center md:justify-end'>
                 {list.map((item, index) => (
-                    <li className={`uppercase mx-1 text-sm px-3 py-1 sm:text-base sm:mx-2 sm:px-4 sm:py-2 cursor-pointer ${item.styleList}`} key={index}>
-                        <a onClick={(e) => {
+                    <li key={index}>
+                        <button className={`uppercase mx-1 text-sm px-3 py-1 sm:text-base sm:mx-2 sm:px-4 sm:py-2 cursor-pointer ${item.styleList}`} onClick={(e) => {
                             setVisibility(item.click(e, visibility) ? true : false)
                         }}>
                             {item.text}
-                        </a>
+                        </button>
                     </li>
                 ))}
             </ul>
