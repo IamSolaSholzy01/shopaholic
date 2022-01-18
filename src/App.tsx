@@ -4,13 +4,14 @@ import logo from './logo.svg';
 import './App.css';
 import Layout from './Layout';
 import Register from './components/Register';
+import Home from './components/Home'
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element="{<Home />}" />
+          <Route index element={<Home />} />
         </Route>
         <Route path="/register" element={<Register />} />
       </Routes>
