@@ -1,0 +1,29 @@
+.social-btn {
+    @apply inline-flex items-center justify-center relative box-border bg-transparent outline-0 cursor-pointer align-middle appearance-none no-underline capitalize font-bold text-base font-sans min-w-[64px] py-[7px] px-[21px] border rounded-md w-full text-inherit border-gray-400/[.32] h-[48px];
+}
+
+.emphasize {
+    overflow: hidden;
+    text-align: center;
+}
+
+.emphasize:before,
+.emphasize:after {
+    @apply bg-gray-200;
+    content: "";
+    display: inline-block;
+    height: 1px;
+    position: relative;
+    vertical-align: middle;
+    width: 50%;
+}
+
+.emphasize:before {
+    right: 0.5em;
+    margin-left: -50%;
+}
+
+.emphasize:after {
+    left: 0.5em;
+    margin-right: -50%;
+}
