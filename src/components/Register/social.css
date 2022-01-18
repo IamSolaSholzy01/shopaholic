@@ -1,3 +1,11 @@
+* {
+    @apply font-['Public_Sans'];
+}
+
+input {
+    font: inherit;
+}
+
 .social-btn {
     @apply inline-flex items-center justify-center relative box-border bg-transparent outline-0 cursor-pointer align-middle appearance-none no-underline capitalize font-bold text-base font-sans min-w-[64px] py-[7px] px-[21px] border rounded-md w-full text-inherit border-gray-400/[.32] h-[48px];
 }
@@ -27,3 +35,9 @@
     left: 0.5em;
     margin-right: -50%;
 }
+
+.input-text-con {
+
+}
+
+.input-text {}
