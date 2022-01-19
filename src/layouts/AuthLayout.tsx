@@ -20,7 +20,7 @@ const Logo = () => {
     return <img src={src} alt="logo" className={classList} />
 }
 
-const HeaderStyle = styled('header')(({ theme }) => ({
+const HeaderStyle = styled('header')(({ theme }: { theme: any }) => ({
   top: 0,
   zIndex: 9,
   lineHeight: 0,

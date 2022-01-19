@@ -12,13 +12,13 @@ import AuthSocial from '../../components/authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
-const RootStyle = styled(Page)(({ theme }) => ({
+const RootStyle = styled(Page)(({ theme }: { theme: any }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex'
   }
 }));
 
-const SectionStyle = styled(Card)(({ theme }) => ({
+const SectionStyle = styled(Card)(({ theme }: { theme: any }) => ({
   width: '100%',
   maxWidth: 464,
   display: 'flex',
@@ -27,7 +27,7 @@ const SectionStyle = styled(Card)(({ theme }) => ({
   margin: theme.spacing(2, 0, 2, 2)
 }));
 
-const ContentStyle = styled('div')(({ theme }) => ({
+const ContentStyle = styled('div')(({ theme }: { theme: any }) => ({
   maxWidth: 480,
   margin: 'auto',
   display: 'flex',
@@ -41,7 +41,7 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function Register() {
   return (
-    <RootStyle>
+    <RootStyle title="Register | Shopaholic">
       <AuthLayout>
         Already have an account? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
