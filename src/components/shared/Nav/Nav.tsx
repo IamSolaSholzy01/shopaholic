@@ -112,6 +112,7 @@ const Panel = (visible: any) => {
 export const NavAuthList = () => {
     const [visibility, setVisibility] = useState(false)
     const [open, setOpen] = useState(false)
+    
     const handleClose = () => {
         setVisibility(!visibility ? true : false)
         setOpen(false)
