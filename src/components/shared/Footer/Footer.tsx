@@ -1,12 +1,68 @@
+import { Close } from '@mui/icons-material';
 import React, { useState } from 'react';
+import SportsOutlinedIcon from '@mui/icons-material/SportsOutlined'
 
 const footerTabStyle = 'w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1';
+
+const GameItem = (props: any) => {
+    return (
+        <div className="my-1">
+            <div className="flex flex-row justify-between bg-blue-100 text-sm">
+                <span className="mx-1"><SportsOutlinedIcon className="text-blue-600"/> {props.game.num}</span>
+                <span className="mx-1">{props.game.league}</span>
+            </div>
+            <div className="flex flex-row justify-between mx-1 items-center">
+                <div>
+                    <div className="flex flex-col justify-between">
+                        <span>{props.game.home} - {props.game.away}</span>
+                        <div className="flex flex-row justify-between text-xs pt-5">
+                            <span className="bg-blue-600 text-white px-1">{props.game.date}</span>
+                            <span>{props.game.time}</span>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <button className="py-1 px-2 bg-blue-500 text-white rounded hover:bg-blue-600">{props.game.odd}</button>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+const BetSlip = () => {
+	return (
+		<div>
+			<div className="flex flex-row justify-between w-full">
+				<span>{games.length} Selections</span>
+				<span>Game type: NAP 3</span>
+			</div>
+			<ul>
+				{games.map((item, index) => (
+					<li key={index}>
+						<GameItem game={item}/>
+					</li>
+				))}
+			</ul>
+		</div>
+	)
+}
+
+const games = [
+	{num: 1, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.50},
+	{num: 2, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 3.85},
+	{num: 3, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+]
 
 const MiniMenu = (props: any) => {
 	console.log(props)
 	return (
-		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white" style={props.visible ? {display: 'block'} : {display: 'none'}}>
-			<h1 className="text-2xl text-green-400">Sorry <br /> This menu is still under construction.</h1>
+		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white py-4 px-4 min-w-[600px] max-w-[80vw] rounded shadow-md" style={props.visible ? {display: 'block'} : {display: 'none'}}>
+			<div className="flex flex-row justify-between pb-4 border-b border-black">
+				<span className="font-bold">Coupon</span>
+				<Close className="cursor-pointer" />
+			</div>
+
+			<BetSlip /> 
 		</div>
 	)
 }
