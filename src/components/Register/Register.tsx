@@ -41,7 +41,7 @@ const ContentStyle = styled('div')(({ theme }: { theme: any }) => ({
 
 export default function Register() {
   return (
-    <RootStyle>
+    <RootStyle title="Register | Shopaholic">
       <AuthLayout>
         Already have an account? &nbsp;
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
