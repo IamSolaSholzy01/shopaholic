@@ -10,7 +10,7 @@ import Panel from '../Panel'
 import { Motion, spring } from '../../ReactMotion'
 
 
-const MyLogoComponent = () => {
+export const MyLogoComponent = () => {
     const { src } = useImage({
         srcList: logo,
     })
