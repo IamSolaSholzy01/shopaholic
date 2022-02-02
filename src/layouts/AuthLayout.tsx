@@ -8,19 +8,21 @@ import { Typography } from '@mui/material';
 import pic from '../components/Images/logo.webp';
 //
 import { MHidden } from '../components/@material-extend';
+import { Suspense } from 'react';
 
 // ----------------------------------------------------------------------
 
-const Logo = () => {
-    const { src } = useImage({
-        srcList: pic,
-    })
-    const classList = 'w-1/3 md:w-32 lg:w-48'
+const MyLogoComponent = () => {
+  const { src } = useImage({
+      srcList: pic,
+  })
+  const classList = 'w-1/3 md:w-32 lg:w-48'
 
-    return <img src={src} alt="logo" className={classList} />
+  return <img src={src} alt="logo" className={classList} />
 }
 
-const HeaderStyle = styled('header')(({ theme }: { theme: any }) => ({
+const HeaderStyle = styled('header')(({ theme }: { theme: any }) => {
+return ({
   top: 0,
   zIndex: 9,
   lineHeight: 0,
@@ -32,9 +34,9 @@ const HeaderStyle = styled('header')(({ theme }: { theme: any }) => ({
   justifyContent: 'space-between',
   [theme.breakpoints.up('md')]: {
     alignItems: 'flex-start',
-    padding: theme.spacing(7, 5, 0, 7)
+    //padding: theme.spacing(7, 5, 0, 7)
   }
-}));
+})});
 
 // ----------------------------------------------------------------------
 
@@ -44,21 +46,22 @@ AuthLayout.propTypes = {
 
 export default function AuthLayout({ children }: {children: any}) {
   return (
-    <HeaderStyle>
+    <HeaderStyle className="flex flex-row relative">
       <RouterLink to="/">
-        <Logo />
+        <Suspense fallback="Logo">
+            <MyLogoComponent />
+        </Suspense>
       </RouterLink>
-
-      <MHidden width="smDown">
+      <div className="absolute top-1/2 -translate-y-1/2 right-2">
         <Typography
           variant="body2"
           sx={{
-            mt: { md: -2 }
+            //mt: { md: -2 }
           }}
         >
           {children}
         </Typography>
-      </MHidden>
+      </div>
     </HeaderStyle>
   );
 }
