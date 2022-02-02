@@ -1,14 +1,24 @@
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography } from '@mui/material';
+import { Box, Card, Link, Container, Typography, Backdrop } from '@mui/material';
 // layouts
 import AuthLayout from '../../layouts/AuthLayout';
 // components
+<<<<<<< HEAD
 import Page from '../Page';
 import { MHidden } from '../@material-extend';
 import { RegisterForm } from '../authentication/register';
 import AuthSocial from '../authentication/AuthSocial';
+=======
+import Page from '../../components/Page';
+import { MHidden } from '../../components/@material-extend';
+import { RegisterForm } from '../../components/authentication/register';
+import AuthSocial from '../../components/authentication/AuthSocial';
+import Panel from '../shared/Panel'
+import { Close } from '@mui/icons-material';
+import { SyntheticEvent, useState } from 'react';
+>>>>>>> 8efecb1b98389318ae587fa062152799350a3088
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +50,28 @@ const ContentStyle = styled('div')(({ theme }: { theme: any }) => ({
 // ----------------------------------------------------------------------
 
 export default function Register() {
+  const [visibility, setVisibility] = useState(false)
+  const [open, setOpen] = useState(false)
+  
+  const handleClose = () => {
+      setVisibility(!visibility ? true : false)
+      setOpen(false)
+  }
+  const handleOpen = () => {
+      setOpen(!open);
+  }
+
+  const click = (event: SyntheticEvent, visibility: boolean) => {
+    event.preventDefault()
+    visibility = !visibility ? true : false
+    handleOpen()
+    return visibility;
+  }
+
+  const navigate = useNavigate()
+
   return (
+<<<<<<< HEAD
     <RootStyle title="Register | Shopaholic">
       Already have an account? &nbsp;
       <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
@@ -54,44 +85,79 @@ export default function Register() {
           <img alt="register" src="/static/illustrations/illustration_register.png" />
         </SectionStyle>
       </MHidden>
+=======
+    <>
+      <div>                
+          <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
+              {/* Needed to close panel on click of the backdrop */}
+              <div className={`opacity-0 w-screen h-screen fixed top-0 left-0`} onClick={handleClose}></div>
+              <Panel visible={visibility} />
+              <Close className={`absolute top-5 left-[285px] cursor-pointer text-black`} style={visibility ? {display: 'block'} : {display: 'none'}} onClick={handleClose} />
+          </Backdrop>
+          {/* <Panel visible={visibility} /> */}
+      </div>
+      
+     <RootStyle title="Register | Shopaholic">
+       <AuthLayout>
+         Already have an account? &nbsp;
+         <Link underline="none" variant="subtitle2" onClick={(e) => {
+                            setVisibility(click(e, visibility) ? true : false)
+                        }} component={RouterLink} to="/login">
+           Login
+         </Link>
+       </AuthLayout>
 
-      <Container>
-        <ContentStyle>
-          <Box sx={{ mb: 5 }}>
-            <Typography variant="h4" gutterBottom>
-              Get started absolutely free.
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              Free forever. No credit card needed.
-            </Typography>
-          </Box>
+       {/* <MHidden width={'mdDown'}>
+         <SectionStyle>
+           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
+             Manage the job more effectively with Minimal
+           </Typography>
+           <img alt="register" src="/static/illustrations/illustration_register.png" />
+         </SectionStyle>
+       </MHidden> */}
+>>>>>>> 8efecb1b98389318ae587fa062152799350a3088
 
-          <AuthSocial />
+       <Container>
+         <ContentStyle>
+           <Box sx={{ mb: 5 }}>
+             <Typography variant="h4" gutterBottom>
+               Get started absolutely free.
+             </Typography>
+             <Typography sx={{ color: 'text.secondary' }}>
+               Free forever. No credit card needed.
+             </Typography>
+           </Box>
 
-          <RegisterForm />
+           <AuthSocial />
 
-          <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
-            By registering, I agree to Minimal&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Terms of Service
-            </Link>
-            &nbsp;and&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              Privacy Policy
-            </Link>
-            .
-          </Typography>
+           <RegisterForm />
 
-          <MHidden width="smUp">
-            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
-              <Link to="/login" component={RouterLink}>
-                Login
-              </Link>
-            </Typography>
-          </MHidden>
-        </ContentStyle>
-      </Container>
-    </RootStyle>
-  );
+           <Typography variant="body2" align="center" sx={{ color: 'text.secondary', mt: 3 }}>
+             By registering, I agree to Shopaholic&nbsp;
+             <Link underline="always" sx={{ color: 'text.primary' }}>
+               Terms of Service
+             </Link>
+             &nbsp;and&nbsp;
+             <Link underline="always" sx={{ color: 'text.primary' }}>
+               Privacy Policy
+             </Link>
+             .
+           </Typography>
+
+           <div>
+             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
+               Already have an account?&nbsp;
+               <Link to="/login" component={RouterLink} 
+                onClick={(e) => {
+                  setVisibility(click(e, visibility) ? true : false)
+                }}>
+                 Login
+               </Link>
+             </Typography>
+           </div>
+         </ContentStyle>
+       </Container>
+     </RootStyle>
+    </>
+  )
 }
