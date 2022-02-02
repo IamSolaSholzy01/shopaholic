@@ -5,10 +5,10 @@ import { Box, Card, Link, Container, Typography } from '@mui/material';
 // layouts
 import AuthLayout from '../../layouts/AuthLayout';
 // components
-import Page from '../../components/Page';
-import { MHidden } from '../../components/@material-extend';
-import { RegisterForm } from '../../components/authentication/register';
-import AuthSocial from '../../components/authentication/AuthSocial';
+import Page from '../Page';
+import { MHidden } from '../@material-extend';
+import { RegisterForm } from '../authentication/register';
+import AuthSocial from '../authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -42,13 +42,10 @@ const ContentStyle = styled('div')(({ theme }: { theme: any }) => ({
 export default function Register() {
   return (
     <RootStyle title="Register | Shopaholic">
-      <AuthLayout>
-        Already have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
-          Login
-        </Link>
-      </AuthLayout>
-
+      Already have an account? &nbsp;
+      <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+        Login
+      </Link>
       <MHidden width="mdDown">
         <SectionStyle>
           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>

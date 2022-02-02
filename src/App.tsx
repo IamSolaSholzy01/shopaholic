@@ -1,21 +1,22 @@
-import React, { Fragment } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { Fragment, useState } from 'react';
+import { useRoutes } from 'react-router-dom';
 import './App.css';
-import Layout from './Layout';
-// import Register from './components/Register';
-import Home from './components/Home'
+import MainLayout from './layouts/MainLayout';
+import Routes from './routes';
 
 function App() {
-  return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route index element={<Home />} />
-        </Route>
-        <Route path="/register" element="{<Register />}" />
-      </Routes>
-    </Router>
-  );
+  const [ loggedIn, setLoggedIn ] = useState(0);
+  return <Routes />;
+  // return (
+  //   <Router>
+  //     <Routes>
+  //       <Route path="/" element={<MainLayout />}>
+  //         <Route index element={<Home />} />
+  //       </Route>
+  //       <Route path="/auth/register" element="{<Register />}" />
+  //     </Routes>
+  //   </Router>
+  // );
 }
 
 export default App;
