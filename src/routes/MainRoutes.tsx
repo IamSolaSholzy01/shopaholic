@@ -2,7 +2,6 @@ import { Navigate } from 'react-router-dom';
 import Loadable from '../ui-component/Loadable';
 
 // layouts
-import AuthLayout from '../layouts/AuthLayout';
 import MainLayout from '../layouts/MainLayout';
 
 // routes

@@ -5,12 +5,6 @@ import { Box, Card, Link, Container, Typography, Backdrop } from '@mui/material'
 // layouts
 import AuthLayout from '../../layouts/AuthLayout';
 // components
-<<<<<<< HEAD
-import Page from '../Page';
-import { MHidden } from '../@material-extend';
-import { RegisterForm } from '../authentication/register';
-import AuthSocial from '../authentication/AuthSocial';
-=======
 import Page from '../../components/Page';
 import { MHidden } from '../../components/@material-extend';
 import { RegisterForm } from '../../components/authentication/register';
@@ -18,7 +12,6 @@ import AuthSocial from '../../components/authentication/AuthSocial';
 import Panel from '../shared/Panel'
 import { Close } from '@mui/icons-material';
 import { SyntheticEvent, useState } from 'react';
->>>>>>> 8efecb1b98389318ae587fa062152799350a3088
 
 // ----------------------------------------------------------------------
 
@@ -71,21 +64,6 @@ export default function Register() {
   const navigate = useNavigate()
 
   return (
-<<<<<<< HEAD
-    <RootStyle title="Register | Shopaholic">
-      Already have an account? &nbsp;
-      <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
-        Login
-      </Link>
-      <MHidden width="mdDown">
-        <SectionStyle>
-          <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-            Manage the job more effectively with Minimal
-          </Typography>
-          <img alt="register" src="/static/illustrations/illustration_register.png" />
-        </SectionStyle>
-      </MHidden>
-=======
     <>
       <div>                
           <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
@@ -98,14 +76,12 @@ export default function Register() {
       </div>
       
      <RootStyle title="Register | Shopaholic">
-       <AuthLayout>
-         Already have an account? &nbsp;
-         <Link underline="none" variant="subtitle2" onClick={(e) => {
-                            setVisibility(click(e, visibility) ? true : false)
-                        }} component={RouterLink} to="/login">
-           Login
-         </Link>
-       </AuthLayout>
+        Already have an account? &nbsp;
+        <Link underline="none" variant="subtitle2" onClick={(e) => {
+                          setVisibility(click(e, visibility) ? true : false)
+                      }} component={RouterLink} to="/login">
+          Login
+        </Link>
 
        {/* <MHidden width={'mdDown'}>
          <SectionStyle>
@@ -115,7 +91,6 @@ export default function Register() {
            <img alt="register" src="/static/illustrations/illustration_register.png" />
          </SectionStyle>
        </MHidden> */}
->>>>>>> 8efecb1b98389318ae587fa062152799350a3088
 
        <Container>
          <ContentStyle>

@@ -1,25 +1,15 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import { useImage } from 'react-image';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
 import { Typography } from '@mui/material';
 // components
-import pic from '../components/Images/logo.webp';
-//
 import { MHidden } from '../components/@material-extend';
+import Logo from '../components/Logo';
 import { Suspense } from 'react';
 
 // // ----------------------------------------------------------------------
-
-const MyLogoComponent = () => {
-  const { src } = useImage({
-      srcList: pic,
-  })
-  const classList = 'w-1/3 md:w-32 lg:w-48'
-
-  return <img src={src} alt="logo" className={classList} />
-}
 
 const HeaderStyle = styled('header')(({ theme }: { theme: any }) => {
 return ({
@@ -44,24 +34,43 @@ return ({
 //   children: PropTypes.node
 // };
 
-export default function AuthLayout({ children }: {children: any}) {
+export default function AuthLayout() {
+  // return (
+  //   <HeaderStyle className="flex flex-row relative">
+  //     <Link to="/">
+  //       <Suspense fallback="Logo">
+  //           <MyLogoComponent />
+  //       </Suspense>
+  //     </Link>
+  //     <div className="absolute top-1/2 -translate-y-1/2 right-2">
+  //       <Typography
+  //         variant="body2"
+  //         sx={{
+  //           //mt: { md: -2 }
+  //         }}
+  //       >
+  //         Hmm
+  //       </Typography>
+  //       <Outlet />
+  //     </div>
+  //   </HeaderStyle>
+  // );
   return (
-    <HeaderStyle className="flex flex-row relative">
-      <RouterLink to="/">
-        <Suspense fallback="Logo">
-            <MyLogoComponent />
-        </Suspense>
-      </RouterLink>
-      <div className="absolute top-1/2 -translate-y-1/2 right-2">
+    <HeaderStyle>
+      <Link to="/">
+        <Logo />
+      </Link>
+
+      <MHidden width="smDown">
         <Typography
           variant="body2"
           sx={{
-            //mt: { md: -2 }
+            mt: { md: -2 }
           }}
         >
-          {children}
+          <Outlet />
         </Typography>
-      </div>
+      </MHidden>
     </HeaderStyle>
   );
 }

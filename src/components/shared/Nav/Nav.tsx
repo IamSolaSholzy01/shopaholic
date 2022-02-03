@@ -64,11 +64,11 @@ export const NavAuthList = () => {
         },
         {
             text: 'register',
-            route: '/auth/register',
+            route: '/register',
             styleList: 'ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
-                navigate('/auth/register')
+                navigate('/register')
             }
         }
     ]
