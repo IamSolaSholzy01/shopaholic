@@ -65,7 +65,7 @@ export default function Register() {
 
   return (
     <>
-      <div>                
+      <div>
           <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
               {/* Needed to close panel on click of the backdrop */}
               <div className={`opacity-0 w-screen h-screen fixed top-0 left-0`} onClick={handleClose}></div>
@@ -74,24 +74,8 @@ export default function Register() {
           </Backdrop>
           {/* <Panel visible={visibility} /> */}
       </div>
-      
+
      <RootStyle title="Register | Shopaholic">
-        Already have an account? &nbsp;
-        <Link underline="none" variant="subtitle2" onClick={(e) => {
-                          setVisibility(click(e, visibility) ? true : false)
-                      }} component={RouterLink} to="/login">
-          Login
-        </Link>
-
-       {/* <MHidden width={'mdDown'}>
-         <SectionStyle>
-           <Typography variant="h3" sx={{ px: 5, mt: 10, mb: 5 }}>
-             Manage the job more effectively with Minimal
-           </Typography>
-           <img alt="register" src="/static/illustrations/illustration_register.png" />
-         </SectionStyle>
-       </MHidden> */}
-
        <Container>
          <ContentStyle>
            <Box sx={{ mb: 5 }}>
@@ -99,7 +83,7 @@ export default function Register() {
                Get started absolutely free.
              </Typography>
              <Typography sx={{ color: 'text.secondary' }}>
-               Free forever. No credit card needed.
+               Come on, We don't bite.
              </Typography>
            </Box>
 
@@ -119,17 +103,14 @@ export default function Register() {
              .
            </Typography>
 
-           <div>
-             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
-               Already have an account?&nbsp;
-               <Link to="/login" component={RouterLink} 
-                onClick={(e) => {
-                  setVisibility(click(e, visibility) ? true : false)
-                }}>
-                 Login
-               </Link>
-             </Typography>
-           </div>
+           <MHidden width="smUp">
+            <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
+              Already have an account?&nbsp;
+              <Link to="/login" component={RouterLink}>
+                Login
+              </Link>
+            </Typography>
+          </MHidden>
          </ContentStyle>
        </Container>
      </RootStyle>

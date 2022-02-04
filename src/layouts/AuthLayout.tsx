@@ -1,9 +1,9 @@
 // import PropTypes from 'prop-types';
 import { useImage } from 'react-image';
-import { Link, Outlet } from 'react-router-dom';
+import { Link as RouterLink, Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Typography } from '@mui/material';
+import { Typography, Link } from '@mui/material';
 // components
 import { MHidden } from '../components/@material-extend';
 import Logo from '../components/Logo';
@@ -56,21 +56,27 @@ export default function AuthLayout() {
   //   </HeaderStyle>
   // );
   return (
-    <HeaderStyle>
-      <Link to="/">
-        <Logo />
-      </Link>
+    <>
+      <HeaderStyle>
+        <Link underline="none" variant="subtitle2" component={RouterLink} to="/">
+          <Logo />
+        </Link>
 
-      <MHidden width="smDown">
-        <Typography
-          variant="body2"
-          sx={{
-            mt: { md: -2 }
-          }}
-        >
-          <Outlet />
-        </Typography>
-      </MHidden>
-    </HeaderStyle>
+        <MHidden width="smDown">
+          <Typography
+            variant="body2"
+            sx={{
+              mt: { md: -2 }
+            }}
+          >
+            Already have an account? &nbsp;
+            <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+              Login
+            </Link>
+          </Typography>
+        </MHidden>
+      </HeaderStyle>
+      <Outlet />
+    </>
   );
 }
