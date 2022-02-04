@@ -10,7 +10,24 @@ import typography from './typography';
 import componentsOverride from './overrides';
 import shadows, { customShadows } from './shadows';
 
-// ----------------------------------------------------------------------
+declare module '@mui/material/styles' {
+    interface Palette {
+        neutral: Palette['primary'];
+    }
+  
+    // allow configuration using `createTheme`
+    interface PaletteOptions {
+        neutral?: PaletteOptions['primary'];
+    }
+
+    interface Theme {
+        palette: Palette;
+    }
+    // allow configuration using `createTheme`
+    interface ThemeOptions {
+        palette?: PaletteOptions;
+    }
+}
 
 ThemeConfig.propTypes = {
     children: PropTypes.node
@@ -19,11 +36,11 @@ ThemeConfig.propTypes = {
 export default function ThemeConfig({ children }: { children: any }) {
     const themeOptions = useMemo(
         () => ({
-            palette,
-            shape,
-            typography,
-            shadows,
-            customShadows
+            // palette,
+            // shape,
+            typography
+            // shadows,
+            // customShadows
         }),
         []
     );

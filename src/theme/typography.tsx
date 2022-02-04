@@ -20,7 +20,7 @@ function responsiveFontSizes({ sm, md, lg }: { sm: number, md: number, lg: numbe
 
 const FONT_PRIMARY = 'Public Sans, sans-serif';
 
-const typography = {
+const typography: any = {
   fontFamily: FONT_PRIMARY,
   fontWeightRegular: 400,
   fontWeightMedium: 600,
