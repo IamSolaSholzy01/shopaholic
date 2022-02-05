@@ -1,19 +1,9 @@
-import { number } from 'prop-types'
-import React, { Suspense } from 'react'
-import { ReactPropTypes } from 'react'
-import SportsOutlinedIcon from '@mui/icons-material/SportsOutlined';
-import { MyLogoComponent } from '../shared/Nav/Nav';
+import React from 'react';
 
 
 const HomeHeader = () => (
     <div>
         <div className="text-center text-3xl fonr-bold py-8 border-b-4 border-blue-400">FIXTURES</div>
-        {/* <div>
-            Gametype 
-            <select name="" id="">
-                <option value="">NAP</option>
-            </select>
-        </div> */}
     </div>
 )
 
@@ -28,9 +18,6 @@ const GameItem = (props: any) => {
                             <span className="order-last">{props.game.home}</span>
                             <div className="h-max">
                                 <img src="favicon.ico" alt="" className="h-12"/>
-                                {/* <Suspense fallback="logo">
-                                    <MyLogoComponent />
-                                </Suspense> */}
                             </div>    
                         </div>
                         <span className="text-3xl font-semibold">1</span>
@@ -40,9 +27,6 @@ const GameItem = (props: any) => {
                         <span className="order-first">{props.game.away}</span>
                         <div className="h-max">
                             <img src="favicon.ico" alt="" className="h-12"/>
-                            {/* <Suspense fallback="logo">
-                                <MyLogoComponent />
-                            </Suspense> */}
                         </div>    
                     </div>
                     <span className="text-3xl font-semibold">3</span>
@@ -65,26 +49,6 @@ const GameItem = (props: any) => {
             </div>
         </div>
         </>
-        // <div className="my-1">
-        //     <div className="flex flex-row justify-between bg-white text-sm">
-        //         <span className="mx-1"><SportsOutlinedIcon className="text-blue-600"/> {props.game.num}</span>
-        //         <span className="mx-1">{props.game.league}</span>
-        //     </div>
-        //     <div className="flex flex-row justify-between mx-1 items-center">
-        //         {/* <div>
-        //             <div className="flex flex-col justify-between">
-        //                 <span>{props.game.home} - {props.game.away}</span>
-        //                 <div className="flex flex-row justify-between text-xs pt-5">
-        //                     <span className="bg-blue-600 text-white px-1">{props.game.date}</span>
-        //                     <span>{props.game.time}</span>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //         <div>
-        //             <button className="py-1 px-2 bg-blue-500 text-white rounded hover:bg-blue-600">{props.game.odd}</button>
-        //         </div> */}
-        //     </div>
-        // </div>
     )
 }
 
@@ -117,7 +81,6 @@ const Home = () => {
     return (
         <div className="mb-[57px]">
             <HomeHeader />
-
             <GameContainer />
         </div>
     )

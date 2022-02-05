@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link } from '@mui/material';
 
 const LoginTab = (visible: any) => {
 
@@ -38,9 +40,9 @@ const LoginTab = (visible: any) => {
                         </div>
 
                         <div className="text-sm">
-                            <a href="#" className="font-medium text-indigo-500 hover:text-primary">
+                            <Link component={RouterLink} to='/' className="font-medium text-indigo-500 hover:text-primary">
                             Forgot password?
-                            </a>
+                            </Link>
                         </div>
                     </div>
 

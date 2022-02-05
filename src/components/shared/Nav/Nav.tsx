@@ -26,9 +26,6 @@ export const NavAuthList = () => {
         setVisibility(!visibility ? true : false)
         setOpen(false)
     }
-    const handleOpen = () => {
-        setOpen(!open);
-    }
 
     const navigate = useNavigate()
 
@@ -62,7 +59,6 @@ export const NavAuthList = () => {
                     <Panel visible={visibility} />
                     <Close className={`absolute top-5 left-[285px] cursor-pointer text-black`} style={visibility ? {display: 'block'} : {display: 'none'}} onClick={handleClose} />
                 </Backdrop>
-                {/* <Panel visible={visibility} /> */}
             </div>
             <ul className='flex flex-row items-center md:justify-end'>
                 {list.map((item, index) => (

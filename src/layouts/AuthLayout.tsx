@@ -1,5 +1,3 @@
-// import PropTypes from 'prop-types';
-import { useImage } from 'react-image';
 import { Link as RouterLink, Outlet } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
@@ -7,7 +5,7 @@ import { Typography, Link } from '@mui/material';
 // components
 import { MHidden } from '../components/@material-extend';
 import Logo from '../components/Logo';
-import { Suspense, useState } from 'react';
+import { useState } from 'react';
 import { LoginTab } from '../components/LoginTab';
 
 // // ----------------------------------------------------------------------
@@ -48,9 +46,6 @@ export default function AuthLayout() {
             }}
           >
             Already have an account? &nbsp;
-            {/* <Link underline="none" variant="subtitle2" component={RouterLink} to="/login" onClick={(e)=>{}}>
-              Login
-            </Link> */}
             <Link underline={"none"} variant={"subtitle2"} component={RouterLink} to="/login" onClick={(e) => {
               e.preventDefault();
               setLoginVisible(true);

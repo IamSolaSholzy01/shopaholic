@@ -1,11 +1,13 @@
-import { Navigate } from 'react-router-dom';
+import { lazy } from 'react';
+
+// project imports
 import Loadable from '../ui-component/Loadable';
 
 // layouts
 import MainLayout from '../layouts/MainLayout';
 
 // routes
-import Home from '../components/Home';
+const Home = Loadable(lazy(() => import('../components/Home')));
 
 const MainRoutes = {
     path: '/',

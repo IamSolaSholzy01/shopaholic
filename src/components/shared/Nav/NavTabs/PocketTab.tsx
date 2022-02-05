@@ -1,4 +1,6 @@
-import React, { Component } from "react";
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
+import { Link } from '@mui/material';
 
 const PocketTab = (visible: any) => {
 
@@ -11,9 +13,9 @@ const PocketTab = (visible: any) => {
                     <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Use a Voucher</h2>
                     <p className="mt-2 text-center text-sm text-gray-600">
                         Don't have an account?&nbsp;
-                        <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                        <Link component={RouterLink} to='/' className="font-medium text-indigo-600 hover:text-indigo-500">
                             Register
-                        </a>
+                        </Link>
                     </p>
                 </div>
                 <form className="mt-8 space-y-6 mx-6" action="#" method="POST">
