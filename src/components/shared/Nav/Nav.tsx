@@ -5,9 +5,7 @@ import Backdrop from '@mui/material/Backdrop'
 import Close from '@mui/icons-material/Close'
 import logo from '../../Images/logo.webp'
 import Panel from '../Panel'
-//import { Link } from 'react-router-dom'
-// import { Motion, spring } from ''
-import { Motion, spring } from '../../ReactMotion'
+import { LoginTab } from '../../LoginTab'
 
 
 export const MyLogoComponent = () => {
@@ -19,26 +17,10 @@ export const MyLogoComponent = () => {
     return <img src={src} alt="logo" className={classList} />
 }
 
-// const buttonStyle = {
-//     backgroundColor: 'transparent',
-//     color: 'black',
-//     border: '1px solid black',
-//     borderRadius: 4,
-//     height: 40,
-//     lineHeight: 2.5,
-//     paddingLeft: 16,
-//     paddingRight: 16,
-//     outline: 'none',
-//     cursor: 'pointer'
-// }
-
-
-
-
-
 export const NavAuthList = () => {
-    const [visibility, setVisibility] = useState(false)
-    const [open, setOpen] = useState(false)
+    const [visibility, setVisibility] = useState(false);
+    const [open, setOpen] = useState(false);
+    const [loginVisible, setLoginVisible] = useState(false);
     
     const handleClose = () => {
         setVisibility(!visibility ? true : false)
@@ -55,11 +37,9 @@ export const NavAuthList = () => {
             text: 'login',
             styleList: 'text-gray-500 hover:text-gray-900',
             route: '/login',
-            click: (event: SyntheticEvent, visibility: boolean) => {
-                event.preventDefault()
-                visibility = !visibility ? true : false
-                handleOpen()
-                return visibility;
+            click: (event: SyntheticEvent) => {
+                event.preventDefault();
+                setLoginVisible(true);
             }
         },
         {
@@ -74,7 +54,7 @@ export const NavAuthList = () => {
     ]
 
     return (
-        <>
+        <LoginTab onClose={() => setLoginVisible(false)} visible={loginVisible}>
             <div>                
                 <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
                     {/* Needed to close panel on click of the backdrop */}
@@ -88,14 +68,14 @@ export const NavAuthList = () => {
                 {list.map((item, index) => (
                     <li key={index}>
                         <button className={`uppercase whitespace-nowrap text-base font-medium ${item.styleList}`} onClick={(e) => {
-                            setVisibility(item.click(e, visibility) ? true : false)
+                            item.click(e);
                         }}>
                             {item.text}
                         </button>
                     </li>
                 ))}
             </ul>
-        </>
+        </LoginTab>
     )
 }
 

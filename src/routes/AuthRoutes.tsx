@@ -20,16 +20,6 @@ const AuthRoutes = {
             element: <Register />
         }
     ]
-    // children: [
-    //     {
-    //         path: '/login',
-    //         element: <AuthLogin />
-    //     },
-    //     {
-    //         path: '/register',
-    //         element: <AuthRegister />
-    //     }
-    // ]
 };
 
 export default AuthRoutes;

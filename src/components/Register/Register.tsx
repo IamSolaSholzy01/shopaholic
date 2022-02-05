@@ -1,17 +1,12 @@
-import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Card, Link, Container, Typography, Backdrop } from '@mui/material';
-// layouts
-import AuthLayout from '../../layouts/AuthLayout';
+import { Box, Link, Container, Typography } from '@mui/material';
 // components
-import Page from '../../components/Page';
-import { MHidden } from '../../components/@material-extend';
-import { RegisterForm } from '../../components/authentication/register';
-import AuthSocial from '../../components/authentication/AuthSocial';
-import Panel from '../shared/Panel'
-import { Close } from '@mui/icons-material';
-import { SyntheticEvent, useState } from 'react';
+import Page from '../Page';
+import { MHidden } from '../@material-extend';
+import { RegisterForm } from '../authentication/register';
+import AuthSocial from '../authentication/AuthSocial';
 
 // ----------------------------------------------------------------------
 
@@ -19,15 +14,6 @@ const RootStyle = styled(Page)(({ theme }: { theme: any }) => ({
   [theme.breakpoints.up('md')]: {
     display: 'flex'
   }
-}));
-
-const SectionStyle = styled(Card)(({ theme }: { theme: any }) => ({
-  width: '100%',
-  maxWidth: 464,
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  margin: theme.spacing(2, 0, 2, 2)
 }));
 
 const ContentStyle = styled('div')(({ theme }: { theme: any }) => ({
@@ -43,38 +29,11 @@ const ContentStyle = styled('div')(({ theme }: { theme: any }) => ({
 // ----------------------------------------------------------------------
 
 export default function Register() {
-  const [visibility, setVisibility] = useState(false)
-  const [open, setOpen] = useState(false)
-  
-  const handleClose = () => {
-      setVisibility(!visibility ? true : false)
-      setOpen(false)
-  }
-  const handleOpen = () => {
-      setOpen(!open);
-  }
 
-  const click = (event: SyntheticEvent, visibility: boolean) => {
-    event.preventDefault()
-    visibility = !visibility ? true : false
-    handleOpen()
-    return visibility;
-  }
-
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   return (
     <>
-      <div>
-          <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
-              {/* Needed to close panel on click of the backdrop */}
-              <div className={`opacity-0 w-screen h-screen fixed top-0 left-0`} onClick={handleClose}></div>
-              <Panel visible={visibility} />
-              <Close className={`absolute top-5 left-[285px] cursor-pointer text-black`} style={visibility ? {display: 'block'} : {display: 'none'}} onClick={handleClose} />
-          </Backdrop>
-          {/* <Panel visible={visibility} /> */}
-      </div>
-
      <RootStyle title="Register | Shopaholic">
        <Container>
          <ContentStyle>
@@ -83,7 +42,7 @@ export default function Register() {
                Get started absolutely free.
              </Typography>
              <Typography sx={{ color: 'text.secondary' }}>
-               Come on, We don't bite.
+               Don't worry, We don't bite.
              </Typography>
            </Box>
 
@@ -106,7 +65,9 @@ export default function Register() {
            <MHidden width="smUp">
             <Typography variant="subtitle2" sx={{ mt: 3, textAlign: 'center' }}>
               Already have an account?&nbsp;
-              <Link to="/login" component={RouterLink}>
+              <Link to="/login" component={RouterLink}
+                onClick={(e) => {console.log('link')}}
+              >
                 Login
               </Link>
             </Typography>

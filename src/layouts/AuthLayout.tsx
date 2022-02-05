@@ -7,7 +7,8 @@ import { Typography, Link } from '@mui/material';
 // components
 import { MHidden } from '../components/@material-extend';
 import Logo from '../components/Logo';
-import { Suspense } from 'react';
+import { Suspense, useState } from 'react';
+import { LoginTab } from '../components/LoginTab';
 
 // // ----------------------------------------------------------------------
 
@@ -24,44 +25,21 @@ return ({
   justifyContent: 'space-between',
   [theme.breakpoints.up('md')]: {
     alignItems: 'flex-start',
-    //padding: theme.spacing(7, 5, 0, 7)
+    padding: theme.spacing(7, 5, 0, 7)
   }
 })});
 
-// // ----------------------------------------------------------------------
-
-// AuthLayout.propTypes = {
-//   children: PropTypes.node
-// };
+// ----------------------------------------------------------------------
 
 export default function AuthLayout() {
-  // return (
-  //   <HeaderStyle className="flex flex-row relative">
-  //     <Link to="/">
-  //       <Suspense fallback="Logo">
-  //           <MyLogoComponent />
-  //       </Suspense>
-  //     </Link>
-  //     <div className="absolute top-1/2 -translate-y-1/2 right-2">
-  //       <Typography
-  //         variant="body2"
-  //         sx={{
-  //           //mt: { md: -2 }
-  //         }}
-  //       >
-  //         Hmm
-  //       </Typography>
-  //       <Outlet />
-  //     </div>
-  //   </HeaderStyle>
-  // );
+  const [loginVisible, setLoginVisible] = useState(false);
+
   return (
-    <>
+    <LoginTab onClose={() => setLoginVisible(false)} visible={loginVisible}>
       <HeaderStyle>
         <Link underline="none" variant="subtitle2" component={RouterLink} to="/">
           <Logo />
         </Link>
-
         <MHidden width="smDown">
           <Typography
             variant="body2"
@@ -70,13 +48,19 @@ export default function AuthLayout() {
             }}
           >
             Already have an account? &nbsp;
-            <Link underline="none" variant="subtitle2" component={RouterLink} to="/login">
+            {/* <Link underline="none" variant="subtitle2" component={RouterLink} to="/login" onClick={(e)=>{}}>
+              Login
+            </Link> */}
+            <Link underline={"none"} variant={"subtitle2"} component={RouterLink} to="/login" onClick={(e) => {
+              e.preventDefault();
+              setLoginVisible(true);
+            }}>
               Login
             </Link>
           </Typography>
         </MHidden>
       </HeaderStyle>
       <Outlet />
-    </>
+    </LoginTab>
   );
 }
