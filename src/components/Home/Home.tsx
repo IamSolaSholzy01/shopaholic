@@ -20,16 +20,14 @@ const GameItem = (props: any) => {
                                 <img src="favicon.ico" alt="" className="h-12"/>
                             </div>    
                         </div>
-                        <span className="text-3xl font-semibold">1</span>
                     </div>
                     <div className="border-l w-full px-12 py-3 flex flex-row-reverse justify-between items-center">
-                    <div className="flex flex-row items-center justify-between w-1/4">
-                        <span className="order-first">{props.game.away}</span>
-                        <div className="h-max">
-                            <img src="favicon.ico" alt="" className="h-12"/>
-                        </div>    
-                    </div>
-                    <span className="text-3xl font-semibold">3</span>
+                        <div className="flex flex-row items-center justify-between w-1/4">
+                            <span className="order-first">{props.game.away}</span>
+                            <div className="h-max">
+                                <img src="favicon.ico" alt="" className="h-12"/>
+                            </div>    
+                        </div>
                     </div>
                 </div>
             </div>

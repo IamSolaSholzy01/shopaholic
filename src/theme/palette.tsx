@@ -9,39 +9,39 @@ const createGradient = (color1: string, color2: string) => {
 // SETUP COLORS
 const GREY = {
   0: '#FFFFFF',
-  100: '#F9FAFB',
-  200: '#F4F6F8',
-  300: '#DFE3E8',
+  100: '#f5f5f5',
+  200: '#eeeeee',
+  300: '#e0e0e0',
   400: '#C4CDD5',
-  500: '#919EAB',
-  600: '#637381',
-  700: '#454F5B',
-  800: '#212B36',
-  900: '#161C24',
-  500_8: alpha('#919EAB', 0.08),
-  500_12: alpha('#919EAB', 0.12),
-  500_16: alpha('#919EAB', 0.16),
-  500_24: alpha('#919EAB', 0.24),
-  500_32: alpha('#919EAB', 0.32),
-  500_48: alpha('#919EAB', 0.48),
-  500_56: alpha('#919EAB', 0.56),
-  500_80: alpha('#919EAB', 0.8)
+  500: '#9e9e9e',
+  600: '#757575',
+  700: '#616161',
+  800: '#414141',
+  900: '#212121',
+  500_8: alpha('#9e9e9e', 0.08),
+  500_12: alpha('#9e9e9e', 0.12),
+  500_16: alpha('#9e9e9e', 0.16),
+  500_24: alpha('#9e9e9e', 0.24),
+  500_32: alpha('#9e9e9e', 0.32),
+  500_48: alpha('#9e9e9e', 0.48),
+  500_56: alpha('#9e9e9e', 0.56),
+  500_80: alpha('#9e9e9e', 0.8)
 };
 
 const PRIMARY = {
-  lighter: '#C8FACD',
-  light: '#5BE584',
-  main: '#00AB55',
-  dark: '#007B55',
-  darker: '#005249',
+  lighter: '#fffde5',
+  light: '#fff595',
+  main: '#ffc000',
+  dark: '#ffa700',
+  darker: '#fe7a00',
   contrastText: '#fff'
 };
 const SECONDARY = {
-  lighter: '#D6E4FF',
-  light: '#84A9FF',
-  main: '#3366FF',
-  dark: '#1939B7',
-  darker: '#091A7A',
+  lighter: '#ffebef',
+  light: '#fa9a9b',
+  main: '#f63033',
+  dark: '#d61b26',
+  darker: '#c70819',
   contrastText: '#fff'
 };
 const INFO = {
