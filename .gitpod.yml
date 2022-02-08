@@ -8,7 +8,6 @@ tasks:
 ports:
   - port: 3000
     visibility: private
-    onOpen: open-preview
 vscode:
   extensions:
     - dbaeumer.vscode-eslint

@@ -1,13 +1,14 @@
-import { Suspense, SyntheticEvent, useState } from 'react'
-import { useImage } from 'react-image'
-import { useNavigate } from 'react-router-dom'
-import Backdrop from '@mui/material/Backdrop'
+import { Suspense, SyntheticEvent, useState } from 'react';
+import { useImage } from 'react-image';
+import { useNavigate } from 'react-router-dom';
+import Backdrop from '@mui/material/Backdrop';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
-import Close from '@mui/icons-material/Close'
-import logo from '../../Images/logo.webp'
-import Panel from '../Panel'
-import { LoginTab } from '../../LoginTab'
+import Close from '@mui/icons-material/Close';
+import logo from '../../Images/logo.webp';
+import Panel from '../Panel';
+import { LoginTab } from '../../LoginTab';
+import { buttonStyle } from '../../styles';
 
 
 export const MyLogoComponent = () => {
@@ -87,8 +88,8 @@ export const NavAuthList = () => {
                         }}>
                             {item.text}
                         </button> */}
-                        <Stack direction="row" spacing="2">
-                            <Button color='secondary' variant={item.variant} onClick={(e) => {item.click(e)}}>
+                        <Stack direction="row" spacing="1">
+                            <Button color='primary' variant={item.variant} onClick={(e) => {item.click(e)}} sx={buttonStyle}>
                                 {item.text}
                             </Button>
                         </Stack>
