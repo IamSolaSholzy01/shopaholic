@@ -2,6 +2,8 @@ import { Suspense, SyntheticEvent, useState } from 'react'
 import { useImage } from 'react-image'
 import { useNavigate } from 'react-router-dom'
 import Backdrop from '@mui/material/Backdrop'
+import Stack from '@mui/material/Stack';
+import Button from '@mui/material/Button';
 import Close from '@mui/icons-material/Close'
 import logo from '../../Images/logo.webp'
 import Panel from '../Panel'
@@ -29,7 +31,22 @@ export const NavAuthList = () => {
 
     const navigate = useNavigate()
 
-    const list = [
+    const list: [
+        {
+            text: string,
+            styleList: string,
+            route: string,
+            click: (event: SyntheticEvent) => void,
+            variant: 'text' | 'contained' | 'outlined'
+        },
+        {
+            text: string,
+            styleList: string,
+            route: string,
+            click: (event: SyntheticEvent) => void,
+            variant: 'text' | 'contained' | 'outlined'
+        }
+    ] = [
         {
             text: 'login',
             styleList: 'text-gray-500 hover:text-gray-900',
@@ -37,7 +54,8 @@ export const NavAuthList = () => {
             click: (event: SyntheticEvent) => {
                 event.preventDefault();
                 setLoginVisible(true);
-            }
+            },
+            variant: 'text'
         },
         {
             text: 'register',
@@ -46,7 +64,8 @@ export const NavAuthList = () => {
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
                 navigate('/register')
-            }
+            },
+            variant: 'contained'
         }
     ]
 
@@ -63,11 +82,16 @@ export const NavAuthList = () => {
             <ul className='flex flex-row items-center md:justify-end'>
                 {list.map((item, index) => (
                     <li key={index}>
-                        <button className={`uppercase whitespace-nowrap text-base font-medium ${item.styleList}`} onClick={(e) => {
+                        {/* <button className={`uppercase whitespace-nowrap text-base font-medium ${item.styleList}`} onClick={(e) => {
                             item.click(e);
                         }}>
                             {item.text}
-                        </button>
+                        </button> */}
+                        <Stack direction="row" spacing="2">
+                            <Button color='secondary' variant={item.variant} onClick={(e) => {item.click(e)}}>
+                                {item.text}
+                            </Button>
+                        </Stack>
                     </li>
                 ))}
             </ul>
