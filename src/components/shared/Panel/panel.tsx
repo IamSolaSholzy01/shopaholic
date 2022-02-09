@@ -26,28 +26,28 @@ const Panel = (visible: any) => {
                 setSocialActive(false)
             }
         },
-        {
-            text: 'pocket',
-            classList: `border-white py-2 bg-white ${pocket_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
-            route: '#pocket',
-            click: (event: SyntheticEvent) => {
-                event.preventDefault()
-                setLoginActive(false)
-                setPocketActive(true)
-                setSocialActive(false)
-            }
-        },
-        {
-            text: 'social',
-            classList: `border-l border-white py-2 bg-white ${social_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
-            route: '#social',
-            click: (event: SyntheticEvent) => {
-                event.preventDefault()
-                setLoginActive(false)
-                setPocketActive(false)
-                setSocialActive(true)
-            }
-        },
+        // {
+        //     text: 'pocket',
+        //     classList: `border-white py-2 bg-white ${pocket_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
+        //     route: '#pocket',
+        //     click: (event: SyntheticEvent) => {
+        //         event.preventDefault()
+        //         setLoginActive(false)
+        //         setPocketActive(true)
+        //         setSocialActive(false)
+        //     }
+        // },
+        // {
+        //     text: 'social',
+        //     classList: `border-l border-white py-2 bg-white ${social_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
+        //     route: '#social',
+        //     click: (event: SyntheticEvent) => {
+        //         event.preventDefault()
+        //         setLoginActive(false)
+        //         setPocketActive(false)
+        //         setSocialActive(true)
+        //     }
+        // },
     ]
 
     return (
@@ -65,7 +65,7 @@ const Panel = (visible: any) => {
                         opacity: currentStyles.opacity
                     }}
                 >
-                    <div className={`mt-16 pt-4 grid grid-cols-3 items-center h-max text-sm font-semibold capitalize text-center`}>
+                    <div className={`mt-16 pt-4 grid grid-cols-${list.length} items-center h-max text-sm font-semibold capitalize text-center`}>
                         {list.map((item, index) => (
                             <a href={`#${item.route}`} className={`uppercase ${item.classList}`} onClick={item.click} key={index}>{item.text}</a>
                         ))}
