@@ -9,10 +9,11 @@ import Backdrop from './Backdrop';
 import Typography from './Typography';
 import IconButton from './IconButton';
 import Autocomplete from './Autocomplete';
+import { Components, Theme } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-export default function ComponentsOverrides(theme: any) {
+export default function ComponentsOverrides(theme: Theme): Components {
   return merge(
     Card(theme),
     Lists(theme),

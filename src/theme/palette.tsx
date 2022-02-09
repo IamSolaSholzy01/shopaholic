@@ -61,7 +61,7 @@ const SUCCESS = {
   contrastText: GREY[800]
 };
 const WARNING = {
-  lighter: '#FFF7CD',
+  lighter: '#FFFDEC',
   light: '#FFE16A',
   main: '#FFC107',
   dark: '#B78103',
@@ -106,7 +106,7 @@ const palette = {
   chart: CHART_COLORS,
   divider: GREY[500_24],
   text: { primary: GREY[800], secondary: GREY[600], disabled: GREY[500] },
-  background: { paper: '#fff', default: '#fffde5', neutral: GREY[200] },
+  background: { paper: PRIMARY.lighter, default: PRIMARY.lighter, neutral: GREY[200] },
   action: {
     active: GREY[600],
     hover: GREY[500_8],

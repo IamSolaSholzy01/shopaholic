@@ -1,4 +1,4 @@
-import { Backdrop } from '@mui/material';
+import { Backdrop, Container } from '@mui/material';
 import Panel from '../shared/Panel';
 import { Close } from '@mui/icons-material';
 import React from 'react';
@@ -21,6 +21,10 @@ export default class LoginTab extends React.Component<LoginTabProps, LoginTabSta
                 </Backdrop>
                 {this.props.children}
             </>
+            // <Container>
+            //     <Backdrop open={this.props.visible} />
+            //     <Panel visible={this.props.visible} />
+            // </Container>
         )
     }
 }
