@@ -31,12 +31,19 @@ export const NavAuthList = () => {
 
     const list = [
         {
-            text: 'login',
+            text: localStorage.getItem("loggedIn") === "true" ? "logout" : 'login',
             styleList: 'text-gray-500 hover:text-gray-900',
             route: '/login',
             click: (event: SyntheticEvent) => {
                 event.preventDefault();
-                setLoginVisible(true);
+                if(localStorage.getItem("loggedIn") === "true"){
+                    
+                    localStorage.setItem("loggedIn", "false")
+                }
+                else{
+                    setLoginVisible(true);
+                }
+                
             }
         },
         {

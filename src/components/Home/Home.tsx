@@ -1,12 +1,20 @@
 import { number } from 'prop-types';
-import React from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import axios from 'axios';
+import { URLAPI } from '../../api/ApiMethods';
+import { Get } from '../../api/fetch';
+import { any } from 'prop-types';
+import { SwapTableContext } from '../../contexts/SwapTableContext'
+
 
 const baseURL = "https://shopaholic-api.herokuapp.com/gamelists/current"
 
 const range = (min: number, max: number) => [...Array(max - min + 1).keys()].map(i => i + min);
 
 const TopSlider = () => {
+   
+    
+
     return (
         <div>
             <h6 className="text-xl text-center w-full my-8 py-8 bg-slate-50">Top Slider will go here</h6>
@@ -16,12 +24,22 @@ const TopSlider = () => {
 
 const GameType = () => {
     const types: string[] = []
+    const { gameType, handleGameType
+        
+    } = useContext(SwapTableContext)
     range(3, 10).map(number => types.push(`NAP ${number}`))
     range(3, 10).map(number => types.push(`PERM ${number}`))
+
+    const handleSelect =(e:any)=>{
+        console.log(e.target.value)
+        handleGameType(e.target.value)
+    }
+
+    
     return (
         <>
             <div>
-                <select className="focus:ring-0 ring-0 border-0 outline-none" name="" id="">
+                <select className="focus:ring-0 ring-0 border-0 outline-none" name="" id="" onChange={e => {handleSelect(e)}}>
                     {types.map((item, index) => (
                         <option key={index} value={item}>
                             {item}
@@ -84,30 +102,50 @@ const GameItem = (props: any) => {
 }
 
 const GameContainer = () => {
-    React.useEffect(() => {
-        axios.get(baseURL).then((response) => {
-          console.log(response.data)
-        });
-      }, []);
-    const games = [
-        {num: 1, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.50},
-        {num: 2, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 3.85},
-        {num: 3, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 4, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 5, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 6, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 7, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 8, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 9, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 10, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 11, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-        {num: 12, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-    ]
+    const [gameLists, setGameLists] = useState<any>([]);
+    const [list, setLists] = useState<any>([]);
+
+    const { homeArray, handleHomeArray
+        
+    } = useContext(SwapTableContext)
+
+
+    const addToList = (item: any) =>{
+        setLists([...list, item])
+        handleHomeArray([...list,item])
+        console.log(list)
+
+    }
+
+
+    useEffect(() => {
+        Get(URLAPI.GameList.GetCurrent, onAfterGetCurrent)
+    }, [])
+
+   const onAfterGetCurrent = (data: any) =>{
+   console.log(data)
+    setGameLists(data.data.gamelist.games)
+   }
+
+    // const games = [
+    //     {num: 1, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.50},
+    //     {num: 2, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 3.85},
+    //     {num: 3, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 4, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 5, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 6, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 7, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 8, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 9, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 10, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 11, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    //     {num: 12, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+    // ]
     return (
         <ul>
-            {games!.map((item, index) => (
-                <li key={index}>
-                    <GameItem game={item}/>
+            {gameLists!.map((item: any, index: React.Key | null | undefined) => (
+                <li key={index} onClick = {() => {addToList(item)}}>
+                    <GameItem game={item} />
                 </li>
             ))}
         </ul>

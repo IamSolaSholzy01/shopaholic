@@ -1,8 +1,11 @@
 import { Close } from '@mui/icons-material';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import SportsOutlinedIcon from '@mui/icons-material/SportsOutlined';
 import { Link as RouterLink } from 'react-router-dom';
-import { Link } from '@mui/material';
+import { Button, Link, Stack, TextField } from '@mui/material';
+import {SwapTableContext} from '../../../contexts/SwapTableContext'
+import { Post } from '../../../api/fetch';
+import { URLAPI } from '../../../api/ApiMethods';
 
 const footerTabStyle = 'w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1';
 
@@ -32,28 +35,88 @@ const GameItem = (props: any) => {
 }
 
 const BetSlip = () => {
+	const [stake, setStake] = useState('')
+	const { homeArray, handleHomeArray, gameType, handleGameType
+        
+	} = useContext<any>(SwapTableContext)
+
+
+
+	let games = homeArray.map((item: any)=>(
+		 item._id
+	))
+
+	console.log(games)
+	console.log(stake)
+	let gameSplit = gameType.split(" ")
+	
+
+	const data = {
+		token : localStorage.getItem("token"),
+		gameType : gameSplit[0],
+		gameTypeNumber : parseInt(gameSplit[1]),
+		totalStake: parseInt(stake),
+		games: games
+
+	}
+
+	const submitStake = () =>{
+		console.log(gameSplit[0] + gameSplit[1] + stake + localStorage.getItem("token"))
+		console.log(gameSplit[0])
+		console.log(gameSplit[1])
+		Post(data, URLAPI.BetSlip.Stake, onAfterStake)
+	}
+
+	const onAfterStake =(data: any)=>{
+		console.log(data);
+	}
+
+	console.log(homeArray)
+	console.log(gameType)
+	// const games = homeArray!.map((item, index)=>(
+	// 	num: index, league: item.league, home: item.home, away: item.away, date: item.date, time: item.time, odd: item.odd
+	// ))
+
 	return (
 		<div>
 			<div className="flex flex-row justify-between w-full">
-				<span>{games.length} Selections</span>
-				<span>Game type: NAP 3</span>
+				<span>{homeArray.length} Selections</span>
+				<span>Game type: {gameType}</span>
 			</div>
 			<ul>
-				{games.map((item, index) => (
+				{homeArray.map((item : any, index: React.Key | null | undefined) => (
 					<li key={index}>
 						<GameItem game={item}/>
 					</li>
 				))}
 			</ul>
+
+			<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+			<TextField
+              label="Stake"
+			  type={'number'}
+              onChange={e =>{setStake(e.target.value)}}
+              value={stake }
+			  style = {{marginTop: '18px'}}
+            />
+
+			<Button onClick={submitStake}>
+				Stake
+			</Button>
+			</Stack>
 		</div>
 	)
 }
 
-const games = [
-	{num: 1, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.50},
-	{num: 2, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 3.85},
-	{num: 3, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
-]
+
+
+// [
+// 	{num: 1, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.50},
+// 	{num: 2, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 3.85},
+// 	{num: 3, league: 'Eng-Prem-League', home: 'Arsenal', away: 'Burnley', date: '23 Jan', time: '15:00', odd: 4.00},
+// ]
+
+
 
 interface IMiniMenuProps {
 	visible: boolean,
@@ -74,6 +137,9 @@ const MiniMenu = (props: IMiniMenuProps) => {
 
 const Footer = () => {
 	const [menuOpen, setMenuOpen] = useState(false)
+	const { homeArray, handleHomeArray, gameType, handleGameType
+        
+	} = useContext<any>(SwapTableContext)
 	return (
 		<>
 			<footer className='block fixed inset-x-0 bottom-0 z-10 bg-white shadow-t'>
@@ -94,7 +160,7 @@ const Footer = () => {
 								<circle stroke="currentColor" strokeWidth="2" cx="21" cy="21" r="20"></circle>
 								</g>
 								</svg>
-							<span className="tab tab-explore block text-xs">0</span>
+							<span className="tab tab-explore block text-xs">{homeArray.length}</span>
 						</Link>
 						<Link underline="none" component={RouterLink} to='/' className={footerTabStyle} sx={{color: '#000'}}>
 							<svg xmlns="http://www.w3.org/2000/svg" className="inline-block mb-1" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" x="0" y="0"/></g><g><g><path d="M19,13H5c-1.1,0-2,0.9-2,2v4c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2v-4C21,13.9,20.1,13,19,13z M19,19H5v-4h14V19z"/><path d="M19,3H5C3.9,3,3,3.9,3,5v4c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,9H5V5h14V9z"/></g></g></svg>
