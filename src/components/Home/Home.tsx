@@ -48,7 +48,7 @@ const GameType = () => {
 }
 
 const HomeHeader = () => (
-    <div>
+    <div className="sticky top-0 bg-white">
         <div className="text-center text-3xl font-bold py-8 border-b-4 border-blue-400">FIXTURES</div>
         <div className="text-center"> Game Type <GameType /></div>
     </div>
