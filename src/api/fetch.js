@@ -110,6 +110,7 @@ export const GetWithoutToken = async (data, method, callbackfunction) => {
 };
 
 export const GetWithData = async (method, data, callbackfunction) => {
+  let Access_token = localStorage.getItem("token")
   const response = axios.get(URL + method, data, {
     headers: {
       Authorization: `Bearer ${Access_token}`,
@@ -192,6 +193,25 @@ export const Get = async (method, callbackfunction) => {
       'Access-Control-Allow-Methods': 'GET',
       'content-type': 'application/json',
     },
+  });
+  await response
+    .then((response) => {
+      let result = response.data;
+      callbackfunction(result);
+    })
+    .catch((error) => {
+      callbackfunction(error);
+    });
+};
+
+export const GetWithToken = async (method, data, callbackfunction) => {
+  
+  console.log(localStorage.getItem("token"))
+  const response = axios.get(`${URL}${method}`, {
+    headers: { 
+      'Content-Type': 'application/json'
+    },
+    data: data
   });
   await response
     .then((response) => {

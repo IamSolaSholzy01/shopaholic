@@ -20,6 +20,10 @@ export const URLAPI = {
         GetCurrent: "/gamelists/current",
         Put: "/api/Grievance/UpdateGrievance",
         Delete: "/api/Grievance/DeleteGrievance",
+    },
+
+    BetSlipId: {
+        Get: "/betslips/",
     }
 
 

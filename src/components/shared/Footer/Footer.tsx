@@ -7,6 +7,8 @@ import {SwapTableContext} from '../../../contexts/SwapTableContext'
 import { Post } from '../../../api/fetch';
 import { URLAPI } from '../../../api/ApiMethods';
 
+var axios = require('axios');
+
 const footerTabStyle = 'w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1';
 
 const GameItem = (props: any) => {
@@ -39,7 +41,6 @@ const BetSlip = () => {
 	const { homeArray, gameType,
         
 	} = useContext<any>(SwapTableContext)
-
 
 
 	let games = homeArray.map((item: any)=>(
@@ -128,6 +129,35 @@ const MiniMenu = (props: IMiniMenuProps) => {
 	const [checkBetSlipVisible, setBetSlipVisible] = useState<boolean>(true)
 	const stakeValues = [100, 200, 250, 500, 1000]
 
+	const onCheckBetSlip = (id: string) => {
+		var data = JSON.stringify({
+			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA0YzJlYzBmNmNlMWY0Y2RhOGZmOWEiLCJ1c2VybmFtZSI6IkZyb250RW5kIiwiZmlyc3ROYW1lIjoiU29sYSIsImxhc3ROYW1lIjoiT2xhZ3VuanUiLCJwYXJlbnQiOiJzaG9wYWhvbGljIiwicGhvbmVOdW1iZXIiOjgxNjc0MDM5OTEsInJvbGUiOiJvbmxpbmUtdXNlciIsImlhdCI6MTY0NDQ3OTIyOSwiZXhwIjoxNjQ0NDgyODI5fQ.GXy9g94BFEUF6Cwq2QHPElZLJhRw1e8xN_fWNG4ZrNs"
+		});
+
+		var config = {
+		method: 'get',
+		url: `https://shopaholic-api.herokuapp.com/betslips/${id}`,
+		headers: { 
+			'Content-Type': 'application/json'
+		},
+		data : data
+		};
+
+		axios(config)
+		.then(function (response: { data: any; }) {
+		console.log(JSON.stringify(response.data));
+		})
+		.catch(function (error: any) {
+		console.log(error);
+		});
+	}
+
+	// const onAfterCheckBetSlip = (data: any) =>{
+	// 	console.log(data)
+	// 	// setGameLists(data.data.gamelist.games)
+	// }
+	
+
 	return (
 		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white py-4 px-4 min-w-[600px] max-w-[80vw] rounded shadow-md max-h-[60vh] overflow-y-scroll" style={props.visible ? {display: 'block'} : {display: 'none'}}>
 			<div className="flex flex-row justify-between pb-4 border-b border-black">
@@ -139,7 +169,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
 			</div>
 			<div className="flex flex-col border-y py-2 w-full">
 				<span onClick={()=>setBetSlipVisible(!checkBetSlipVisible)}>{'>'} Check Betslip</span>
-				<input className="ring ring-rose-300 rounded" type="text" hidden={checkBetSlipVisible}/>
+				<input className="ring ring-rose-300 rounded" type="text" onChange={(e)=>onCheckBetSlip(e.target.value)} hidden={checkBetSlipVisible}/>
 			</div>
 			<div className="border-y py-2 w-full">
 				{'>'} Fast Bet
