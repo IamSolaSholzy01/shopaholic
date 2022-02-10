@@ -17,7 +17,7 @@ const Panel = (visible: any) => {
     const list = [
         {
             text: 'log in',
-            classList: `border-r border-white py-2 bg-white ${login_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
+            classList: `border-r border-white py-2 bg-white ${login_active ? 'text-rose-600 cursor-default' : 'text-black cursor-pointer'}`,
             route: '#login',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()

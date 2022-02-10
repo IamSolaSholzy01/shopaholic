@@ -12,8 +12,8 @@ const footerTabStyle = 'w-full focus:text-primary hover:text-primary justify-cen
 const GameItem = (props: any) => {
     return (
         <div className="my-1">
-            <div className="flex flex-row justify-between bg-blue-100 text-sm">
-                <span className="mx-1"><SportsOutlinedIcon className="text-blue-600"/> {props.game.num}</span>
+            <div className="flex flex-row justify-between bg-rose-100 text-sm">
+                <span className="mx-1"><SportsOutlinedIcon className="text-rose-600"/> {props.game.num}</span>
                 <span className="mx-1">{props.game.league}</span>
             </div>
             <div className="flex flex-row justify-between mx-1 items-center">
@@ -21,13 +21,13 @@ const GameItem = (props: any) => {
                     <div className="flex flex-col justify-between">
                         <span>{props.game.home} - {props.game.away}</span>
                         <div className="flex flex-row justify-between text-xs pt-5">
-                            <span className="bg-blue-600 text-white px-1">{props.game.date}</span>
+                            <span className="bg-rose-600 text-white px-1">{props.game.date}</span>
                             <span>{props.game.time}</span>
                         </div>
                     </div>
                 </div>
                 <div>
-                    <button className="py-1 px-2 bg-blue-500 text-white rounded hover:bg-blue-600">{props.game.odd}</button>
+                    <button className="py-1 px-2 bg-rose-500 text-white rounded hover:bg-rose-600">{props.game.odd}</button>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@ const BetSlip = () => {
 				<span>{homeArray.length} Selections</span>
 				<span>Game type: {gameType}</span>
 			</div>
-			<ul>
+			<ul className="mb-5">
 				{homeArray.map((item : any, index: React.Key | null | undefined) => (
 					<li key={index}>
 						<GameItem game={item}/>
@@ -91,18 +91,19 @@ const BetSlip = () => {
 				))}
 			</ul>
 
-			<Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-			<TextField
-              label="Stake"
-			  type={'number'}
-              onChange={e =>{setStake(e.target.value)}}
-              value={stake }
-			  style = {{marginTop: '18px'}}
-            />
+			<Stack width="100%" justifyContent="space-between" alignItems="center" direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+				Lines:
+				<TextField
+				label="Stake"
+				type={'number'}
+				onChange={e =>{setStake(e.target.value)}}
+				value={stake }
+				style = {{marginTop: '18px'}}
+				/>
 
-			<Button onClick={submitStake}>
-				Stake
-			</Button>
+				<Button variant="outlined" size="small" disableElevation={true} onClick={submitStake}>
+					Stake
+				</Button>
 			</Stack>
 		</div>
 	)
@@ -124,13 +125,63 @@ interface IMiniMenuProps {
 }
 
 const MiniMenu = (props: IMiniMenuProps) => {
+	const [checkBetSlipVisible, setBetSlipVisible] = useState<boolean>(true)
+	const stakeValues = [100, 200, 250, 500, 1000]
+
 	return (
-		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white py-4 px-4 min-w-[600px] max-w-[80vw] rounded shadow-md" style={props.visible ? {display: 'block'} : {display: 'none'}}>
+		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white py-4 px-4 min-w-[600px] max-w-[80vw] rounded shadow-md max-h-[60vh] overflow-y-scroll" style={props.visible ? {display: 'block'} : {display: 'none'}}>
 			<div className="flex flex-row justify-between pb-4 border-b border-black">
 				<span className="font-bold">Coupon</span>
 				<Close className="cursor-pointer" onClick={props.closeMenu} />
 			</div>
+			<div className="border-y py-2 w-full">
+				{'>'} Load Booking Code
+			</div>
+			<div className="flex flex-col border-y py-2 w-full">
+				<span onClick={()=>setBetSlipVisible(!checkBetSlipVisible)}>{'>'} Check Betslip</span>
+				<input className="ring ring-rose-300 rounded" type="text" hidden={checkBetSlipVisible}/>
+			</div>
+			<div className="border-y py-2 w-full">
+				{'>'} Fast Bet
+			</div>
+			<div className="flex flex-row justify-center w-full my-3">
+				<ul className="flex flex-row list-none font-semibold">
+					<li className="text-rose-600 mx-3">BetSlip</li>
+					<li>My Bets</li>
+				</ul>
+			</div>
 			<BetSlip /> 
+
+			<div>
+				<div className="mt-2">
+					<ul className="flex flex-row list-none justify-between w-full px-2">
+						{stakeValues.map((item, index) => (
+							<li className="border px-3 py-1 rounded" key={index}>
+								<button>{item}</button>
+							</li>
+						))}
+					</ul>
+				</div>
+			</div>
+			<div className="py-3">
+				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+					<span>Stake</span>
+					<span>Total Stake</span>
+				</div>
+				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+					<span>Min Odd</span>
+					<span>Max Odd</span>
+				</div>
+				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+					<span>Min Win</span>
+					<span>Max Win</span>
+				</div>
+				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+					<span>Min Bonus (up to 20%)</span>
+					<span>Max Bonus (up to 20%)</span>
+				</div>
+				<div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">Total Pot Winnings</div>
+			</div>
 		</div>
 	)
 }
