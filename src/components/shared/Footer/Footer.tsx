@@ -6,12 +6,15 @@ import { Button, Link, Stack, TextField } from '@mui/material';
 import {SwapTableContext} from '../../../contexts/SwapTableContext'
 import { Post } from '../../../api/fetch';
 import { URLAPI } from '../../../api/ApiMethods';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 var axios = require('axios');
 
 const footerTabStyle = 'w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1';
 
 const GameItem = (props: any) => {
+
+	console.log(props.game)
     return (
         <div className="my-1">
             <div className="flex flex-row justify-between bg-rose-100 text-sm">
@@ -29,7 +32,8 @@ const GameItem = (props: any) => {
                     </div>
                 </div>
                 <div>
-                    <button className="py-1 px-2 bg-rose-500 text-white rounded hover:bg-rose-600">{props.game.odd}</button>
+                    <button className="py-1 px-2 mx-2 bg-rose-500 text-white rounded hover:bg-rose-600">{props.game.odd}</button>
+					<button className="py-1 px-2 mx-2 bg-rose-500 text-white rounded hover:bg-rose-600"><DeleteIcon /></button>
                 </div>
             </div>
         </div>
@@ -43,12 +47,8 @@ const BetSlip = (props: { betData: (arg0: any) => void; }) => {
 	} = useContext<any>(SwapTableContext)
 
 
-<<<<<<< HEAD
-	let games = homeArray.map((item: any)=>(
-=======
 
 	let games = Array.isArray(homeArray) ? homeArray?.map((item: any)=>(
->>>>>>> b48c02c (betslip stake)
 		 item._id
 	)) : console.log("homeArray is not an array")
 
@@ -134,37 +134,6 @@ interface IMiniMenuProps {
 const MiniMenu = (props: IMiniMenuProps) => {
 	const [checkBetSlipVisible, setBetSlipVisible] = useState<boolean>(true)
 	const stakeValues = [100, 200, 250, 500, 1000]
-<<<<<<< HEAD
-
-	const onCheckBetSlip = (id: string) => {
-		var data = JSON.stringify({
-			"token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjA0YzJlYzBmNmNlMWY0Y2RhOGZmOWEiLCJ1c2VybmFtZSI6IkZyb250RW5kIiwiZmlyc3ROYW1lIjoiU29sYSIsImxhc3ROYW1lIjoiT2xhZ3VuanUiLCJwYXJlbnQiOiJzaG9wYWhvbGljIiwicGhvbmVOdW1iZXIiOjgxNjc0MDM5OTEsInJvbGUiOiJvbmxpbmUtdXNlciIsImlhdCI6MTY0NDQ3OTIyOSwiZXhwIjoxNjQ0NDgyODI5fQ.GXy9g94BFEUF6Cwq2QHPElZLJhRw1e8xN_fWNG4ZrNs"
-		});
-
-		var config = {
-		method: 'get',
-		url: `https://shopaholic-api.herokuapp.com/betslips/${id}`,
-		headers: { 
-			'Content-Type': 'application/json'
-		},
-		data : data
-		};
-
-		axios(config)
-		.then(function (response: { data: any; }) {
-		console.log(JSON.stringify(response.data));
-		})
-		.catch(function (error: any) {
-		console.log(error);
-		});
-	}
-
-	// const onAfterCheckBetSlip = (data: any) =>{
-	// 	console.log(data)
-	// 	// setGameLists(data.data.gamelist.games)
-	// }
-	
-=======
 	const [stake, setStake] = useState(0)
 	const [totalstake, setTotalStake] = useState(0)
 	const [minOdd, setMinOdd] = useState(0)
@@ -189,7 +158,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
 		
 	}
 
->>>>>>> b48c02c (betslip stake)
 
 	return (
 		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white py-4 px-4 min-w-[600px] max-w-[80vw] rounded shadow-md max-h-[60vh] overflow-y-scroll" style={props.visible ? {display: 'block'} : {display: 'none'}}>
@@ -202,11 +170,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
 			</div>
 			<div className="flex flex-col border-y py-2 w-full">
 				<span onClick={()=>setBetSlipVisible(!checkBetSlipVisible)}>{'>'} Check Betslip</span>
-<<<<<<< HEAD
-				<input className="ring ring-rose-300 rounded" type="text" onChange={(e)=>onCheckBetSlip(e.target.value)} hidden={checkBetSlipVisible}/>
-=======
 				<input className="ring ring-rose-300 rounded" type="text" hidden={checkBetSlipVisible}/>
->>>>>>> b48c02c (betslip stake)
 			</div>
 			<div className="border-y py-2 w-full">
 				{'>'} Fast Bet
@@ -217,11 +181,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
 					<li>My Bets</li>
 				</ul>
 			</div>
-<<<<<<< HEAD
-			<BetSlip /> 
-=======
 			<BetSlip betData = {betData}/> 
->>>>>>> b48c02c (betslip stake)
 
 			<div>
 				<div className="mt-2">
@@ -236,24 +196,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
 			</div>
 			<div className="py-3">
 				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-<<<<<<< HEAD
-					<span>Stake</span>
-					<span>Total Stake</span>
-				</div>
-				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-					<span>Min Odd</span>
-					<span>Max Odd</span>
-				</div>
-				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-					<span>Min Win</span>
-					<span>Max Win</span>
-				</div>
-				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-					<span>Min Bonus (up to 20%)</span>
-					<span>Max Bonus (up to 20%)</span>
-				</div>
-				<div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">Total Pot Winnings</div>
-=======
 					<span>Stake : {stake}</span>
 					<span>Total Stake : {totalstake}</span>
 				</div>
@@ -271,7 +213,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
 				</div>
 				<div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">Total Pot Winnings</div>
 				<div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">{totalPot}</div>
->>>>>>> b48c02c (betslip stake)
 			</div>
 		</div>
 	)
