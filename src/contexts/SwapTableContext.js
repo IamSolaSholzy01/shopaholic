@@ -53,7 +53,7 @@ const SwapTableContextProvider = (props) => {
   const [approversArray, setApproversArray] = useState([])
   const [mFilesArray, setMfilesArray] = useState([])
   // const [testArray, setTestArray] = useState([])
-
+  // type MyType = MyObj[];
   const [homeArray, setHomeArray] = useState([])
   const [gameType, setGameType] = useState('NAP 3')
    

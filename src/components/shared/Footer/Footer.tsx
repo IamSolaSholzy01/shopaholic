@@ -36,16 +36,21 @@ const GameItem = (props: any) => {
     )
 }
 
-const BetSlip = () => {
+const BetSlip = (props: { betData: (arg0: any) => void; }) => {
 	const [stake, setStake] = useState('')
 	const { homeArray, gameType,
         
 	} = useContext<any>(SwapTableContext)
 
 
+<<<<<<< HEAD
 	let games = homeArray.map((item: any)=>(
+=======
+
+	let games = Array.isArray(homeArray) ? homeArray?.map((item: any)=>(
+>>>>>>> b48c02c (betslip stake)
 		 item._id
-	))
+	)) : console.log("homeArray is not an array")
 
 	console.log(games)
 	console.log(stake)
@@ -54,11 +59,10 @@ const BetSlip = () => {
 
 	const data = {
 		token : localStorage.getItem("token"),
-		gameType : gameSplit[0],
+		gameType : gameSplit[0].toLowerCase(),
 		gameTypeNumber : parseInt(gameSplit[1]),
 		totalStake: parseInt(stake),
 		games: games
-
 	}
 
 	const submitStake = () =>{
@@ -70,6 +74,7 @@ const BetSlip = () => {
 
 	const onAfterStake =(data: any)=>{
 		console.log(data);
+		props.betData(data)
 	}
 
 	console.log(homeArray)
@@ -125,9 +130,11 @@ interface IMiniMenuProps {
 	closeMenu: () => void
 }
 
+
 const MiniMenu = (props: IMiniMenuProps) => {
 	const [checkBetSlipVisible, setBetSlipVisible] = useState<boolean>(true)
 	const stakeValues = [100, 200, 250, 500, 1000]
+<<<<<<< HEAD
 
 	const onCheckBetSlip = (id: string) => {
 		var data = JSON.stringify({
@@ -157,6 +164,32 @@ const MiniMenu = (props: IMiniMenuProps) => {
 	// 	// setGameLists(data.data.gamelist.games)
 	// }
 	
+=======
+	const [stake, setStake] = useState(0)
+	const [totalstake, setTotalStake] = useState(0)
+	const [minOdd, setMinOdd] = useState(0)
+	const [maxOdd, setMaxOdd] = useState(0)
+	const [minWin, setMinWin] = useState(0)
+	const [maxWin, setMaxWin] = useState(0)
+	const [minBonus, setMinBonus] = useState(0)
+	const [maxBonus, setMaxBonus] = useState(0)
+	const [totalPot, setTotalPot] = useState(0)
+
+	const betData =(data : any)=>{
+		console.log(data)
+		setStake(data.stake)
+		setTotalStake(data.data.betslip.totalStake)
+		setMaxBonus(data.data.betslip.maxBonus)
+		setMinBonus(data.data.betslip.minBonus)
+		setMinOdd(data.data.betslip.minOdd)
+		setMaxOdd(data.data.betslip.maxOdd)
+		setMinBonus(data.data.betslip.minBonus)
+		setMaxBonus(data.data.betslip.maxBonus)
+		setTotalPot(data.data.betslip.totalPotWin)
+		
+	}
+
+>>>>>>> b48c02c (betslip stake)
 
 	return (
 		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white py-4 px-4 min-w-[600px] max-w-[80vw] rounded shadow-md max-h-[60vh] overflow-y-scroll" style={props.visible ? {display: 'block'} : {display: 'none'}}>
@@ -169,7 +202,11 @@ const MiniMenu = (props: IMiniMenuProps) => {
 			</div>
 			<div className="flex flex-col border-y py-2 w-full">
 				<span onClick={()=>setBetSlipVisible(!checkBetSlipVisible)}>{'>'} Check Betslip</span>
+<<<<<<< HEAD
 				<input className="ring ring-rose-300 rounded" type="text" onChange={(e)=>onCheckBetSlip(e.target.value)} hidden={checkBetSlipVisible}/>
+=======
+				<input className="ring ring-rose-300 rounded" type="text" hidden={checkBetSlipVisible}/>
+>>>>>>> b48c02c (betslip stake)
 			</div>
 			<div className="border-y py-2 w-full">
 				{'>'} Fast Bet
@@ -180,7 +217,11 @@ const MiniMenu = (props: IMiniMenuProps) => {
 					<li>My Bets</li>
 				</ul>
 			</div>
+<<<<<<< HEAD
 			<BetSlip /> 
+=======
+			<BetSlip betData = {betData}/> 
+>>>>>>> b48c02c (betslip stake)
 
 			<div>
 				<div className="mt-2">
@@ -195,6 +236,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
 			</div>
 			<div className="py-3">
 				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+<<<<<<< HEAD
 					<span>Stake</span>
 					<span>Total Stake</span>
 				</div>
@@ -211,6 +253,25 @@ const MiniMenu = (props: IMiniMenuProps) => {
 					<span>Max Bonus (up to 20%)</span>
 				</div>
 				<div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">Total Pot Winnings</div>
+=======
+					<span>Stake : {stake}</span>
+					<span>Total Stake : {totalstake}</span>
+				</div>
+				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+					<span>Min Odd : {minOdd}</span>
+					<span>Max Odd : {maxOdd}</span>
+				</div>
+				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+					<span>Min Win : {minWin}</span>
+					<span>Max Win : {maxWin}</span>
+				</div>
+				<div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+					<span>Min Bonus (up to 20%) : {minBonus}</span>
+					<span>Max Bonus (up to 20%) : {maxBonus}</span>
+				</div>
+				<div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">Total Pot Winnings</div>
+				<div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">{totalPot}</div>
+>>>>>>> b48c02c (betslip stake)
 			</div>
 		</div>
 	)
