@@ -1,4 +1,4 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, createContext } from 'react';
 
 export const SwapTableContext = createContext();
 
@@ -15,7 +15,7 @@ const SwapTableContextProvider = (props) => {
    const [show5F2, setShow5F2] = useState(false)
    const [show5F3, setShow5F3] = useState(false)
 
-   const [sideValue, setSideValue] = useState(0)
+   const [sideValue] = useState(0)
 
    const [badgeValueR, setBadgeValueR] = useState(0)
    const [badgeValueA, setBadgeValueA] = useState(0)
@@ -188,18 +188,18 @@ const handleShow5F3 =()=>{
     console.log(index)
 
     switch (index?.key>0) {
-      case index?.key==12: 
+      case index?.key===12: 
      
       handleShow5F1()
       break;
       
-      case index.key==13: 
+      case index.key===13: 
      
      handleShow5F2()
       break;
       
       
-      case index.key==14: 
+      case index.key===14: 
       
       handleShow5F3()
       break;

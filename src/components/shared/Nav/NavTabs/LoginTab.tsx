@@ -6,16 +6,16 @@ import {Login} from '../../../../api/fetch'
 const LoginTab = (visible: any) => {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
-    let [loginVisible, setLoginVisible] = useState(visible.visible)
+    let [loginVisible] = useState(visible.visible)
     
 
-const handleEmail = (event: any) =>{
-    setUserName(event.target.value)
-}
+// const handleEmail = (event: any) =>{
+//     setUserName(event.target.value)
+// }
 
-const handlePassword = (event: any) => {
-    setPassword(event.target.value)
-}
+// const handlePassword = (event: any) => {
+//     setPassword(event.target.value)
+// }
 
 
     const signIn = (event: { preventDefault: () => void; }) =>{

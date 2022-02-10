@@ -36,7 +36,7 @@ const GameItem = (props: any) => {
 
 const BetSlip = () => {
 	const [stake, setStake] = useState('')
-	const { homeArray, handleHomeArray, gameType, handleGameType
+	const { homeArray, gameType,
         
 	} = useContext<any>(SwapTableContext)
 
@@ -137,7 +137,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
 
 const Footer = () => {
 	const [menuOpen, setMenuOpen] = useState(false)
-	const { homeArray, handleHomeArray, gameType, handleGameType
+	const { homeArray
         
 	} = useContext<any>(SwapTableContext)
 	return (

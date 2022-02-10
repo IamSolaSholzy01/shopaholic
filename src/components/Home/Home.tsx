@@ -28,6 +28,7 @@ const GameType = () => {
     const handleSelect =(e:any)=>{
         console.log(e.target.value)
         handleGameType(e.target.value)
+        console.log(gameType)
     }
 
     
@@ -119,6 +120,7 @@ const GameContainer = () => {
         setLists([...list, item])
         handleHomeArray([...list,item])
         console.log(list)
+        console.log(homeArray)
     }
 
 

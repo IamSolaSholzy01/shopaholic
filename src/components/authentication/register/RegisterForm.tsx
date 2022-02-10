@@ -232,7 +232,7 @@ const onAfterRegister = (data: any) =>{
     </FormikProvider>
   );
 }
-function values(values: any) {
-  throw new Error('Function not implemented.');
-}
-
+// function values(values: any) {
+//   console.log(values)
+//   throw new Error('Function not implemented.');
+// }
