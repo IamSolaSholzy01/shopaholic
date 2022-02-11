@@ -6,6 +6,8 @@ import Close from '@mui/icons-material/Close'
 import logo from '../../Images/logo.webp'
 import Panel from '../Panel'
 import { LoginTab } from '../../LoginTab'
+import RegisterTab from '../../RegisterTab/RegisterTab'
+import AuthPanel from '../AuthPanel'
 
 
 export const MyLogoComponent = () => {
@@ -18,16 +20,19 @@ export const MyLogoComponent = () => {
 }
 
 export const NavAuthList = () => {
-    const [visibility, setVisibility] = useState(false);
+    const [loginPanelVisibility, setLoginPanelVisibility] = useState(false);
     const [open, setOpen] = useState(false);
     const [loginVisible, setLoginVisible] = useState(false);
+    const [authVisible, setAuthVisible] = useState(false)
     
     const handleClose = () => {
-        setVisibility(!visibility ? true : false)
+        setLoginPanelVisibility(!loginPanelVisibility ? true : false)
         setOpen(false)
     }
 
     const navigate = useNavigate()
+
+    
 
     const list = [
         {
@@ -36,49 +41,61 @@ export const NavAuthList = () => {
             route: '/login',
             click: (event: SyntheticEvent) => {
                 event.preventDefault();
-                if(localStorage.getItem("loggedIn") === "true"){
-                    
-                    localStorage.setItem("loggedIn", "false")
+                if (localStorage.getItem("loggedIn") === "true") {                    
+                   localStorage.setItem("loggedIn", "false")
                 }
-                else{
+                else {
                     setLoginVisible(true);
                 }
                 
             }
         },
         {
-            text: 'register',
+            text: localStorage.getItem("loggedIn") === "true" ? "auth" : 'register',
             route: '/register',
             styleList: 'ml-8 inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-rose-600 hover:bg-rose-700',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
-                navigate('/register')
+                if (localStorage.getItem("loggedIn") === "true") {                    
+                    setAuthVisible(true)
+                 }
+                 else {
+                    navigate('/register')
+                 }
+                
             }
         }
     ]
 
     return (
-        <LoginTab onClose={() => setLoginVisible(false)} visible={loginVisible}>
-            <div>                
-                <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
-                    {/* Needed to close panel on click of the backdrop */}
-                    <div className={`opacity-0 w-screen h-screen fixed top-0 left-0`} onClick={handleClose}></div>
-                    <Panel visible={visibility} />
-                    <Close className={`absolute top-5 left-[285px] cursor-pointer text-black`} style={visibility ? {display: 'block'} : {display: 'none'}} onClick={handleClose} />
-                </Backdrop>
-            </div>
-            <ul className='flex flex-row items-center md:justify-end'>
-                {list.map((item, index) => (
-                    <li key={index}>
-                        <button className={`uppercase whitespace-nowrap text-base font-medium ${item.styleList}`} onClick={(e) => {
-                            item.click(e);
-                        }}>
-                            {item.text}
-                        </button>
-                    </li>
-                ))}
-            </ul>
-        </LoginTab>
+        <>
+            <LoginTab onClose={() => setLoginVisible(false)} visible={loginVisible}>
+                {/* <div>                
+                    <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
+                        
+                        <div className={`opacity-0 w-screen h-screen fixed top-0 left-0`} onClick={handleClose}></div>
+                        <Panel visible={loginPanelVisibility} />
+                        
+                        <Close className={`absolute top-5 left-[285px] cursor-pointer text-black`} style={loginPanelVisibility ? {display: 'block'} : {display: 'none'}} onClick={handleClose} />
+                    </Backdrop>
+                </div> */}
+                <ul className='flex flex-row items-center md:justify-end'>
+                    {list.map((item, index) => (
+                        <li key={index}>
+                            <button className={`uppercase whitespace-nowrap text-base font-medium ${item.styleList}`} onClick={(e) => {
+                                item.click(e);
+                            }}>
+                                {item.text}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            </LoginTab>
+            <RegisterTab onClose={() => setAuthVisible(false)} visible={authVisible}>
+
+            </RegisterTab>
+            {/* <AuthPanel visible={loginPanelVisibility}/> */}
+        </>
     )
 }
 

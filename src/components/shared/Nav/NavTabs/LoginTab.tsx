@@ -7,16 +7,6 @@ const LoginTab = (visible: any) => {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     let [loginVisible] = useState(visible.visible)
-    
-
-// const handleEmail = (event: any) =>{
-//     setUserName(event.target.value)
-// }
-
-// const handlePassword = (event: any) => {
-//     setPassword(event.target.value)
-// }
-
 
     const signIn = (event: { preventDefault: () => void; }) =>{
         console.log("touched")
@@ -30,6 +20,8 @@ const LoginTab = (visible: any) => {
         if(result.token){
             localStorage.setItem("loggedIn", "true")
             localStorage.setItem("token", result.token);
+            localStorage.setItem("user_id", result.data.user._id)
+            localStorage.setItem("username", result.data.user.username)
             // setLoginVisible(false) 
             window.alert(`Welcome ${result.data.user.firstName} ${result.data.user.lastName}`)
         }
