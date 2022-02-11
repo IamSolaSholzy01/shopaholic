@@ -1,6 +1,6 @@
 import { SyntheticEvent, useState } from "react"
 import { Motion, spring } from "../../ReactMotion"
-import { LoginTab, PocketTab, SocialTab } from '../Nav/NavTabs'
+import { PocketTab, SocialTab } from '../Nav/NavTabs'
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const panelStyle = {
@@ -12,30 +12,30 @@ const AuthPanel = (visible: any) => {
 
     const [login_active, setLoginActive] = useState(true)
     const [pocket_active, setPocketActive] = useState(false)
-    const [social_active, setSocialActive] = useState(false)
+    
     let visibles = visible.visible
 
     const list = [
         {
-            text: 'withdraw',
+            text: 'profile',
             classList: `border-r border-white py-2 bg-white ${login_active ? 'text-rose-600 cursor-default' : 'text-black cursor-pointer'}`,
             route: '#login',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
                 setLoginActive(true)
                 setPocketActive(false)
-                setSocialActive(false)
+                
             }
         },
         {
-            text: 'deposit',
+            text: 'wallet',
             classList: `border-white py-2 bg-white ${pocket_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
             route: '#pocket',
             click: (event: SyntheticEvent) => {
                 event.preventDefault()
                 setLoginActive(false)
                 setPocketActive(true)
-                setSocialActive(false)
+                
             }
         },
         // {

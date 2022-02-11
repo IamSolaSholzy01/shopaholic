@@ -65,6 +65,7 @@ const GameItem = (props: any) => {
     return (
         <>
         <div onClick = {() => {setItemSelected(selected)}} className="rounded-lg my-2 mx-2 border grid grid-rows-2 items-center justify-items-center text-lg">
+        <div className = "font-medium">{parseInt(props.index) + 1}</div>
             <div className="border-b w-full">
                 <div className="grid grid-cols-2 items-center justify-items-center font-medium">
                     <div className="border-r w-full px-12 py-3 flex flex-row justify-between items-center">
@@ -111,14 +112,14 @@ const GameContainer = () => {
     const [list, setLists] = useState<any>([]);
     
 
-    const { homeArray, handleHomeArray
+    const { homeArray, handleHomeArray, handleTempHomeArray
         
     } = useContext(SwapTableContext)
 
 
     const addToList = (item: any) =>{
         setLists([...list, item])
-        handleHomeArray([...list,item])
+        handleTempHomeArray([...list,item])
         console.log(list)
         console.log(homeArray)
     }
@@ -126,11 +127,12 @@ const GameContainer = () => {
 
     useEffect(() => {
         Get(URLAPI.GameList.GetCurrent, onAfterGetCurrent)
-    }, [])
+    })
 
    const onAfterGetCurrent = (data: any) =>{
-   console.log(data)
+    console.log(data)
     setGameLists(data.data.gamelist.games)
+    handleHomeArray(data.data.gamelist.games)
    }
 
     // const games = [
@@ -151,7 +153,7 @@ const GameContainer = () => {
         <ul>
             {gameLists!.map((item: any, index: React.Key | null | undefined) => (
                 <li key={index} onClick = {() => {addToList(item)}}>
-                    <GameItem game={item} />
+                    <GameItem game={item} index={index}/>
                 </li>
             ))}
         </ul>

@@ -17,6 +17,7 @@ export const URLAPI = {
 
     BetSlip: {
         Stake: "/betslips",
+        GetBetslip:"/betslips",
         GetCurrent: "/gamelists/current",
         Put: "/api/Grievance/UpdateGrievance",
         Delete: "/api/Grievance/DeleteGrievance",

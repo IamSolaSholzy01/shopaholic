@@ -7,7 +7,6 @@ import logo from '../../Images/logo.webp'
 import Panel from '../Panel'
 import { LoginTab } from '../../LoginTab'
 import RegisterTab from '../../RegisterTab/RegisterTab'
-import AuthPanel from '../AuthPanel'
 
 
 export const MyLogoComponent = () => {
@@ -70,7 +69,7 @@ export const NavAuthList = () => {
     return (
         <>
             <LoginTab onClose={() => setLoginVisible(false)} visible={loginVisible}>
-                {/* <div>                
+                <div>                
                     <Backdrop sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }} open={open}>
                         
                         <div className={`opacity-0 w-screen h-screen fixed top-0 left-0`} onClick={handleClose}></div>
@@ -78,7 +77,7 @@ export const NavAuthList = () => {
                         
                         <Close className={`absolute top-5 left-[285px] cursor-pointer text-black`} style={loginPanelVisibility ? {display: 'block'} : {display: 'none'}} onClick={handleClose} />
                     </Backdrop>
-                </div> */}
+                </div>
                 <ul className='flex flex-row items-center md:justify-end'>
                     {list.map((item, index) => (
                         <li key={index}>

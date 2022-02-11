@@ -4,11 +4,11 @@ import SportsOutlinedIcon from '@mui/icons-material/SportsOutlined';
 import { Link as RouterLink } from 'react-router-dom';
 import { Button, Link, Stack, TextField } from '@mui/material';
 import {SwapTableContext} from '../../../contexts/SwapTableContext'
-import { Post } from '../../../api/fetch';
+import { GetWithoutData, Post } from '../../../api/fetch';
 import { URLAPI } from '../../../api/ApiMethods';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-var axios = require('axios');
+// var axios = require('axios');
 
 const footerTabStyle = 'w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1';
 
@@ -42,13 +42,13 @@ const GameItem = (props: any) => {
 
 const BetSlip = (props: { betData: (arg0: any) => void; }) => {
 	const [stake, setStake] = useState('')
-	const { homeArray, gameType,
+	const { gameType, tempHomeArray
         
 	} = useContext<any>(SwapTableContext)
 
 
 
-	let games = Array.isArray(homeArray) ? homeArray?.map((item: any)=>(
+	let games = Array.isArray(tempHomeArray) ? tempHomeArray?.map((item: any)=>(
 		 item._id
 	)) : console.log("homeArray is not an array")
 
@@ -74,10 +74,11 @@ const BetSlip = (props: { betData: (arg0: any) => void; }) => {
 
 	const onAfterStake =(data: any)=>{
 		console.log(data);
+		window.alert("your betSlip code is " + data.data.betslip.betslipId)
 		props.betData(data)
 	}
 
-	console.log(homeArray)
+	console.log(tempHomeArray)
 	console.log(gameType)
 	// const games = homeArray!.map((item, index)=>(
 	// 	num: index, league: item.league, home: item.home, away: item.away, date: item.date, time: item.time, odd: item.odd
@@ -86,11 +87,11 @@ const BetSlip = (props: { betData: (arg0: any) => void; }) => {
 	return (
 		<div>
 			<div className="flex flex-row justify-between w-full">
-				<span>{homeArray.length} Selections</span>
+				<span>{tempHomeArray.length} Selections</span>
 				<span>Game type: {gameType}</span>
 			</div>
 			<ul className="mb-5">
-				{homeArray.map((item : any, index: React.Key | null | undefined) => (
+				{tempHomeArray.map((item : any, index: React.Key | null | undefined) => (
 					<li key={index}>
 						<GameItem game={item}/>
 					</li>
@@ -133,7 +134,10 @@ interface IMiniMenuProps {
 
 const MiniMenu = (props: IMiniMenuProps) => {
 	const [checkBetSlipVisible, setBetSlipVisible] = useState<boolean>(true)
+	const [checkFastBetVisible, setFastBetVisible] = useState<boolean>(true)
 	const stakeValues = [100, 200, 250, 500, 1000]
+	const [betSlipId, setBetSlipId] = useState('');
+	const [fastBetId, setFastBetId] = useState('');
 	const [stake, setStake] = useState(0)
 	const [totalstake, setTotalStake] = useState(0)
 	const [minOdd, setMinOdd] = useState(0)
@@ -144,6 +148,12 @@ const MiniMenu = (props: IMiniMenuProps) => {
 	const [maxBonus, setMaxBonus] = useState(0)
 	const [totalPot, setTotalPot] = useState(0)
 
+	const { homeArray, handleTempHomeArray, tempHomeArray
+        
+	} = useContext<any>(SwapTableContext)
+
+
+	let data = { "token":localStorage.getItem("token")}
 	const betData =(data : any)=>{
 		console.log(data)
 		setStake(data.stake)
@@ -155,9 +165,46 @@ const MiniMenu = (props: IMiniMenuProps) => {
 		setMinBonus(data.data.betslip.minBonus)
 		setMaxBonus(data.data.betslip.maxBonus)
 		setTotalPot(data.data.betslip.totalPotWin)
+		setMaxWin(data.data.betslip.maxWin)
+		setMinWin(data.data.betslip.minWin)
 		
 	}
 
+	const submitBetSlip =()=>{
+		console.log(data)
+		GetWithoutData(URLAPI.BetSlip.GetBetslip + `/${betSlipId}`, onAfterGetBetSlip)
+	}
+
+	const submitFastBet =()=>{
+		console.log(data)
+		console.log(tempHomeArray)
+		console.log(homeArray)
+		handleTempHomeArray(
+			homeArray.filter((item:any, index:any)=>{
+			return index  === parseInt(fastBetId) - 1
+		})
+		) 
+
+		
+	}
+
+	const onAfterGetBetSlip =(data: any)=>{
+		console.log(data)
+		// handleHomeArray(data.data.betslip.games)
+		handleTempHomeArray(data.data.betslip.games)
+		setStake(data.stake)
+		setTotalStake(data.data.betslip.totalStake)
+		setMaxBonus(data.data.betslip.maxBonus)
+		setMinBonus(data.data.betslip.minBonus)
+		setMinOdd(data.data.betslip.minOdd)
+		setMaxOdd(data.data.betslip.maxOdd)
+		setMinBonus(data.data.betslip.minBonus)
+		setMaxBonus(data.data.betslip.maxBonus)
+		setTotalPot(data.data.betslip.totalPotWin)
+		setMaxWin(data.data.betslip.maxWin)
+		setMinWin(data.data.betslip.minWin)
+		
+	}
 
 	return (
 		<div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white py-4 px-4 min-w-[600px] max-w-[80vw] rounded shadow-md max-h-[60vh] overflow-y-scroll" style={props.visible ? {display: 'block'} : {display: 'none'}}>
@@ -170,10 +217,13 @@ const MiniMenu = (props: IMiniMenuProps) => {
 			</div>
 			<div className="flex flex-col border-y py-2 w-full">
 				<span onClick={()=>setBetSlipVisible(!checkBetSlipVisible)}>{'>'} Check Betslip</span>
-				<input className="ring ring-rose-300 rounded" type="text" hidden={checkBetSlipVisible}/>
+				<input onChange={e =>{setBetSlipId(e.target.value)}} className="ring ring-rose-300 rounded" type="text" hidden={checkBetSlipVisible}/>
+				<Button onClick={submitBetSlip} hidden = {checkBetSlipVisible}>Check</Button>
 			</div>
-			<div className="border-y py-2 w-full">
-				{'>'} Fast Bet
+			<div className="flex flex-col border-y py-2 w-full">
+				<span onClick={()=>setFastBetVisible(!checkFastBetVisible)}>{'>'} Fast Bet</span>
+				<input onChange={e =>{setFastBetId(e.target.value)}} className="ring ring-rose-300 rounded" type="text" hidden={checkFastBetVisible}/>
+				<Button onClick={submitFastBet} hidden = {checkFastBetVisible}>Add</Button>
 			</div>
 			<div className="flex flex-row justify-center w-full my-3">
 				<ul className="flex flex-row list-none font-semibold">
@@ -220,7 +270,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
 
 const Footer = () => {
 	const [menuOpen, setMenuOpen] = useState(false)
-	const { homeArray
+	const { tempHomeArray
         
 	} = useContext<any>(SwapTableContext)
 	return (
@@ -243,7 +293,7 @@ const Footer = () => {
 								<circle stroke="currentColor" strokeWidth="2" cx="21" cy="21" r="20"></circle>
 								</g>
 								</svg>
-							<span className="tab tab-explore block text-xs">{homeArray.length}</span>
+							<span className="tab tab-explore block text-xs">{tempHomeArray.length}</span>
 						</Link>
 						<Link underline="none" component={RouterLink} to='/' className={footerTabStyle} sx={{color: '#000'}}>
 							<svg xmlns="http://www.w3.org/2000/svg" className="inline-block mb-1" enableBackground="new 0 0 24 24" height="24px" viewBox="0 0 24 24" width="24px" fill="currentColor"><g><rect fill="none" height="24" width="24" x="0" y="0"/></g><g><g><path d="M19,13H5c-1.1,0-2,0.9-2,2v4c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2v-4C21,13.9,20.1,13,19,13z M19,19H5v-4h14V19z"/><path d="M19,3H5C3.9,3,3,3.9,3,5v4c0,1.1,0.9,2,2,2h14c1.1,0,2-0.9,2-2V5C21,3.9,20.1,3,19,3z M19,9H5V5h14V9z"/></g></g></svg>

@@ -111,7 +111,7 @@ export const GetWithoutToken = async (data, method, callbackfunction) => {
 
 export const GetWithData = async (method, data, callbackfunction) => {
   let Access_token = localStorage.getItem("token")
-  const response = axios.get(URL + method, data, {
+  const response = axios.get(URL + method, {params:data}, {
     headers: {
       Authorization: `Bearer ${Access_token}`,
     },
