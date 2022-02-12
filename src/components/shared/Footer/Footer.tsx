@@ -203,7 +203,11 @@ const MiniMenu = (props: IMiniMenuProps) => {
   };
 
   const submitFastBet = () => {
-    if (parseInt(fastBetId) < homeArray.length && fastBetId !== "") {
+    if (
+      parseInt(fastBetId) < homeArray.length &&
+      fastBetId !== "" &&
+      parseInt(fastBetId) > 0
+    ) {
       let i = parseInt(fastBetId) - 1;
       if (!tempHomeArray.includes(homeArray[i])) {
         setTempHomeArray([...tempHomeArray, homeArray[i]]);
