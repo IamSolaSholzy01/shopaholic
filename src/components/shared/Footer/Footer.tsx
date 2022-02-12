@@ -354,7 +354,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
 
 const Footer = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const {tempHomeArray} = useContext<any>(SwapTableContext);
+  const {tempHomeArray, homeArray} = useContext<any>(SwapTableContext);
   return (
     <>
       <footer className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow-t">
@@ -509,7 +509,10 @@ const Footer = () => {
           </Link>
         </div>
       </footer>
-      <MiniMenu visible={menuOpen} closeMenu={() => setMenuOpen(false)} />
+      <MiniMenu
+        visible={homeArray.length > 0 && menuOpen}
+        closeMenu={() => setMenuOpen(false)}
+      />
     </>
   );
 };
