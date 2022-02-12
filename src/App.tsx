@@ -1,17 +1,18 @@
-import './App.css';
-import SwapTableContextProvider from './contexts/SwapTableContext';
-import Routes from './routes';
-import ThemeConfig from './theme';
+import "./App.css";
+import UserContextWrap from "./contexts/AuthContext";
+import SwapTableContextProvider from "./contexts/SwapTableContext";
+import Routes from "./routes";
+import ThemeConfig from "./theme";
 
 function App() {
   return (
-  <SwapTableContextProvider>
-
-    <ThemeConfig>
-      <Routes />
-    </ThemeConfig>
-  </SwapTableContextProvider>
-
+    <SwapTableContextProvider>
+      <UserContextWrap>
+        <ThemeConfig>
+          <Routes />
+        </ThemeConfig>
+      </UserContextWrap>
+    </SwapTableContextProvider>
   );
 }
 
