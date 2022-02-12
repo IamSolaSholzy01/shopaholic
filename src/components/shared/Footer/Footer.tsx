@@ -87,8 +87,10 @@ const BetSlip = ({
   };
 
   const submitStake = () => {
-    setisLoading(true);
-    Post(data, URLAPI.BetSlip.Stake, onAfterStake);
+    if (parseInt(stakeInput) > 0) {
+      setisLoading(true);
+      Post(data, URLAPI.BetSlip.Stake, onAfterStake);
+    }
   };
 
   const onAfterStake = (data: any) => {
