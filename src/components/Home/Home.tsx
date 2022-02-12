@@ -1,3 +1,4 @@
+import {CircularProgress} from "@mui/material";
 import React, {useEffect, useState, useContext} from "react";
 import {URLAPI} from "../../api/ApiMethods";
 import {Get} from "../../api/fetch";
@@ -144,10 +145,11 @@ const GameContainer = () => {
       setLists([...filteredList]);
     }
   };
-
+  const [isLoading, setisLoading] = useState(true);
   useEffect(() => {
     const onAfterGetCurrent = (data: any) => {
       setGameLists(data.data.gamelist.games);
+      setisLoading(false);
     };
     Get(URLAPI.GameList.GetCurrent, onAfterGetCurrent);
   }, []);
@@ -162,6 +164,11 @@ const GameContainer = () => {
 
   return (
     <ul>
+      {isLoading && (
+        <div className="flex w-full h-[300px] items-center justify-center">
+          <CircularProgress />
+        </div>
+      )}
       {gameLists!.map((item: any, index: React.Key | null | undefined) => (
         <li
           key={item._id}

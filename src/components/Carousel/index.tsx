@@ -2,13 +2,11 @@
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./carousel.css";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
-import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import {ReactNode} from "react";
 // declare module "react-slick" {
 //   export {Slider, Settings};
 // }
-import Slider, {Settings} from "react-slick";
+import Slider from "react-slick";
 const Carousel = ({children}: {children: ReactNode}) => {
   const sliderSettings = {
     dots: true,

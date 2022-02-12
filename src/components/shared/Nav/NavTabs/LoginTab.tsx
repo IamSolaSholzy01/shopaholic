@@ -64,14 +64,11 @@ const LoginTab = ({
           <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             <div>
-              <label htmlFor="username" className="sr-only">
-                Username
-              </label>
+              <label className="sr-only">Username</label>
               <input
                 onChange={e => {
                   setUserName(e.target.value);
                 }}
-                id="username"
                 name="username"
                 type="text"
                 autoComplete="username"
@@ -81,14 +78,11 @@ const LoginTab = ({
               />
             </div>
             <div>
-              <label htmlFor="password" className="sr-only">
-                Password
-              </label>
+              <label className="sr-only">Password</label>
               <input
                 onChange={e => {
                   setPassword(e.target.value);
                 }}
-                id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
@@ -102,15 +96,11 @@ const LoginTab = ({
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <input
-                id="remember-me"
                 name="remember-me"
                 type="checkbox"
                 className="h-4 w-4 text-primary focus:ring-primary border-gray-300 rounded"
               />
-              <label
-                htmlFor="remember-me"
-                className="ml-2 block text-sm text-gray-900"
-              >
+              <label className="ml-2 block text-sm text-gray-900">
                 Remember me
               </label>
             </div>
