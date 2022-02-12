@@ -87,8 +87,10 @@ const BetSlip = ({
   };
 
   const submitStake = () => {
-    setisLoading(true);
-    Post(data, URLAPI.BetSlip.Stake, onAfterStake);
+    if (parseInt(stakeInput) > 0) {
+      setisLoading(true);
+      Post(data, URLAPI.BetSlip.Stake, onAfterStake);
+    }
   };
 
   const onAfterStake = (data: any) => {
@@ -193,15 +195,21 @@ const MiniMenu = (props: IMiniMenuProps) => {
   };
   const [isCheckBetLoading, setisCheckBetLoading] = useState(false);
   const submitBetSlip = () => {
-    setisCheckBetLoading(true);
-    GetWithoutData(
-      URLAPI.BetSlip.GetBetslip + `/${betSlipId}`,
-      onAfterGetBetSlip
-    );
+    if (betSlipId !== "") {
+      setisCheckBetLoading(true);
+      GetWithoutData(
+        URLAPI.BetSlip.GetBetslip + `/${betSlipId}`,
+        onAfterGetBetSlip
+      );
+    }
   };
 
   const submitFastBet = () => {
-    if (parseInt(fastBetId) < homeArray.length) {
+    if (
+      parseInt(fastBetId) < homeArray.length &&
+      fastBetId !== "" &&
+      parseInt(fastBetId) > 0
+    ) {
       let i = parseInt(fastBetId) - 1;
       if (!tempHomeArray.includes(homeArray[i])) {
         setTempHomeArray([...tempHomeArray, homeArray[i]]);
@@ -217,7 +225,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
 
   const onAfterGetBetSlip = (data: any) => {
     setbetSlipData({...data.data.betslip});
-    console.log(data);
     setshowBetSlip(true);
     setisCheckBetLoading(false);
   };
@@ -233,13 +240,19 @@ const MiniMenu = (props: IMiniMenuProps) => {
       </div>
       <div className="border-y py-2 w-full">{">"} Load Booking Code</div>
       <div className="flex flex-col border-y py-2 w-full">
-        <span onClick={() => setBetSlipVisible(!checkBetSlipVisible)}>
+        <span
+          onClick={() => {
+            setshowBetSlip(!showBetSlip);
+            setBetSlipVisible(!checkBetSlipVisible);
+          }}
+        >
           {">"} Check Betslip
         </span>
         <input
           onChange={e => {
             setBetSlipId(e.target.value);
           }}
+          value={betSlipId}
           className="ring ring-rose-300 rounded"
           type="text"
           hidden={checkBetSlipVisible}
@@ -251,7 +264,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
         >
           {isCheckBetLoading ? "Loading..." : "Check"}
         </Button>
-        {showBetSlip && checkBetSlipVisible && (
+        {showBetSlip && (
           <div className="py-3">
             <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
               <span>Betslip Id : {betSlipData.betslipId}</span>
