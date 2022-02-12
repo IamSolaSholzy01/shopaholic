@@ -6,7 +6,7 @@ import eyeFill from '@iconify/icons-eva/eye-fill';
 import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { useNavigate } from 'react-router-dom';
 // material
-import { Stack, TextField, IconButton, InputAdornment } from '@mui/material';
+import { Stack, TextField, IconButton, InputAdornment, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { URLAPI } from '../../../api/ApiMethods';
 import { Post } from '../../../api/fetch';
@@ -72,6 +72,12 @@ const onAfterRegister = (data: any) =>{
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, handleChange } = formik;
+
+  const [ gender, setGender ] = useState('male');
+
+  const handleGenderChange = (event: any) => {
+    setGender(event.target.value);
+  }
 
   return (
     <FormikProvider value={formik}>
@@ -141,18 +147,19 @@ const onAfterRegister = (data: any) =>{
 
 
             />
-
-            <TextField
-              fullWidth
-              label="gender"
-              {...getFieldProps('gender')}
-              error={Boolean(touched.gender && errors.gender)}
-              helperText={touched.gender && errors.gender}
-              onChange={handleChange}
-              value={formik.values.gender}
-
-
-            />
+            <FormControl fullWidth>
+              <InputLabel id="gender-label">Gender</InputLabel>
+              <Select
+                labelId="gender-label"
+                id="gender"
+                value={gender}
+                label="Gender"
+                onChange={handleGenderChange}
+              >
+                <MenuItem value="male">Male</MenuItem>
+                <MenuItem value="female">Female</MenuItem>
+              </Select>
+            </FormControl>
           </Stack>
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
