@@ -1,6 +1,6 @@
 import {SyntheticEvent, useState} from "react";
 import {Motion, spring} from "../../ReactMotion";
-import {LoginTab, PocketTab, SocialTab} from "../Nav/NavTabs";
+import {LoginTab} from "../Nav/NavTabs";
 
 const panelStyle = {
   width: 320,
