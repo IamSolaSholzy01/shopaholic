@@ -10,8 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: >-
-          npm i -g yarn && yarn set version stable && yarn install --immutable
-          && yarn build
+          npm ci && npm build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
