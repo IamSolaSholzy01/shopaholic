@@ -193,15 +193,17 @@ const MiniMenu = (props: IMiniMenuProps) => {
   };
   const [isCheckBetLoading, setisCheckBetLoading] = useState(false);
   const submitBetSlip = () => {
-    setisCheckBetLoading(true);
-    GetWithoutData(
-      URLAPI.BetSlip.GetBetslip + `/${betSlipId}`,
-      onAfterGetBetSlip
-    );
+    if (betSlipId !== "") {
+      setisCheckBetLoading(true);
+      GetWithoutData(
+        URLAPI.BetSlip.GetBetslip + `/${betSlipId}`,
+        onAfterGetBetSlip
+      );
+    }
   };
 
   const submitFastBet = () => {
-    if (parseInt(fastBetId) < homeArray.length) {
+    if (parseInt(fastBetId) < homeArray.length && fastBetId !== "") {
       let i = parseInt(fastBetId) - 1;
       if (!tempHomeArray.includes(homeArray[i])) {
         setTempHomeArray([...tempHomeArray, homeArray[i]]);
