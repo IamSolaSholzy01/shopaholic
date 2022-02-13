@@ -109,14 +109,16 @@ const BetSlip = ({
 
   const doPrint = () => {
     console.log('Printinggg')
+    console.log(document.getElementById('print'))
     var elem = document.createElement('div');
     var myWindow = window.open('', 'PRINT', 'height=400,width=600');
 
     myWindow!.document.write('<html><head><title>' + document.title  + '</title>');
     myWindow!.document.write('</head><body >');
     myWindow!.document.write('<h1>' + document.title  + '</h1>');
-    myWindow!.document.write(document.getElementById('elem')!.innerHTML);
+    myWindow!.document.write(document.getElementById('print')!.innerHTML);
     myWindow!.document.write('</body></html>');
+    
 
     myWindow!.document.close(); // necessary for IE >= 10
     myWindow!.focus(); // necessary for IE >= 10*/

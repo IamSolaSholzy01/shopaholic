@@ -74,6 +74,7 @@ const AuthPanel = (visible: any) => {
       if (data.success) {
         setUserData({...data.data.user});
         setisLoading(false);
+        console.log({...data.data.user})
       } else {
         displayMsg("error", data.message);
       }
