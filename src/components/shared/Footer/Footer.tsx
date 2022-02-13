@@ -9,15 +9,11 @@ import {URLAPI} from "../../../api/ApiMethods";
 import DeleteIcon from "@mui/icons-material/Delete";
 import displayMsg from "../../../ui-component/Toast";
 import {useEffect} from "react";
-import FeedIcon from '@mui/icons-material/Feed';
-import ReceiptIcon from '@mui/icons-material/Receipt';
 
 // var axios = require('axios');
 
 const footerTabStyle =
   "w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1";
-
-
 
 const GameItem = (props: any) => {
   return (
@@ -59,12 +55,10 @@ const GameItem = (props: any) => {
 };
 
 const BetSlip = ({
-  visibility,
   betData,
   stakeInput,
   setStakeInput,
 }: {
-  visibility: boolean;
   betData: (arg0: any) => void;
   stakeInput: string;
   setStakeInput: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -172,10 +166,9 @@ const BetSlip = ({
     return true;
     // window.print()
   }
-
+    
   return (
-    <>
-    <div hidden={!visibility}>
+    <div>
       <div className="flex flex-row justify-between w-full">
         <span>{tempHomeArray.length} Selections</span>
         <span>Game type: {gameType}</span>
@@ -221,6 +214,7 @@ const BetSlip = ({
         </Button>
       </Stack>
     </div>
+
     <div hidden={visibility}>
       <div className="flex flex-col">
         <ul>
@@ -325,19 +319,16 @@ const MiniMenu = (props: IMiniMenuProps) => {
     setFastBetId("");
   };
 
-  const [showBetSlip, setShowBetSlip] = useState(false);
+  const [showBetSlip, setshowBetSlip] = useState(false);
   const [betSlipData, setbetSlipData] = useState<{
     [key: string]: string | number;
   }>({});
 
   const onAfterGetBetSlip = (data: any) => {
     setbetSlipData({...data.data.betslip});
-    setShowBetSlip(true);
+    setshowBetSlip(true);
     setisCheckBetLoading(false);
   };
-
-  const [ activeTab, setTab ] = useState('BetSlip');
-  const activeStyleClass = "text-rose-600";
 
   return (
     <div
@@ -348,15 +339,15 @@ const MiniMenu = (props: IMiniMenuProps) => {
         <span className="font-bold">Coupon</span>
         <Close className="cursor-pointer" onClick={props.closeMenu} />
       </div>
-      <div className="border-y py-2 w-full cursor-pointer">{">"} Load Booking Code</div>
-      <div className="flex flex-col border-y py-2 w-full cursor-pointer">
+      <div className="border-y py-2 w-full">{">"} Load Booking Code</div>
+      <div className="flex flex-col border-y py-2 w-full">
         <span
           onClick={() => {
-            setShowBetSlip(!showBetSlip);
+            setshowBetSlip(!showBetSlip);
             setBetSlipVisible(!checkBetSlipVisible);
           }}
         >
-          {checkBetSlipVisible ? <i className="arrow right"></i> : <i className="arrow down"></i>} Check Betslip
+          {">"} Check Betslip
         </span>
         <input
           onChange={e => {
@@ -404,9 +395,9 @@ const MiniMenu = (props: IMiniMenuProps) => {
           </div>
         )}
       </div>
-      <div className="flex flex-col border-y py-2 w-full cursor-pointer">
+      <div className="flex flex-col border-y py-2 w-full">
         <span onClick={() => setFastBetVisible(!checkFastBetVisible)}>
-          {checkFastBetVisible ? <i className="arrow right"></i> : <i className="arrow down"></i>} Fast Bet
+          {">"} Fast Bet
         </span>
         <input
           value={fastBetId}
@@ -423,60 +414,54 @@ const MiniMenu = (props: IMiniMenuProps) => {
       </div>
       <div className="flex flex-row justify-center w-full my-3">
         <ul className="flex flex-row list-none font-semibold">
-          <li className={`mr-3 ${activeTab === 'BetSlip' ? activeStyleClass : 'cursor-pointer'}`} onClick={() => {
-            setTab('BetSlip');
-          }}>BetSlip</li>
-          <li className={activeTab === 'MyBets' ? activeStyleClass : 'cursor-pointer'} onClick={() => {
-            setTab('MyBets');
-          }}>My Bets</li>
+          <li className="text-rose-600 mx-3">BetSlip</li>
+          <li>My Bets</li>
         </ul>
       </div>
       <BetSlip
-        visibility={activeTab === 'BetSlip'}
         betData={betData}
         stakeInput={stakeInput}
         setStakeInput={e => setStakeInput(e.target.value)}
       />
 
-      {(activeTab === 'BetSlip' &&
-        <><div>
-          <div className="mt-2">
-            <ul className="flex flex-row list-none justify-between w-full px-2">
-              {stakeValues.map((item, index) => (
-                <li className="border px-3 py-1 rounded" key={index}>
-                  <button onClick={() => setStakeInput(item)}>{item}</button>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div><div className="py-3">
-            <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-              <span>Betslip Id: {betId}</span>
-            </div>
-            <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-              <span>Stake: {stake}</span>
-              <span>Total Stake: {totalstake}</span>
-            </div>
-            <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-              <span>Min Odd: {minOdd}</span>
-              <span>Max Odd: {maxOdd}</span>
-            </div>
-            <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-              <span>Min Win: {minWin}</span>
-              <span>Max Win: {maxWin}</span>
-            </div>
-            <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
-              <span>Min Bonus (up to 20%): {minBonus}</span>
-              <span>Max Bonus (up to 20%): {maxBonus}</span>
-            </div>
-            <div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">
-              Total Pot Winnings
-            </div>
-            <div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">
-              {totalPot}
-            </div>
-          </div></>
-      )}
+      <div>
+        <div className="mt-2">
+          <ul className="flex flex-row list-none justify-between w-full px-2">
+            {stakeValues.map((item, index) => (
+              <li className="border px-3 py-1 rounded" key={index}>
+                <button onClick={() => setStakeInput(item)}>{item}</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+      <div className="py-3">
+        <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+          <span>Betslip Id : {betId}</span>
+        </div>
+        <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+          <span>Stake : {stake}</span>
+          <span>Total Stake : {totalstake}</span>
+        </div>
+        <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+          <span>Min Odd : {minOdd}</span>
+          <span>Max Odd : {maxOdd}</span>
+        </div>
+        <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+          <span>Min Win : {minWin}</span>
+          <span>Max Win : {maxWin}</span>
+        </div>
+        <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
+          <span>Min Bonus (up to 20%) : {minBonus}</span>
+          <span>Max Bonus (up to 20%) : {maxBonus}</span>
+        </div>
+        <div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">
+          Total Pot Winnings
+        </div>
+        <div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">
+          {totalPot}
+        </div>
+      </div>
     </div>
   );
 };
@@ -486,7 +471,7 @@ const Footer = () => {
   const {tempHomeArray, homeArray} = useContext<any>(SwapTableContext);
   return (
     <>
-    
+
       <footer className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow-t">
         <div id="tabs" className="flex justify-between">
           <Link
