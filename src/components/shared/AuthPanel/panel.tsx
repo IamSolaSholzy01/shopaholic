@@ -1,6 +1,6 @@
 import {SyntheticEvent, useEffect, useState} from "react";
 import {Motion, spring} from "../../ReactMotion";
-import {PocketTab, SocialTab} from "../Nav/NavTabs";
+import {PocketTab} from "../Nav/NavTabs";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {GetWithoutData} from "../../../api/fetch";
 import {URLAPI} from "../../../api/ApiMethods";
