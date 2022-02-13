@@ -7,7 +7,7 @@ const URL = "https://shopaholic-api.herokuapp.com";
 
 // export let Access_token = Cookies.get(ModuleName + '_AppToken') || Cookies.get('token');
 const Logout = () => {
-  localStorage.clear();
+  sessionStorage.clear();
   displayMsg("error", "Your session has expired. Please log in.");
   // setTimeout(() => {
   //   location.reload();
@@ -117,7 +117,7 @@ export const GetWithoutToken = async (data, method, callbackfunction) => {
     });
 };
 
-let Access_token = localStorage.getItem("token");
+let Access_token = sessionStorage.getItem("token");
 export const GetWithData = async (method, data, callbackfunction) => {
   const response = axios.get(
     URL + method,
@@ -168,7 +168,7 @@ export const GetWithoutData = async (method, callbackfunction) => {
 
 export const Post = async (data, method, callbackfunction) => {
   console.log("post data", data);
-  let Access_token = localStorage.getItem("token");
+  let Access_token = sessionStorage.getItem("token");
   const response = axios.post(URL + method, data, {
     headers: {
       token: `${Access_token}`,
@@ -231,7 +231,7 @@ export const Get = async (method, callbackfunction) => {
 };
 
 export const GetWithToken = async (method, data, callbackfunction) => {
-  console.log(localStorage.getItem("token"));
+  console.log(sessionStorage.getItem("token"));
   const response = axios.get(`${URL}${method}`, {
     headers: {
       "Content-Type": "application/json",
