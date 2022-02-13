@@ -80,8 +80,17 @@ const BetSlip = ({
     if (Array.isArray(tempHomeArray)) {
       setgames([...tempHomeArray.map((item: any) => item._id)]);
     }
+    
+    console.log('stuff')
+    
   }, [tempHomeArray]);
 
+  const onAfterGetMyBets = (data: any) => {
+    console.log(data.data.betslips)
+    let newData = [...data.data.betslips]
+    console.log(newData)
+    setStaked(newData)
+  }
   let gameSplit = gameType.split(" ");
   const [isLoading, setisLoading] = useState(false);
 
@@ -104,7 +113,11 @@ const BetSlip = ({
     if (data?.success === true) {
       betData(data);
       console.log(data)
-      setStaked([...staked, data])
+    
+      GetWithoutData(
+        URLAPI.BetSlip.GetBetslip + '/mybets',
+        onAfterGetMyBets
+      );
       displayMsg("success", data.message);
     } else displayMsg("error", data.message);
   };
@@ -225,14 +238,15 @@ const BetSlip = ({
       <div className="flex flex-col">
         <ul>
           {staked.map( (stake, index) => {
+            console.log(stake, index)
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec']
-            var d = new Date(stake.data.betslip.createdAt)
+            var d = new Date(stake.createdAt)
             return (
             <li key={index}>
               <div className="flex flex-row justify-between bg-yellow-50">
                 <span className="-ml-2">
                   <span className="mx-2">C1</span>
-                  <span className="mx-2">{stake.data.betslip.status}</span>
+                  <span className="mx-2">{stake.status}</span>
                   <span>
                     <span className="mx-2">{months[d.getMonth()]} {d.getDate()}, {d.getFullYear()}</span>
                     <span className="mx-2">{d.getHours()}:{d.getMinutes()}</span>
@@ -244,9 +258,9 @@ const BetSlip = ({
                 </span>
               </div>
               <div className="flex flex-row justify-between mt-2">
-                <span>ID: {stake.data.betslip.betslipId}</span>
-                <span>Pot Win: {stake.data.betslip.totalPotWin}</span>
-                <span className="uppercase border px-4 py-1 rounded-xl cursor-pointer" onClick={()=>{doPrint(stake.data.betslip)}}>print</span>
+                <span>ID: {stake.betslipId}</span>
+                <span>Pot Win: {stake.totalPotWin}</span>
+                <span className="uppercase border px-4 py-1 rounded-xl cursor-pointer" onClick={()=>{doPrint(stake)}}>print</span>
               </div>
             </li>
           )})}
@@ -348,7 +362,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
         <span className="font-bold">Coupon</span>
         <Close className="cursor-pointer" onClick={props.closeMenu} />
       </div>
-      <div className="border-y py-2 w-full cursor-pointer">{">"} Load Booking Code</div>
+      {/* <div className="border-y py-2 w-full cursor-pointer">{">"} Load Booking Code</div> */}
       <div className="flex flex-col border-y py-2 w-full cursor-pointer">
         <span
           onClick={() => {
