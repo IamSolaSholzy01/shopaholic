@@ -44,6 +44,7 @@ export const NavAuthList = () => {
   const RegisterAuthModal = (event: SyntheticEvent) => {
     event.preventDefault();
     if (isLoggedIn) {
+      console.log('clicked')
       setAuthVisible(true);
     } else {
       navigate("/register");
