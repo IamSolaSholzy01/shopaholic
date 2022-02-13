@@ -35,10 +35,6 @@ const onAfterRegister = (data: any) =>{
   
 }
 
-
-
-
-
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
       .min(2, 'Too Short!')

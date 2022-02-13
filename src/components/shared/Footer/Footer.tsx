@@ -156,7 +156,7 @@ const BetSlip = ({
       <tr><td>&nbsp;</td></tr>
       <tr style="border-top: 1px solid black">
         <td>TICKET ID:</td>
-        <td>${stake.betslipId}</td>
+        <td>${stake.betslipId.toUpperCase()}</td>
       </tr>
       <tr>
         <td>PLAYER</td>

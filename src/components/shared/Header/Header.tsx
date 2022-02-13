@@ -114,7 +114,7 @@ const Header = ({data}: {data: {
       <Link underline="none" variant="subtitle2" component={RouterLink} to="/">
         <Logo />
       </Link>
-      <MHidden width="smDown">
+      <MHidden width="xsDown">
         <Stack direction="row" spacing="1">
           {(data.isLoggedIn ? loginList : list).map((item, index) => (
             <Button key={index} color='secondary' variant={item.variant} onClick={(e) => {item.click(e)}} sx={buttonStyle}>
