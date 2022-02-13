@@ -20,7 +20,7 @@ export default class RegisterTab extends React.Component<
           sx={{color: "#fff", zIndex: theme => theme.zIndex.drawer + 1}}
           open={this.props.visible}
         >
-          {/* Needed to close panel on click of the backdrop */}
+          
           <div
             className={`opacity-0 w-screen h-screen fixed top-0 left-0`}
             onClick={() => this.props.onClose}

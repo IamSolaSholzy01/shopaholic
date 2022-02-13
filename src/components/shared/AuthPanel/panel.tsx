@@ -88,11 +88,11 @@ const AuthPanel = (visible: any) => {
     };
     console.log('running')
     GetWithoutData(
-      URLAPI.UserDetails.userId + `/${localStorage.getItem("user_id")}`,
+      URLAPI.UserDetails.userId + `/${sessionStorage.getItem("user_id")}`,
       omAfterGetUser
     );
     GetWithoutData(
-      URLAPI.UserDetails.userId + `/${localStorage.getItem("user_id")}/wallet`,
+      URLAPI.UserDetails.userId + `/${sessionStorage.getItem("user_id")}/wallet`,
       omAfterGetWallet
     );
   }, []);
@@ -123,8 +123,8 @@ const AuthPanel = (visible: any) => {
                 <div className="flex flex-row mt-16 text-base text-black w-full justify-center items-center pl-2">
                   <AccountCircleIcon fontSize="large" />
                   <div className="ml-3 flex flex-col">
-                    <span>{localStorage.getItem("username")}</span>
-                    <span>User ID: {localStorage.getItem("user_id")}</span>
+                    <span>{sessionStorage.getItem("username")}</span>
+                    <span>User ID: {sessionStorage.getItem("user_id")}</span>
                   </div>
                 </div>
                 <div className="flex flex-row mt-3 text-black justify-between items-center px-2">

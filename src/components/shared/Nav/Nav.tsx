@@ -33,9 +33,9 @@ export const NavAuthList = () => {
   const LoginLogout = (event: SyntheticEvent) => {
     event.preventDefault();
     if (isLoggedIn) {
-      localStorage.clear();
+      sessionStorage.clear();
       setIsLoggedIn(false);
-      localStorage.setItem("loggedIn", "false");
+      sessionStorage.setItem("loggedIn", "false");
     } else {
       setLoginVisible(true);
     }

@@ -5,7 +5,7 @@ export const UserContext = createContext();
 
 const UserContextWrap = ({children}) => {
   const [isLoggedIn, setIsLoggedIn] = useState(
-    JSON.parse(localStorage.getItem("loggedIn")) ? true : false
+    JSON.parse(sessionStorage.getItem("loggedIn")) ? true : false
   );
   return (
     <UserContext.Provider value={{isLoggedIn, setIsLoggedIn}}>

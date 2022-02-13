@@ -1,9 +1,10 @@
 import React, {useContext, useState} from "react";
 import {Link as RouterLink} from "react-router-dom";
-import {CircularProgress, Link} from "@mui/material";
+import {Link} from "@mui/material";
 import {Login} from "../../../../api/fetch";
 import displayMsg from "../../../../ui-component/Toast";
 import {UserContext} from "../../../../contexts/AuthContext";
+import { LoadingButton } from "../../../buttons";
 
 const LoginTab = ({
   visible,
@@ -28,10 +29,10 @@ const LoginTab = ({
     console.log(result);
     setisLoading(false);
     if (result.token) {
-      localStorage.setItem("loggedIn", "true");
-      localStorage.setItem("token", result.token);
-      localStorage.setItem("user_id", result.data.user._id);
-      localStorage.setItem("username", result.data.user.username);
+      sessionStorage.setItem("loggedIn", "true");
+      sessionStorage.setItem("token", result.token);
+      sessionStorage.setItem("user_id", result.data.user._id);
+      sessionStorage.setItem("username", result.data.user.username);
       setIsLoggedIn(true);
       // setLoginVisible(false)
       if (onClose) {
@@ -117,7 +118,15 @@ const LoginTab = ({
           </div>
 
           <div>
-            <button
+            <LoadingButton
+              fullWidth
+              loading={isLoading}
+              type="submit"
+              variant="contained"
+            >
+              Log In
+            </LoadingButton>
+            {/* <button
               disabled={isLoading}
               type="submit"
               className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-rose-600 hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-rose-500"
@@ -143,7 +152,7 @@ const LoginTab = ({
               ) : (
                 "Log In"
               )}
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

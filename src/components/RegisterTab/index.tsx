@@ -1,1 +1,1 @@
-export { default as LoginTab } from './RegisterTab';
+export { default as RegisterTab } from './RegisterTab';
