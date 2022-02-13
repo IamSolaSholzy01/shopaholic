@@ -7,7 +7,7 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { LoadingButton } from '@mui/lab';
+import { LoadingButton } from '../../buttons';
 import { URLAPI } from '../../../api/ApiMethods';
 import { Post } from '../../../api/fetch';
 
@@ -23,23 +23,17 @@ export default function RegisterForm() {
   //   password: ''
   // })
 
-
-
   const register = (data: any) =>{
     Post(data, URLAPI.Users.Register, onAfterRegister)
   }
 
 const onAfterRegister = (data: any) =>{
   console.log(data)
-  localStorage.setItem("loggedIn", "true");
-  localStorage.setItem("token", data.token);
+  sessionStorage.setItem("loggedIn", "true");
+  sessionStorage.setItem("token", data.token);
   navigate('/', { replace: true });
   
 }
-
-
-
-
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
@@ -82,6 +76,7 @@ const onAfterRegister = (data: any) =>{
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+        <input autoComplete="false" name="hidden" type="text" style={{display: 'none'}} />
         <Stack spacing={3}>
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
@@ -92,8 +87,6 @@ const onAfterRegister = (data: any) =>{
               helperText={touched.firstName && errors.firstName}
               onChange ={handleChange}
               value    = {formik.values.firstName}
-
-
             />
 
             <TextField
@@ -137,6 +130,7 @@ const onAfterRegister = (data: any) =>{
 
           <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
             <TextField
+              // autoComplete="username"
               fullWidth
               label="Username"
               {...getFieldProps('username')}
@@ -190,7 +184,7 @@ const onAfterRegister = (data: any) =>{
 
           <TextField
             fullWidth
-            autoComplete="username"
+            // autoComplete="email"
             type="email"
             label="Email address"
             {...getFieldProps('email')}
@@ -204,8 +198,7 @@ const onAfterRegister = (data: any) =>{
 
           <TextField
             fullWidth
-            
-            autoComplete="current-password"
+            // autoComplete="current-password"
             type={showPassword ? 'text' : 'password'}
             label="Password"
             {...getFieldProps('password')}

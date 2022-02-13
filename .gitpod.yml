@@ -3,12 +3,11 @@
 # and commit this file to your remote git repository to share the goodness with others.
 
 tasks:
-  - init: yarn install && yarn run build
-    command: yarn run start
+  - init: npm i && npm run build && export WDS_SOCKET_PORT=0
+    command: npm run start
 ports:
   - port: 3000
     visibility: private
-    onOpen: open-preview
 vscode:
   extensions:
     - dbaeumer.vscode-eslint
