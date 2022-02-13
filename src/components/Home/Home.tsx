@@ -106,8 +106,8 @@ const GameItem = (props: any) => {
           </div>
           <div className={`flex flex-row justify-center w-1/3`}>
             <div
-              className={`flex flex-col w-[fit-content] items-center px-5 py-3 rounded ${
-                props.selected ? "bg-yellow-500" : "bg-transparent"
+              className={`flex flex-col w-[fit-content] items-center px-5 py-3 rounded border ${
+                props.selected ? "bg-rose-200" : "bg-rose-50"
               }`}
             >
               <span className="text-sm text-gray-400">Odds</span>

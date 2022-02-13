@@ -143,7 +143,7 @@ const AuthPanel = (visible: any) => {
                   ))}
                 </div>
                 <PocketTab visible={login_active} userDetails={userData} />
-                <SocialTab visible={pocket_active} />
+                {/* <SocialTab visible={pocket_active} /> */}
               </>
             )}
             {/* <PocketTab visible={pocket_active} />

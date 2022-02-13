@@ -1,6 +1,6 @@
 import React, {useContext, useState} from "react";
 import {Link as RouterLink} from "react-router-dom";
-import {Link, Stack, styled} from "@mui/material";
+import {IconButton, InputAdornment, Link, Stack, styled, TextField} from "@mui/material";
 // import { Icon } from '@iconify/react';
 import {Login} from "../../../../api/fetch";
 import displayMsg from "../../../../ui-component/Toast";
@@ -8,8 +8,11 @@ import {UserContext} from "../../../../contexts/AuthContext";
 import { LoadingButton } from "../../../buttons";
 // import eyeFill from '@iconify/icons-eva/eye-fill';
 // import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
-import { Form, FormikProvider, useFormik } from "formik";
+import { ErrorMessage, Field, Form, Formik, FormikProvider, useFormik } from "formik";
 import * as Yup from 'yup';
+import eyeFill from "@iconify/icons-eva/eye-fill";
+import eyeOffFill from "@iconify/icons-eva/eye-off-fill";
+import { Icon } from "@iconify/react";
 
 const LoginTab = ({
   visible,
@@ -74,6 +77,10 @@ const LoginTab = ({
       signIn(values);
     }
   });
+  interface formikErrors {
+    email: string;
+    
+  }
 
   const { handleChange } = formik;
 //errors, touched, handleSubmit, isSubmitting, getFieldProps, 
@@ -154,21 +161,75 @@ const LoginTab = ({
           </div>
         </form> */}
       </div>
-      <FormikProvider value={formik}>
-        <Form autoComplete="off" noValidate onSubmit={signIn}>
+      <div>
+     <h1>Any place in your app!</h1>
+     {/* <Formik
+       initialValues={{ email: '', password: '' }}
+       validate={values => {
+         const errors: formikErrors = {email: ''};
+         if (!values.email) {
+           errors.email = 'Required';
+         } else if (
+           !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
+         ) {
+           errors.email = 'Invalid email address';
+         }
+         return errors;
+       }}
+       onSubmit={(values, { setSubmitting }) => {
+         setTimeout(() => {
+           alert(JSON.stringify(values, null, 2));
+           setSubmitting(false);
+         }, 400);
+       }}
+     >
+       {({ isSubmitting }) => (
+         <Form className="text-black" >
+           <Field type="text" name="username" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"/>
+           <ErrorMessage name="username" component="div" />
+           <Field type="password" name="password" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"/>
+           <ErrorMessage name="password" component="div" />
+           <button type="submit" disabled={isSubmitting}>
+             Submit
+           </button>
+         </Form>
+       )}
+     </Formik> */}
+   </div>
+      <Formik 
+        initialValues={{ email: '', password: '' }}
+        // validationSchema = {LoginSchema}
+        onSubmit={ (values: any) => {
+        signIn(values);
+        }
+      }>
+        <Form className="text-black" onSubmit={signIn}>
+          <Stack spacing={3}>
+            <Stack direction={{ xs: 'column' }} spacing={2}>
+              <input type="hidden" name="remember" value="true" />
+              <input type="hidden" name="remember" value="true" />
+              <Field type="text" name="username" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"/>
+              <ErrorMessage name="username" component="div" />
+              <Field type="password" name="password" className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"/>
+              <ErrorMessage name="password" component="div" />
+            </Stack>
+            <LoadingButton variant="contained" fullWidth type="submit" loading={isLoading}>Login</LoadingButton>
+          </Stack>
+         </Form>
+        {/* <Form autoComplete="off" noValidate onSubmit={signIn}>
           <Stack spacing={3}>
             <Stack direction={{ xs: 'column' }} spacing={2}>
               <input type="hidden" name="remember" value="true" />
               <div className="rounded-md shadow-sm -space-y-px">
                 <div>
                   <label className="sr-only">Username</label>
-                  <input
+                  <Field
                     onChange={handleChange}
                     name="username"
                     type="text"
                     autoComplete="username"
                     required={true}
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                    
                     placeholder="Username"
                     value={formik.values.username}
                   />
@@ -176,14 +237,12 @@ const LoginTab = ({
                 <div>
                   <label className="sr-only">Password</label>
                   <input
-                    onChange={e => {
-                      setPassword(e.target.value);
-                    }}
+                    onChange={handleChange}
                     name="password"
                     type="password"
                     autoComplete="current-password"
                     required={true}
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                    
                     placeholder="Password"
                   />
                 </div>
@@ -240,12 +299,12 @@ const LoginTab = ({
                 helperText={touched.password && errors.password}
                 onChange={handleChange}
                 value={formik.values.password}
-              /> */}
+              />
             </Stack>
             <LoadingButton variant="contained" fullWidth type="submit" loading={isLoading}>Login</LoadingButton>
           </Stack>
-        </Form>
-      </FormikProvider>
+        </Form> */}
+      </Formik>
     </ContentStyle>
     // <>
     //   <div className={loginVisible ? "block" : "hidden"}>

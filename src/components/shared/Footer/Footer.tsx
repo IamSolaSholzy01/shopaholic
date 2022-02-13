@@ -17,13 +17,7 @@ import ReceiptIcon from '@mui/icons-material/Receipt';
 const footerTabStyle =
   "w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1";
 
-const PrintSample = () => {
-  return (
-    <div className="print-only absolute top-1/2">
-      Hi there. I'm Ben
-    </div>
-  )
-}
+
 
 const GameItem = (props: any) => {
   return (
@@ -115,7 +109,23 @@ const BetSlip = ({
 
   const doPrint = () => {
     console.log('Printinggg')
-    window.print()
+    var elem = document.createElement('div');
+    var myWindow = window.open('', 'PRINT', 'height=400,width=600');
+
+    myWindow!.document.write('<html><head><title>' + document.title  + '</title>');
+    myWindow!.document.write('</head><body >');
+    myWindow!.document.write('<h1>' + document.title  + '</h1>');
+    myWindow!.document.write(document.getElementById('elem')!.innerHTML);
+    myWindow!.document.write('</body></html>');
+
+    myWindow!.document.close(); // necessary for IE >= 10
+    myWindow!.focus(); // necessary for IE >= 10*/
+
+    myWindow!.print();
+    myWindow!.close();
+
+    return true;
+    // window.print()
   }
 
   return (
@@ -168,20 +178,20 @@ const BetSlip = ({
     </div>
     <div hidden={visibility}>
       <div className="flex flex-col">
-          <div className="flex flex-row justify-between">
-              <span className="-ml-2">
-                <span className="mx-2">C1</span>
-                <span className="mx-2">Running</span>
-                <span>
-                  <span className="mx-2">26-07-2021</span>
-                  <span className="mx-2">14:56</span>
-                </span>
+          <div className="flex flex-row justify-between bg-yellow-50">
+            <span className="-ml-2">
+              <span className="mx-2">C1</span>
+              <span className="mx-2">Running</span>
+              <span>
+                <span className="mx-2">26-07-2021</span>
+                <span className="mx-2">14:56</span>
               </span>
-              
-              <span className="-mr-1">
-                <span className="mx-1"><FeedIcon /></span>
-                <span className="mx-1"><ReceiptIcon /></span>
-              </span>
+            </span>
+            
+            <span className="-mr-1">
+              <span className="mx-1"><FeedIcon /></span>
+              <span className="mx-1"><ReceiptIcon /></span>
+            </span>
           </div>
           <div className="flex flex-row justify-between mt-2">
             <span>ID: stuff</span>
@@ -422,7 +432,7 @@ const Footer = () => {
   const {tempHomeArray, homeArray} = useContext<any>(SwapTableContext);
   return (
     <>
-    <PrintSample />
+    
       <footer className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow-t">
         <div id="tabs" className="flex justify-between">
           <Link
