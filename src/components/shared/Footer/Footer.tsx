@@ -86,7 +86,7 @@ const BetSlip = ({
   }, [tempHomeArray]);
 
   const onAfterGetMyBets = (data: any) => {
-    console.log(data.data.betslips)
+    console.log('data', data)
     let newData = [...data.data.betslips]
     console.log(newData)
     setStaked(newData)
