@@ -1,0 +1,70 @@
+.slick-dots {
+  display: inline-flex !important;
+  align-items: center;
+  width: fit-content;
+  bottom: -30px !important;
+}
+
+.slick-slider li.slick-active button {
+  width: 12px !important;
+  height: 12px !important;
+}
+.slick-slider li {
+  margin: 0 0.2rem !important;
+  padding: 0 !important;
+}
+.slick-slider li button {
+  width: 9px !important;
+  height: 9px !important;
+  padding: 3px;
+  border-radius: 50%;
+  border: 1px solid var(--primary);
+  transition: 0.5s ease;
+}
+.slick-slider li button:hover {
+  box-shadow: none;
+}
+.slick-slider li button::before {
+  display: none !important;
+}
+.slick-slider {
+  max-height: 350px;
+}
+.slick-slider img {
+  height: 400px;
+  /* object-fit: cover; */
+}
+.slick-arrow {
+  width: 30px !important;
+  height: 30px !important;
+  bottom: -35px;
+  transform: unset;
+  position: absolute !important;
+  top: unset;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--primary) !important;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0.4rem;
+}
+.slick-arrow svg {
+  width: 100%;
+  height: 100%;
+}
+.slick-arrow::before {
+  display: none;
+  pointer-events: none;
+}
+.slick-arrow.slick-prev {
+  right: 40px;
+  left: unset;
+}
+.slide-list {
+  max-height: 350px !important;
+}
+.slick-slide > div {
+  margin-top: 10px;
+}

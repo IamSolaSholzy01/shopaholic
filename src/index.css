@@ -9,9 +9,59 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  @apply bg-yellow-50
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+<<<<<<< HEAD
 } */
+=======
+}
+
+.MuiButton-containedSecondary {
+  background-color: #f63033;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 2px 2px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.right {
+  transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+}
+
+.left {
+  transform: rotate(135deg);
+  -webkit-transform: rotate(135deg);
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
+
+.print-only{
+  display: none;
+}
+
+@media print {
+  :not(.print-only, .print-only *) {
+    display: none;
+  }
+
+  .print-only, .print-only * {
+    display: block !important;
+  }
+}
+>>>>>>> af2d12e32d656982e32c2da22c67d68f39ab865e
