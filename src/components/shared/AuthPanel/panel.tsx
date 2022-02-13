@@ -1,6 +1,6 @@
 import {SyntheticEvent, useEffect, useState} from "react";
 import {Motion, spring} from "../../ReactMotion";
-import {PocketTab} from "../Nav/NavTabs";
+import {PocketTab, SocialTab} from "../Nav/NavTabs";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {GetWithoutData} from "../../../api/fetch";
 import {URLAPI} from "../../../api/ApiMethods";
@@ -127,10 +127,7 @@ const AuthPanel = (visible: any) => {
                     <span>User ID: {sessionStorage.getItem("user_id")}</span>
                   </div>
                 </div>
-                <div className="flex flex-row mt-3 text-black justify-between items-center px-2">
-                  <span>Trust Balance: {userWallet?.trust || "N/A"}</span>
-                  <span>Balance: {userWallet?.balance || "N/A"}</span>
-                </div>
+               
                 <div
                   className={`mt-3 pt-4 grid grid-cols-${list.length} items-center h-max text-sm font-semibold capitalize text-center`}
                 >
@@ -146,7 +143,7 @@ const AuthPanel = (visible: any) => {
                   ))}
                 </div>
                 <PocketTab visible={login_active} userDetails={userData} />
-                {/* <SocialTab visible={pocket_active} /> */}
+                <SocialTab visible={pocket_active} userWallet={userWallet} />
               </>
             )}
             {/* <PocketTab visible={pocket_active} />
