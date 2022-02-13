@@ -116,50 +116,140 @@ const BetSlip = ({
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec']
     var d = new Date(stake.createdAt)
 
-    myWindow!.document.write('<html><head><title>' + document.title  + '</title>');
-    myWindow!.document.write('</head><body >');
-    myWindow!.document.write('<h1>' + document.title  + '</h1>');
+    myWindow!.document.write('<html><head><title>' + document.title  + '</title><meta name="viewport" content="width=device-width, initial-scale=1" />');
+    myWindow!.document.write('<style>')
     myWindow!.document.write(`
-    <div>
-      <p>Ticket ID: ${stake.betslipId}</p>
-      <p>Player: ${stake.betslipId}</p>
-      <p>Date: ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}</p>
-    </div>
-    <div>`)
+    table{border: none; width: 100%;}
+    tr > td{width: 50%; border-collapse: collapse;}
+    @page{margin: 0;}
+    body{margin: 1.6cm;}
+    tbody{border: 1px solid black; width: 100%;}
+    `);
+    myWindow!.document.write('</style>');
+    myWindow!.document.write('</head><body >');
+    // myWindow!.document.write('<h1>' + document.title  + '</h1>');
+    myWindow!.document.write(`
+    <table>
+      <tr>
+        <td rowspan="6"><img src="/logo.webp" style="width: 200px" /></td>
+        <td>Shopaholic Pools</td>
+      </tr>
+      <tr>
+        <td>1 Afolabi Aina Street,</td>
+      </tr>
+      <tr>
+        <td>Off Allen Avenue Ikeja</td>
+      </tr>
+      <tr>
+        <td>Lagos, Nigeria</td>
+      </tr>
+      <tr>
+        <td>Tel: +2348165868655</td>
+      </tr>
+      <tr>
+        <td>pool.shopaholic.ng</td>
+      </tr>
+    `);
+    myWindow!.document.write(`
+    <tbody>
+      <tr><td>&nbsp;</td></tr>
+      <tr><td>&nbsp;</td></tr>
+      <tr style="border-top: 1px solid black">
+        <td>TICKET ID:</td>
+        <td>${stake.betslipId}</td>
+      </tr>
+      <tr>
+        <td>PLAYER</td>
+        <td>${stake.userId}</td>
+      </tr>
+      <tr>
+    	  <td>DATE</td>
+        <td>${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}</td>
+      </tr>
+    </tbody>
+    `);
 
     stake.games.forEach( (game: any) => {
       myWindow!.document.write(
-      `<div>
-        <span>League: ${game.league}</span>
-        <div>
-          <span>Game Number</span>
-          <span>${game.home} - ${game.away}</span>
-        </div>
-        <div>
-          <span>${game.date} ${game.time}</span>
-          <span>${game.result}</span>
-          <span>${game.odd}</span>
-        </div>
-      </div>`
+      `
+      <tr>
+        <td colspan="2">${game.league.toUpperCase()}</td>
+      </tr>
+      <tr>
+        <td colspan="2">46. ${game.home} - ${game.away}</td>
+      </tr>
+      <tr>
+        <td>${game.date} ${game.time}</td>
+        <td>${game.odd}</td>
+      </tr>
+      `
     )})
-
     myWindow!.document.write(`
-      <div>
-        <p>Type: ${stake.gameType}</p>
-        <p>Tot. Stake: ${stake.totalStake}</p>
-      </div>
-      <div>
-        <p>Max Bonus: ${stake.maxBonus}</p>
-        <p>Max Win: ${stake.maxWin}</p>
-      </div>
-    </div>
-    <div>
-    ${stake.totalPotWin}
-    </div>
-    <div>
-    ${stake.betslipId}
-    </div>
+    <tr>
+      <td colspan="2">${stake.gameType.toUpperCase()}</td>
+    </tr>
+    <tr>
+      <td>Tot. Stake:</td>
+      <td>${stake.totalStake}</td>
+    </tr>
+    <tr>
+      <td>Max Bonus:</td>
+      <td>&#8358;${stake.maxBonus}</td>
+    </tr>
+    <tr>
+      <td>Max Win:</td>
+      <td>&#8358;${stake.maxWin}</td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: center; width: 100%;"><h2>&#8358;${stake.totalPotWin}</h2></td>
+    </tr>
+    <tr>
+      <td colspan="2" style="text-align: center; width: 100%;">${stake.betslipId.toUpperCase()}</td>
+    </tr>
     `);
+
+    myWindow!.document.write('</table>');
+    // myWindow!.document.write(`
+    // <div>
+    //   <p>Ticket ID: ${stake.betslipId}</p>
+    //   <p>Player: ${stake.betslipId}</p>
+    //   <p>Date: ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}</p>
+    // </div>
+    // <div>`)
+
+    // stake.games.forEach( (game: any) => {
+    //   myWindow!.document.write(
+    //   `<div>
+    //     <span>League: ${game.league}</span>
+    //     <div>
+    //       <span>Game Number</span>
+    //       <span>${game.home} - ${game.away}</span>
+    //     </div>
+    //     <div>
+    //       <span>${game.date} ${game.time}</span>
+    //       <span>${game.result}</span>
+    //       <span>${game.odd}</span>
+    //     </div>
+    //   </div>`
+    // )})
+
+    // myWindow!.document.write(`
+    //   <div>
+    //     <p>Type: ${stake.gameType}</p>
+    //     <p>Tot. Stake: ${stake.totalStake}</p>
+    //   </div>
+    //   <div>
+    //     <p>Max Bonus: ${stake.maxBonus}</p>
+    //     <p>Max Win: ${stake.maxWin}</p>
+    //   </div>
+    // </div>
+    // <div>
+    // ${stake.totalPotWin}
+    // </div>
+    // <div>
+    // ${stake.betslipId}
+    // </div>
+    // `);
     myWindow!.document.write('</body></html>');
     
 
