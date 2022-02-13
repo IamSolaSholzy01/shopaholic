@@ -8,7 +8,7 @@ const URL = "https://shopaholic-api.herokuapp.com";
 // export let Access_token = Cookies.get(ModuleName + '_AppToken') || Cookies.get('token');
 const Logout = () => {
   localStorage.clear();
-  displayMsg("error", "Your session has expired please try again");
+  displayMsg("error", "Your session has expired. Please log in.");
   // setTimeout(() => {
   //   location.reload();
   // }, 2000);

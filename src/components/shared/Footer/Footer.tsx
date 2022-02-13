@@ -69,7 +69,7 @@ const BetSlip = ({
   // let games = Array.isArray(tempHomeArray)
   //   ? tempHomeArray?.map((item: any) => item._id)
   //   : console.log("homeArray is not an array");
-
+  const [staked, setStaked] = useState<any[]>([])
   useEffect(() => {
     if (Array.isArray(tempHomeArray)) {
       setgames([...tempHomeArray.map((item: any) => item._id)]);
@@ -97,10 +97,76 @@ const BetSlip = ({
     setisLoading(false);
     if (data?.success === true) {
       betData(data);
+      console.log(data)
+      setStaked([...staked, data])
       displayMsg("success", data.message);
     } else displayMsg("error", data.message);
   };
 
+  const doPrint = (stake: any) => {
+    console.log('Printinggg')
+    console.log(document.getElementById('print'))
+    var myWindow = window.open('', 'PRINT', 'height=400,width=600');
+    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec']
+    var d = new Date(stake.createdAt)
+
+    myWindow!.document.write('<html><head><title>' + document.title  + '</title>');
+    myWindow!.document.write('</head><body >');
+    myWindow!.document.write('<h1>' + document.title  + '</h1>');
+    myWindow!.document.write(`
+    <div>
+      <p>Ticket ID: ${stake.betslipId}</p>
+      <p>Player: ${stake.betslipId}</p>
+      <p>Date: ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}</p>
+    </div>
+    <div>`)
+
+    stake.games.forEach( (game: any) => {
+      myWindow!.document.write(
+      `<div>
+        <span>League: ${game.league}</span>
+        <div>
+          <span>Game Number</span>
+          <span>${game.home} - ${game.away}</span>
+        </div>
+        <div>
+          <span>${game.date} ${game.time}</span>
+          <span>${game.result}</span>
+          <span>${game.odd}</span>
+        </div>
+      </div>`
+    )})
+
+    myWindow!.document.write(`
+      <div>
+        <p>Type: ${stake.gameType}</p>
+        <p>Tot. Stake: ${stake.totalStake}</p>
+      </div>
+      <div>
+        <p>Max Bonus: ${stake.maxBonus}</p>
+        <p>Max Win: ${stake.maxWin}</p>
+      </div>
+    </div>
+    <div>
+    ${stake.totalPotWin}
+    </div>
+    <div>
+    ${stake.betslipId}
+    </div>
+    `);
+    myWindow!.document.write('</body></html>');
+    
+
+    myWindow!.document.close(); // necessary for IE >= 10
+    myWindow!.focus(); // necessary for IE >= 10*/
+
+    myWindow!.print();
+    myWindow!.close();
+
+    return true;
+    // window.print()
+  }
+    
   return (
     <div>
       <div className="flex flex-row justify-between w-full">
@@ -148,6 +214,41 @@ const BetSlip = ({
         </Button>
       </Stack>
     </div>
+
+    <div hidden={visibility}>
+      <div className="flex flex-col">
+        <ul>
+          {staked.map( (stake, index) => {
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec']
+            var d = new Date(stake.data.betslip.createdAt)
+            return (
+            <li key={index}>
+              <div className="flex flex-row justify-between bg-yellow-50">
+                <span className="-ml-2">
+                  <span className="mx-2">C1</span>
+                  <span className="mx-2">{stake.data.betslip.status}</span>
+                  <span>
+                    <span className="mx-2">{months[d.getMonth()]} {d.getDate()}, {d.getFullYear()}</span>
+                    <span className="mx-2">{d.getHours()}:{d.getMinutes()}</span>
+                  </span>
+                </span>
+                <span className="-mr-1">
+                  <span className="mx-1"><FeedIcon /></span>
+                  <span className="mx-1"><ReceiptIcon /></span>
+                </span>
+              </div>
+              <div className="flex flex-row justify-between mt-2">
+                <span>ID: {stake.data.betslip.betslipId}</span>
+                <span>Pot Win: {stake.data.betslip.totalPotWin}</span>
+                <span className="uppercase border px-4 py-1 rounded-xl cursor-pointer" onClick={()=>{doPrint(stake.data.betslip)}}>print</span>
+              </div>
+            </li>
+          )})}
+        </ul>
+          
+      </div>
+    </div>
+    </>
   );
 };
 
@@ -370,6 +471,7 @@ const Footer = () => {
   const {tempHomeArray, homeArray} = useContext<any>(SwapTableContext);
   return (
     <>
+
       <footer className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow-t">
         <div id="tabs" className="flex justify-between">
           <Link

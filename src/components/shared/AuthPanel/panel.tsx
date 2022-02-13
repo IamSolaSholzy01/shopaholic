@@ -1,6 +1,6 @@
 import {SyntheticEvent, useEffect, useState} from "react";
 import {Motion, spring} from "../../ReactMotion";
-import {PocketTab, SocialTab} from "../Nav/NavTabs";
+import {PocketTab} from "../Nav/NavTabs";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {GetWithoutData} from "../../../api/fetch";
 import {URLAPI} from "../../../api/ApiMethods";
@@ -68,10 +68,13 @@ const AuthPanel = (visible: any) => {
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
+    console.log('auth modal open')
     const omAfterGetUser = (data: any) => {
+      console.log('searching...')
       if (data.success) {
         setUserData({...data.data.user});
         setisLoading(false);
+        console.log({...data.data.user})
       } else {
         displayMsg("error", data.message);
       }
@@ -83,7 +86,7 @@ const AuthPanel = (visible: any) => {
         setisLoading(false);
       }
     };
-
+    console.log('running')
     GetWithoutData(
       URLAPI.UserDetails.userId + `/${localStorage.getItem("user_id")}`,
       omAfterGetUser
@@ -143,7 +146,7 @@ const AuthPanel = (visible: any) => {
                   ))}
                 </div>
                 <PocketTab visible={login_active} userDetails={userData} />
-                <SocialTab visible={pocket_active} />
+                {/* <SocialTab visible={pocket_active} /> */}
               </>
             )}
             {/* <PocketTab visible={pocket_active} />
