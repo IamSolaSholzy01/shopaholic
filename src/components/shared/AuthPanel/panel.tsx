@@ -68,7 +68,9 @@ const AuthPanel = (visible: any) => {
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
+    console.log('auth modal open')
     const omAfterGetUser = (data: any) => {
+      console.log('searching...')
       if (data.success) {
         setUserData({...data.data.user});
         setisLoading(false);
@@ -83,7 +85,7 @@ const AuthPanel = (visible: any) => {
         setisLoading(false);
       }
     };
-
+    console.log('running')
     GetWithoutData(
       URLAPI.UserDetails.userId + `/${localStorage.getItem("user_id")}`,
       omAfterGetUser
