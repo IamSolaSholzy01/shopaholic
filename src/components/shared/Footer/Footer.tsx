@@ -174,7 +174,7 @@ const BetSlip = ({
   }
 
   return (
-    <>
+  <>
     <div hidden={!visibility}>
       <div className="flex flex-row justify-between w-full">
         <span>{tempHomeArray.length} Selections</span>
@@ -254,7 +254,7 @@ const BetSlip = ({
           
       </div>
     </div>
-    </>
+  </>
   );
 };
 

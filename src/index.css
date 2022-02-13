@@ -1,4 +1,4 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -15,9 +15,6 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-<<<<<<< HEAD
-} */
-=======
 }
 
 .MuiButton-containedSecondary {
@@ -64,4 +61,3 @@ code {
     display: block !important;
   }
 }
->>>>>>> af2d12e32d656982e32c2da22c67d68f39ab865e
