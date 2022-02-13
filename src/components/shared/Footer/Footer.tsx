@@ -112,7 +112,6 @@ const BetSlip = ({
   const doPrint = (stake: any) => {
     console.log('Printinggg')
     console.log(document.getElementById('print'))
-    var elem = document.createElement('div');
     var myWindow = window.open('', 'PRINT', 'height=400,width=600');
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec']
     var d = new Date(stake.createdAt)
@@ -126,17 +125,25 @@ const BetSlip = ({
       <p>Player: ${stake.betslipId}</p>
       <p>Date: ${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}</p>
     </div>
-    <div>
-      <span>League:</span>
-      <div>
-        <span>Game Number</span>
-        <span>Home - Away</span>
-      </div>
-      <div>
-        <span>Date Time</span>
-        <span>1x2 - X</span>
-        <span>Odd</span>
-      </div>
+    <div>`)
+
+    stake.games.forEach( (game: any) => {
+      myWindow!.document.write(
+      `<div>
+        <span>League: ${game.league}</span>
+        <div>
+          <span>Game Number</span>
+          <span>${game.home} - ${game.away}</span>
+        </div>
+        <div>
+          <span>${game.date} ${game.time}</span>
+          <span>${game.result}</span>
+          <span>${game.odd}</span>
+        </div>
+      </div>`
+    )})
+
+    myWindow!.document.write(`
       <div>
         <p>Type: ${stake.gameType}</p>
         <p>Tot. Stake: ${stake.totalStake}</p>
