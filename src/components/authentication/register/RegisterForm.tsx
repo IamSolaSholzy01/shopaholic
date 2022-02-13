@@ -7,7 +7,7 @@ import eyeOffFill from '@iconify/icons-eva/eye-off-fill';
 import { useNavigate } from 'react-router-dom';
 // material
 import { Stack, TextField, IconButton, InputAdornment, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import { LoadingButton } from '../../buttons';
+import { LoadingButton } from '@mui/lab';
 import { URLAPI } from '../../../api/ApiMethods';
 import { Post } from '../../../api/fetch';
 
@@ -29,13 +29,17 @@ export default function RegisterForm() {
     Post(data, URLAPI.Users.Register, onAfterRegister)
   }
 
-  const onAfterRegister = (data: any) =>{
-    console.log(data)
-    localStorage.setItem("loggedIn", "true");
-    localStorage.setItem("token", data.token);
-    navigate('/', { replace: true });
-    
-  }
+const onAfterRegister = (data: any) =>{
+  console.log(data)
+  localStorage.setItem("loggedIn", "true");
+  localStorage.setItem("token", data.token);
+  navigate('/', { replace: true });
+  
+}
+
+
+
+
 
   const RegisterSchema = Yup.object().shape({
     firstName: Yup.string()
