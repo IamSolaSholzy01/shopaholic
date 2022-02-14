@@ -87,7 +87,7 @@ const BetSlip = ({
   const [isMyBetsLoading, setMyBetsisLoading] = useState(true);
   const onAfterGetMyBets = (data: any) => {
     let newData = [...data.data.betslips];
-    console.log(data.data);
+    console.log(data);
     setMyBetsisLoading(false);
     setStaked(newData);
   };
@@ -108,7 +108,6 @@ const BetSlip = ({
   };
   useEffect(() => {
     GetWithoutData(URLAPI.BetSlip.GetBetslip + "/mybets", onAfterGetMyBets);
-    console.log("getting...");
   }, []);
 
   const onAfterStake = (data: any) => {
@@ -351,7 +350,7 @@ const BetSlip = ({
             {isMyBetsLoading && (
               <p className="m-auto my-4 text-center">Loading...</p>
             )}
-            {staked.length <= 0 && (
+            {isMyBetsLoading !== false && staked.length <= 0 && (
               <p className="m-auto my-4 text-center">No bets yet...</p>
             )}
             {staked.map((stake, index) => {
