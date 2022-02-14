@@ -71,6 +71,7 @@ const AuthPanel = (visible: any) => {
     const omAfterGetUser = (data: any) => {
       console.log("searching...");
       if (data.success) {
+        console.log(data)
         setUserData({...data.data.user});
         setisLoading(false);
       } else {
@@ -79,9 +80,13 @@ const AuthPanel = (visible: any) => {
     };
 
     const omAfterGetWallet = (data: any) => {
+      console.log('After wallet get')
       if (data.success) {
+        console.log(data)
         setUserWallet({...data.data.wallet});
         setisLoading(false);
+      } else {
+        console.log(data)
       }
     };
     GetWithoutData(

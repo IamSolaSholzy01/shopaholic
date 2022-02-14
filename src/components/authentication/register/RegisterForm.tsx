@@ -60,18 +60,13 @@ const onAfterRegister = (data: any) =>{
     },
     validationSchema: RegisterSchema,
     onSubmit: (values: any) => {
+      console.log(values)
       register(values);
       
     }
   });
 
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps, handleChange } = formik;
-
-  const [ gender, setGender ] = useState('male');
-
-  const handleGenderChange = (event: any) => {
-    setGender(event.target.value);
-  }
 
   return (
     <FormikProvider value={formik}>
@@ -144,11 +139,12 @@ const onAfterRegister = (data: any) =>{
             <FormControl fullWidth>
               <InputLabel id="gender-label">Gender</InputLabel>
               <Select
+               {...getFieldProps('gender')}
                 labelId="gender-label"
                 id="gender"
-                value={gender}
+                value={formik.values.gender}
                 label="Gender"
-                onChange={handleGenderChange}
+                onChange={handleChange}
               >
                 <MenuItem value="male">Male</MenuItem>
                 <MenuItem value="female">Female</MenuItem>
