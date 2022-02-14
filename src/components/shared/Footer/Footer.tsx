@@ -115,6 +115,7 @@ const BetSlip = ({
     if (data?.success === true) {
       betData(data?.data?.betslip);
       setTab();
+      setTempHomeArray([]);
       GetWithoutData(URLAPI.BetSlip.GetBetslip + "/mybets", onAfterGetMyBets);
       displayMsg("success", data.message);
     } else displayMsg("error", data.message);
