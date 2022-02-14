@@ -110,8 +110,20 @@ const GameItem = (props: any) => {
                 props.selected ? "bg-rose-500" : "bg-gray-200"
               }`}
             >
-              <span className={`text-sm ${props.selected ? "text-white" : "text-gray-400"}`}>Odds</span>
-              <span className={`${props.selected ? "text-white" : "text-gray-600"} text-xl`}>{props.game.odd}</span>
+              <span
+                className={`text-sm ${
+                  props.selected ? "text-white" : "text-gray-400"
+                }`}
+              >
+                Odds
+              </span>
+              <span
+                className={`${
+                  props.selected ? "text-white" : "text-gray-600"
+                } text-xl`}
+              >
+                {props.game.odd}
+              </span>
             </div>
           </div>
           <div className="flex flex-row px-12 w-1/3 font-regular text-base justify-self-end justify-end grow">
@@ -128,9 +140,10 @@ const GameItem = (props: any) => {
 
 const GameContainer = () => {
   const [gameLists, setGameLists] = useState<any>([]);
-  const [list, setLists] = useState<GameObjectType[]>([]);
+  const {setTempHomeArray, setHomeArray, tempHomeArray} =
+    useContext(SwapTableContext);
+  const [list, setLists] = useState<GameObjectType[]>([...tempHomeArray]);
   const [listIds, setListIds] = useState<Number[]>([]);
-  const {setTempHomeArray, setHomeArray} = useContext(SwapTableContext);
 
   const addToList = (item: GameObjectType) => {
     setListIds(prev => [...prev, item._id]);
