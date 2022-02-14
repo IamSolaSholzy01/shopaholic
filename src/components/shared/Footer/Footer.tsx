@@ -62,8 +62,10 @@ const BetSlip = ({
   betData,
   stakeInput,
   setStakeInput,
+  showMyBets,
 }: {
   visibility: boolean;
+  showMyBets: boolean;
   betData: (arg0: any) => void;
   stakeInput: string;
   setStakeInput: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -71,25 +73,20 @@ const BetSlip = ({
   const {gameType, tempHomeArray, setTempHomeArray} =
     useContext<any>(SwapTableContext);
   const [games, setgames] = useState<any[]>([]);
-  // let games = Array.isArray(tempHomeArray)
-  //   ? tempHomeArray?.map((item: any) => item._id)
-  //   : console.log("homeArray is not an array");
-  const [staked, setStaked] = useState<any[]>([]);
+
   useEffect(() => {
     if (Array.isArray(tempHomeArray)) {
       setgames([...tempHomeArray.map((item: any) => item._id)]);
     }
-
-    console.log("stuff");
   }, [tempHomeArray]);
+  let gameSplit = gameType.split(" ");
 
+  const [staked, setStaked] = useState<any[]>([]);
   const onAfterGetMyBets = (data: any) => {
-    console.log("data", data);
     let newData = [...data.data.betslips];
     console.log(newData);
     setStaked(newData);
   };
-  let gameSplit = gameType.split(" ");
   const [isLoading, setisLoading] = useState(false);
 
   const data = {
@@ -109,7 +106,7 @@ const BetSlip = ({
   const onAfterStake = (data: any) => {
     setisLoading(false);
     if (data?.success === true) {
-      betData(data);
+      betData(data?.data?.betslip);
       console.log(data);
 
       GetWithoutData(URLAPI.BetSlip.GetBetslip + "/mybets", onAfterGetMyBets);
@@ -341,11 +338,11 @@ const BetSlip = ({
           </Button>
         </Stack>
       </div>
-      <div hidden={visibility}>
+      <div hidden={!showMyBets}>
         <div className="flex flex-col">
           <ul>
             {staked.map((stake, index) => {
-              console.log(stake, index);
+              // console.log(stake, index);
               const months = [
                 "Jan",
                 "Feb",
@@ -431,23 +428,32 @@ const MiniMenu = (props: IMiniMenuProps) => {
   const [maxBonus, setMaxBonus] = useState(0);
   const [totalPot, setTotalPot] = useState(0);
 
-  const {homeArray, setTempHomeArray, tempHomeArray} =
+  const {gameType, homeArray, setTempHomeArray, tempHomeArray} =
     useContext<any>(SwapTableContext);
+
+  const [games, setgames] = useState<any[]>([]);
+  useEffect(() => {
+    if (Array.isArray(tempHomeArray)) {
+      setgames([...tempHomeArray]);
+    }
+    console.log("stuff");
+  }, [tempHomeArray]);
+  let gameSplit = gameType.split(" ");
 
   const betData = (data: any) => {
     console.log(data);
-    setStake(data.data.betslip.stake);
-    setBetId(data.data.betslip.betslipId);
-    setTotalStake(data.data.betslip.totalStake);
-    setMaxBonus(data.data.betslip.maxBonus);
-    setMinBonus(data.data.betslip.minBonus);
-    setMinOdd(data.data.betslip.minOdd);
-    setMaxOdd(data.data.betslip.maxOdd);
-    setMinBonus(data.data.betslip.minBonus);
-    setMaxBonus(data.data.betslip.maxBonus);
-    setTotalPot(data.data.betslip.totalPotWin);
-    setMaxWin(data.data.betslip.maxWin);
-    setMinWin(data.data.betslip.minWin);
+    setStake(data.stake);
+    setBetId(data.betslipId);
+    setTotalStake(data.totalStake);
+    setMaxBonus(data.maxBonus);
+    setMinBonus(data.minBonus);
+    setMinOdd(data.minOdd);
+    setMaxOdd(data.maxOdd);
+    setMinBonus(data.minBonus);
+    setMaxBonus(data.maxBonus);
+    setTotalPot(data.totalPotWin);
+    setMaxWin(data.maxWin);
+    setMinWin(data.minWin);
   };
   const [isCheckBetLoading, setisCheckBetLoading] = useState(false);
   const submitBetSlip = () => {
@@ -490,7 +496,20 @@ const MiniMenu = (props: IMiniMenuProps) => {
 
   const onStakeChangeHandler = (totalStake: string) => {
     setStakeInput(totalStake);
-    calculateBetslipWinnings();
+    let winningObj = calculateBetslipWinnings(
+      gameSplit[0].toLowerCase(),
+      parseInt(gameSplit[1]),
+      games,
+      totalStake
+    );
+    if (winningObj !== null) betData({...winningObj});
+    console.log(winningObj);
+    console.log(
+      gameSplit[0].toLowerCase(),
+      parseInt(gameSplit[1]),
+      games,
+      totalStake
+    );
   };
   return (
     <div
@@ -609,6 +628,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
         </ul>
       </div>
       <BetSlip
+        showMyBets={activeTab === "MyBets"}
         visibility={activeTab === "BetSlip"}
         betData={betData}
         stakeInput={stakeInput}
