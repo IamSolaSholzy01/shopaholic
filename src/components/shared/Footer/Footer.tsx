@@ -63,11 +63,13 @@ const BetSlip = ({
   stakeInput,
   setStakeInput,
   showMyBets,
+  setTab,
 }: {
   visibility: boolean;
   showMyBets: boolean;
   betData: (arg0: any) => void;
   stakeInput: string;
+  setTab: () => void;
   setStakeInput: (e: ChangeEvent<HTMLInputElement>) => void;
 }) => {
   const {gameType, tempHomeArray, setTempHomeArray} =
@@ -82,9 +84,10 @@ const BetSlip = ({
   let gameSplit = gameType.split(" ");
 
   const [staked, setStaked] = useState<any[]>([]);
+  const [isMyBetsLoading, setMyBetsisLoading] = useState(true);
   const onAfterGetMyBets = (data: any) => {
     let newData = [...data.data.betslips];
-    console.log(newData);
+    setMyBetsisLoading(false);
     setStaked(newData);
   };
   const [isLoading, setisLoading] = useState(false);
@@ -102,13 +105,15 @@ const BetSlip = ({
       Post(data, URLAPI.BetSlip.Stake, onAfterStake);
     }
   };
+  useEffect(() => {
+    GetWithoutData(URLAPI.BetSlip.GetBetslip + "/mybets", onAfterGetMyBets);
+  }, []);
 
   const onAfterStake = (data: any) => {
     setisLoading(false);
     if (data?.success === true) {
       betData(data?.data?.betslip);
-      console.log(data);
-
+      setTab();
       GetWithoutData(URLAPI.BetSlip.GetBetslip + "/mybets", onAfterGetMyBets);
       displayMsg("success", data.message);
     } else displayMsg("error", data.message);
@@ -341,6 +346,9 @@ const BetSlip = ({
       <div hidden={!showMyBets}>
         <div className="flex flex-col">
           <ul>
+            {isMyBetsLoading && (
+              <p className="m-auto my-4 text-center">Loading...</p>
+            )}
             {staked.map((stake, index) => {
               // console.log(stake, index);
               const months = [
@@ -419,7 +427,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
   const [fastBetId, setFastBetId] = useState("1");
   const [stake, setStake] = useState(0);
   const [stakeInput, setStakeInput] = useState("");
-  const [totalstake, setTotalStake] = useState(0);
   const [minOdd, setMinOdd] = useState(0);
   const [maxOdd, setMaxOdd] = useState(0);
   const [minWin, setMinWin] = useState(0);
@@ -436,7 +443,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
     if (Array.isArray(tempHomeArray)) {
       setgames([...tempHomeArray]);
     }
-    console.log("stuff");
   }, [tempHomeArray]);
   let gameSplit = gameType.split(" ");
 
@@ -444,7 +450,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
     console.log(data);
     setStake(data.stake);
     setBetId(data.betslipId);
-    setTotalStake(data.totalStake);
     setMaxBonus(data.maxBonus);
     setMinBonus(data.minBonus);
     setMinOdd(data.minOdd);
@@ -503,13 +508,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
       totalStake
     );
     if (winningObj !== null) betData({...winningObj});
-    console.log(winningObj);
-    console.log(
-      gameSplit[0].toLowerCase(),
-      parseInt(gameSplit[1]),
-      games,
-      totalStake
-    );
   };
   return (
     <div
@@ -558,7 +556,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
             </div>
             <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
               <span>Stake : {stake}</span>
-              <span>Total Stake : {betSlipData.totalstake}</span>
             </div>
             <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
               <span>Min Odd : {betSlipData.minOdd}</span>
@@ -628,6 +625,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
         </ul>
       </div>
       <BetSlip
+        setTab={() => setTab("MyBets")}
         showMyBets={activeTab === "MyBets"}
         visibility={activeTab === "BetSlip"}
         betData={betData}
@@ -656,7 +654,6 @@ const MiniMenu = (props: IMiniMenuProps) => {
             </div>
             <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
               <span>Stake: {stake}</span>
-              <span>Total Stake: {totalstake}</span>
             </div>
             <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
               <span>Min Odd: {minOdd}</span>

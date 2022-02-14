@@ -4,6 +4,7 @@ export const calculateBetslipWinnings = (
   games,
   totalStake
 ) => {
+  console.log(gameType, gameTypeNumber, games, totalStake);
   if (gameType === "nap") {
     if (games.length !== gameTypeNumber) return null;
   } else {
