@@ -8,13 +8,13 @@ import PersonIcon from "@mui/icons-material/Person";
 
 const HeaderStyle = styled("header")(({theme}: {theme: any}) => {
   return {
-    top: 0,
+    // top: 0,
     zIndex: 9,
     lineHeight: 0,
     width: "100%",
     display: "flex",
     alignItems: "center",
-    position: "absolute",
+    // position: "absolute",
     padding: theme.spacing(1),
     justifyContent: "space-between",
     [theme.breakpoints.up("md")]: {

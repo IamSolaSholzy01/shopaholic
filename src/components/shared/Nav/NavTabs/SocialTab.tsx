@@ -4,7 +4,6 @@
 const SocialTab = (props: any) => {
   let socialVisible = props.visible;
   let userWallet = props.userWallet;
-  
   return (
     <>
       {/* <div className={socialVisible ? "block" : "hidden"}>
@@ -70,9 +69,17 @@ const SocialTab = (props: any) => {
           </form>
         </>
       </div> */}
-      <div className={`${socialVisible ? "flex" : "hidden"} flex-row mt-3 text-black justify-between items-center px-2`}>
-        <span>Trust Balance: {userWallet?.trust || "N/A"}</span>
-        <span>Balance: {userWallet?.balance || "N/A"}</span>
+      <div
+        className={`${
+          socialVisible ? "flex" : "hidden"
+        } flex-row mt-3 text-black justify-between items-center px-2`}
+      >
+        <span>
+          Trust Balance: {userWallet?.trust >= 0 ? userWallet?.trust : "N/A"}
+        </span>
+        <span>
+          Balance: {userWallet?.balance >= 0 ? userWallet?.balance : "N/A"}
+        </span>
       </div>
     </>
   );

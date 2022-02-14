@@ -47,17 +47,6 @@ const AuthPanel = (visible: any) => {
         setPocketActive(true);
       },
     },
-    // {
-    //     text: 'social',
-    //     classList: `border-l border-white py-2 bg-white ${social_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
-    //     route: '#social',
-    //     click: (event: SyntheticEvent) => {
-    //         event.preventDefault()
-    //         setLoginActive(false)
-    //         setPocketActive(false)
-    //         setSocialActive(true)
-    //     }
-    // },
   ];
   const [userData, setUserData] = useState<{
     [key: string]: string | number;
@@ -65,29 +54,26 @@ const AuthPanel = (visible: any) => {
   const [userWallet, setUserWallet] = useState<{
     [key: string]: string | number;
   }>({});
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
     const omAfterGetUser = (data: any) => {
       console.log("searching...");
       if (data.success) {
-        console.log(data)
         setUserData({...data.data.user});
-        setisLoading(false);
       } else {
         displayMsg("error", data.message);
       }
+      setisLoading(false);
     };
 
     const omAfterGetWallet = (data: any) => {
-      console.log('After wallet get')
       if (data.success) {
-        console.log(data)
         setUserWallet({...data.data.wallet});
-        setisLoading(false);
       } else {
-        console.log(data)
+        console.log(data.message);
       }
+      setisLoading(false);
     };
     GetWithoutData(
       URLAPI.UserDetails.userId + `/${sessionStorage.getItem("user_id")}`,
@@ -117,19 +103,20 @@ const AuthPanel = (visible: any) => {
               opacity: currentStyles.opacity,
             }}
           >
-            <div className="flex flex-row mt-16 text-base text-black w-full justify-center items-center pl-2">
-              <AccountCircleIcon fontSize="large" />
-              <div className="ml-3 flex flex-col">
-                <span>{sessionStorage.getItem("username")}</span>
-                <span>User ID: {sessionStorage.getItem("user_id")}</span>
-              </div>
-            </div>
             {isLoading ? (
               <div className="flex h-full items-center w-full justify-center">
                 <CircularProgress />
               </div>
             ) : (
               <>
+                <div className="flex flex-row mt-16 text-base text-black w-full justify-center items-center pl-2">
+                  <AccountCircleIcon fontSize="large" />
+                  <div className="ml-3 flex flex-col">
+                    <span>{sessionStorage.getItem("username")}</span>
+                    <span>User ID: {sessionStorage.getItem("user_id")}</span>
+                  </div>
+                </div>
+
                 <div
                   className={`mt-3 pt-4 grid grid-cols-${list.length} items-center h-max text-sm font-semibold capitalize text-center`}
                 >
