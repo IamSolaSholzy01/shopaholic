@@ -8,7 +8,7 @@ const URL = "https://shopaholic-api.herokuapp.com";
 // export let Access_token = Cookies.get(ModuleName + '_AppToken') || Cookies.get('token');
 const Logout = () => {
   sessionStorage.clear();
-  displayMsg("error", "Your session has expired. Please log in.");
+  displayMsg("error", "Your session has expired. Please log in again.");
 };
 export const Login = async (username, password, callbackfunction) => {
   const response = axios.post(
@@ -28,6 +28,7 @@ export const Login = async (username, password, callbackfunction) => {
     .then(response => {
       let result = response.data;
       callbackfunction(result);
+      window.location.reload();
     })
     .catch(error => {
       callbackfunction(error);
@@ -150,9 +151,8 @@ export const GetWithoutData = async (method, callbackfunction) => {
       let result = response.data;
       if (result.status === 401 && result.message.includes("jwt")) {
         Logout();
-      } else {
-        callbackfunction(result);
       }
+      callbackfunction(result);
     })
     .catch(err => {
       callbackfunction(err);
