@@ -4,6 +4,7 @@ import {UserContext} from "../../../../contexts/AuthContext";
 
 const PocketTab = (props: any) => {
   const {userDetails} = props;
+  // console.log(props)
   const {isLoggedIn} = useContext(UserContext);
   return (
     <>
