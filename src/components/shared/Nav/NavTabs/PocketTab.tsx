@@ -9,18 +9,28 @@ const PocketTab = (props: any) => {
     <>
       <div className={props.visible ? "block" : "hidden"}>
         {isLoggedIn && userDetails && (
-          <div className="text-black">
-            <p>Role: {userDetails.role || "N/A"}</p>
-            <p>
+          <div className="text-black mt-3">
+            <p className="border-b py-2">Role: {userDetails.role || "N/A"}</p>
+            <p className="border-b py-2">
               Name:{" "}
               {userDetails.firstName + " " + userDetails.lastName || "N/A"}
             </p>
-            <p>Username: {userDetails.username || "N/A"}</p>
-            <p>Gender: {userDetails.gender || "N/A"}</p>
-            <p>Email: {userDetails.email || "N/A"}</p>
-            <p>Address: {userDetails.address || "N/A"}</p>
-            <p>Commission: {userDetails.commission || "N/A"}</p>
-            <p>Phone Number: {userDetails.phoneNumber || "N/A"}</p>
+            <p className="border-b py-2">
+              Username: {userDetails.username || "N/A"}
+            </p>
+            <p className="border-b py-2">
+              Gender: {userDetails.gender || "N/A"}
+            </p>
+            <p className="border-b py-2">Email: {userDetails.email || "N/A"}</p>
+            <p className="border-b py-2">
+              Address: {userDetails.address || "N/A"}
+            </p>
+            <p className="border-b py-2">
+              Commission: {userDetails.commission || "N/A"}
+            </p>
+            <p className="border-b py-2">
+              Phone Number: {userDetails.phoneNumber || "N/A"}
+            </p>
           </div>
         )}
       </div>
