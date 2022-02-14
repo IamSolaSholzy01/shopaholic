@@ -9,9 +9,6 @@ const URL = "https://shopaholic-api.herokuapp.com";
 const Logout = () => {
   sessionStorage.clear();
   displayMsg("error", "Your session has expired. Please log in.");
-  // setTimeout(() => {
-  //   location.reload();
-  // }, 2000);
 };
 export const Login = async (username, password, callbackfunction) => {
   const response = axios.post(
@@ -52,10 +49,7 @@ export const GetwithQueryString = async (method, data, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
-        callbackfunction(result);
-      }
+      callbackfunction(result);
     })
     .catch(error => {
       callbackfunction(error);
@@ -107,10 +101,7 @@ export const GetWithoutToken = async (data, method, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
-        callbackfunction(result);
-      }
+      callbackfunction(result);
     })
     .catch(err => {
       callbackfunction(err);
@@ -131,8 +122,9 @@ export const GetWithData = async (method, data, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
+      if (result.status === 401 && result.message.includes("jwt")) {
+        Logout();
+      } else {
         callbackfunction(result);
       }
     })
@@ -156,8 +148,9 @@ export const GetWithoutData = async (method, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
+      if (result.status === 401 && result.message.includes("jwt")) {
+        Logout();
+      } else {
         callbackfunction(result);
       }
     })
@@ -181,8 +174,9 @@ export const Post = async (data, method, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
+      if (result.status === 401 && result.message.includes("jwt")) {
+        Logout();
+      } else {
         callbackfunction(result);
       }
     })
@@ -197,8 +191,9 @@ export const PostWithoutData = async (method, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
+      if (result.status === 401 && result.message.includes("jwt")) {
+        Logout();
+      } else {
         callbackfunction(result);
       }
     })
@@ -220,10 +215,7 @@ export const Get = async (method, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
-        callbackfunction(result);
-      }
+      callbackfunction(result);
     })
     .catch(error => {
       callbackfunction(error);
@@ -242,8 +234,9 @@ export const GetWithToken = async (method, data, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
+      if (result.status === 401 && result.message.includes("jwt")) {
+        Logout();
+      } else {
         callbackfunction(result);
       }
     })
@@ -260,8 +253,9 @@ export const Put = async (data, method, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
+      if (result.status === 401 && result.message.includes("jwt")) {
+        Logout();
+      } else {
         callbackfunction(result);
       }
     })
@@ -278,8 +272,9 @@ export const Delete = async (method, callbackfunction) => {
   await response
     .then(response => {
       let result = response.data;
-      if (result.status === 401 && result.message.includes("jwt")) Logout();
-      else {
+      if (result.status === 401 && result.message.includes("jwt")) {
+        Logout();
+      } else {
         callbackfunction(result);
       }
     })
