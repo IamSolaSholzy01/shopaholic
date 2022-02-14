@@ -65,16 +65,16 @@ const AuthPanel = (visible: any) => {
   const [userWallet, setUserWallet] = useState<{
     [key: string]: string | number;
   }>({});
-  const [isLoading, setisLoading] = useState(true);
+  const [isLoading, setisLoading] = useState(false);
 
   useEffect(() => {
-    console.log('auth modal open')
+    console.log("auth modal open");
     const omAfterGetUser = (data: any) => {
-      console.log('searching...')
+      console.log("searching...");
       if (data.success) {
         setUserData({...data.data.user});
         setisLoading(false);
-        console.log({...data.data.user})
+        console.log({...data.data.user});
       } else {
         displayMsg("error", data.message);
       }
@@ -86,13 +86,14 @@ const AuthPanel = (visible: any) => {
         setisLoading(false);
       }
     };
-    console.log('running')
+    console.log("running");
     GetWithoutData(
       URLAPI.UserDetails.userId + `/${sessionStorage.getItem("user_id")}`,
       omAfterGetUser
     );
     GetWithoutData(
-      URLAPI.UserDetails.userId + `/${sessionStorage.getItem("user_id")}/wallet`,
+      URLAPI.UserDetails.userId +
+        `/${sessionStorage.getItem("user_id")}/wallet`,
       omAfterGetWallet
     );
   }, []);
@@ -114,20 +115,19 @@ const AuthPanel = (visible: any) => {
               opacity: currentStyles.opacity,
             }}
           >
+            <div className="flex flex-row mt-16 text-base text-black w-full justify-center items-center pl-2">
+              <AccountCircleIcon fontSize="large" />
+              <div className="ml-3 flex flex-col">
+                <span>{sessionStorage.getItem("username")}</span>
+                <span>User ID: {sessionStorage.getItem("user_id")}</span>
+              </div>
+            </div>
             {isLoading ? (
               <div className="flex h-full items-center w-full justify-center">
                 <CircularProgress />
               </div>
             ) : (
               <>
-                <div className="flex flex-row mt-16 text-base text-black w-full justify-center items-center pl-2">
-                  <AccountCircleIcon fontSize="large" />
-                  <div className="ml-3 flex flex-col">
-                    <span>{sessionStorage.getItem("username")}</span>
-                    <span>User ID: {sessionStorage.getItem("user_id")}</span>
-                  </div>
-                </div>
-               
                 <div
                   className={`mt-3 pt-4 grid grid-cols-${list.length} items-center h-max text-sm font-semibold capitalize text-center`}
                 >

@@ -9,15 +9,14 @@ import {URLAPI} from "../../../api/ApiMethods";
 import DeleteIcon from "@mui/icons-material/Delete";
 import displayMsg from "../../../ui-component/Toast";
 import {useEffect} from "react";
-import FeedIcon from '@mui/icons-material/Feed';
-import ReceiptIcon from '@mui/icons-material/Receipt';
+import FeedIcon from "@mui/icons-material/Feed";
+import ReceiptIcon from "@mui/icons-material/Receipt";
+import {calculateBetslipWinnings} from "../../../utils/betslipHelper";
 
 // var axios = require('axios');
 
 const footerTabStyle =
   "w-full focus:text-primary hover:text-primary justify-center inline-block text-center pt-2 pb-1";
-
-
 
 const GameItem = (props: any) => {
   return (
@@ -75,22 +74,21 @@ const BetSlip = ({
   // let games = Array.isArray(tempHomeArray)
   //   ? tempHomeArray?.map((item: any) => item._id)
   //   : console.log("homeArray is not an array");
-  const [staked, setStaked] = useState<any[]>([])
+  const [staked, setStaked] = useState<any[]>([]);
   useEffect(() => {
     if (Array.isArray(tempHomeArray)) {
       setgames([...tempHomeArray.map((item: any) => item._id)]);
     }
-    
-    console.log('stuff')
-    
+
+    console.log("stuff");
   }, [tempHomeArray]);
 
   const onAfterGetMyBets = (data: any) => {
-    console.log('data', data)
-    let newData = [...data.data.betslips]
-    console.log(newData)
-    setStaked(newData)
-  }
+    console.log("data", data);
+    let newData = [...data.data.betslips];
+    console.log(newData);
+    setStaked(newData);
+  };
   let gameSplit = gameType.split(" ");
   const [isLoading, setisLoading] = useState(false);
 
@@ -112,25 +110,38 @@ const BetSlip = ({
     setisLoading(false);
     if (data?.success === true) {
       betData(data);
-      console.log(data)
-    
-      GetWithoutData(
-        URLAPI.BetSlip.GetBetslip + '/mybets',
-        onAfterGetMyBets
-      );
+      console.log(data);
+
+      GetWithoutData(URLAPI.BetSlip.GetBetslip + "/mybets", onAfterGetMyBets);
       displayMsg("success", data.message);
     } else displayMsg("error", data.message);
   };
 
   const doPrint = (stake: any) => {
-    console.log('Printinggg')
-    console.log(document.getElementById('print'))
-    var myWindow = window.open('', 'PRINT', 'height=400,width=600');
-    const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec']
-    var d = new Date(stake.createdAt)
+    console.log("Printinggg");
+    console.log(document.getElementById("print"));
+    var myWindow = window.open("", "PRINT", "height=400,width=600");
+    const months = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    var d = new Date(stake.createdAt);
 
-    myWindow!.document.write('<html><head><title>' + document.title  + '</title><meta name="viewport" content="width=device-width, initial-scale=1" />');
-    myWindow!.document.write('<style>')
+    myWindow!.document.write(
+      "<html><head><title>" +
+        document.title +
+        '</title><meta name="viewport" content="width=device-width, initial-scale=1" />'
+    );
+    myWindow!.document.write("<style>");
     myWindow!.document.write(`
     table{border: none; width: 100%;}
     tr > td{width: 50%; border-collapse: collapse;}
@@ -138,8 +149,8 @@ const BetSlip = ({
     body{margin: 1.6cm;}
     tbody{border: 1px solid black; width: 100%;}
     `);
-    myWindow!.document.write('</style>');
-    myWindow!.document.write('</head><body >');
+    myWindow!.document.write("</style>");
+    myWindow!.document.write("</head><body >");
     // myWindow!.document.write('<h1>' + document.title  + '</h1>');
     myWindow!.document.write(`
     <table>
@@ -177,14 +188,16 @@ const BetSlip = ({
       </tr>
       <tr>
     	  <td>DATE</td>
-        <td>${months[d.getMonth()]} ${d.getDate()}, ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}</td>
+        <td>${
+          months[d.getMonth()]
+        } ${d.getDate()}, ${d.getFullYear()} ${d.getHours()}:${d.getMinutes()}</td>
       </tr>
     </tbody>
     `);
 
-    stake.games.forEach( (game: any) => {
+    stake.games.forEach((game: any) => {
       myWindow!.document.write(
-      `
+        `
       <tr>
         <td colspan="2">${game.league.toUpperCase()}</td>
       </tr>
@@ -196,7 +209,8 @@ const BetSlip = ({
         <td>${game.odd}</td>
       </tr>
       `
-    )})
+      );
+    });
     myWindow!.document.write(`
     <tr>
       <td colspan="2">${stake.gameType.toUpperCase()}</td>
@@ -214,14 +228,16 @@ const BetSlip = ({
       <td>&#8358;${stake.maxWin}</td>
     </tr>
     <tr>
-      <td colspan="2" style="text-align: center; width: 100%;"><h2>&#8358;${stake.totalPotWin}</h2></td>
+      <td colspan="2" style="text-align: center; width: 100%;"><h2>&#8358;${
+        stake.totalPotWin
+      }</h2></td>
     </tr>
     <tr>
       <td colspan="2" style="text-align: center; width: 100%;">${stake.betslipId.toUpperCase()}</td>
     </tr>
     `);
 
-    myWindow!.document.write('</table>');
+    myWindow!.document.write("</table>");
     // myWindow!.document.write(`
     // <div>
     //   <p>Ticket ID: ${stake.betslipId}</p>
@@ -263,8 +279,7 @@ const BetSlip = ({
     // ${stake.betslipId}
     // </div>
     // `);
-    myWindow!.document.write('</body></html>');
-    
+    myWindow!.document.write("</body></html>");
 
     myWindow!.document.close(); // necessary for IE >= 10
     myWindow!.focus(); // necessary for IE >= 10*/
@@ -274,91 +289,121 @@ const BetSlip = ({
 
     return true;
     // window.print()
-  }
+  };
 
   return (
-  <>
-    <div hidden={!visibility}>
-      <div className="flex flex-row justify-between w-full">
-        <span>{tempHomeArray.length} Selections</span>
-        <span>Game type: {gameType}</span>
-      </div>
-      <ul className="mb-5">
-        {tempHomeArray.map((item: any, index: React.Key | null | undefined) => (
-          <li key={index}>
-            <GameItem
-              game={item}
-              handleRemove={() =>
-                setTempHomeArray(
-                  tempHomeArray.filter((el: any) => el._id !== item._id)
-                )
-              }
-            />
-          </li>
-        ))}
-      </ul>
-
-      <Stack
-        width="100%"
-        justifyContent="space-between"
-        alignItems="center"
-        direction={{xs: "column", sm: "row"}}
-        spacing={2}
-      >
-        Lines:
-        <TextField
-          label="Stake"
-          type={"number"}
-          onChange={setStakeInput}
-          value={stakeInput}
-          style={{marginTop: "18px"}}
-        />
-        <Button
-          variant="outlined"
-          size="small"
-          disableElevation={true}
-          disabled={isLoading}
-          onClick={submitStake}
-        >
-          {isLoading ? "..." : "Stake"}
-        </Button>
-      </Stack>
-    </div>
-    <div hidden={visibility}>
-      <div className="flex flex-col">
-        <ul>
-          {staked.map( (stake, index) => {
-            console.log(stake, index)
-            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Sep', 'Oct', 'Nov', 'Dec']
-            var d = new Date(stake.createdAt)
-            return (
-            <li key={index}>
-              <div className="flex flex-row justify-between bg-yellow-50">
-                <span className="-ml-2">
-                  <span className="mx-2">C1</span>
-                  <span className="mx-2">{stake.status}</span>
-                  <span>
-                    <span className="mx-2">{months[d.getMonth()]} {d.getDate()}, {d.getFullYear()}</span>
-                    <span className="mx-2">{d.getHours()}:{d.getMinutes()}</span>
-                  </span>
-                </span>
-                <span className="-mr-1">
-                  <span className="mx-1"><FeedIcon /></span>
-                  <span className="mx-1"><ReceiptIcon /></span>
-                </span>
-              </div>
-              <div className="flex flex-row justify-between mt-2">
-                <span>ID: {stake.betslipId}</span>
-                <span>Pot Win: {stake.totalPotWin}</span>
-                <span className="uppercase border px-4 py-1 rounded-xl cursor-pointer" onClick={()=>{doPrint(stake)}}>print</span>
-              </div>
-            </li>
-          )})}
+    <>
+      <div hidden={!visibility}>
+        <div className="flex flex-row justify-between w-full">
+          <span>{tempHomeArray.length} Selections</span>
+          <span>Game type: {gameType}</span>
+        </div>
+        <ul className="mb-5">
+          {tempHomeArray.map(
+            (item: any, index: React.Key | null | undefined) => (
+              <li key={index}>
+                <GameItem
+                  game={item}
+                  handleRemove={() =>
+                    setTempHomeArray(
+                      tempHomeArray.filter((el: any) => el._id !== item._id)
+                    )
+                  }
+                />
+              </li>
+            )
+          )}
         </ul>
-          
+
+        <Stack
+          width="100%"
+          justifyContent="space-between"
+          alignItems="center"
+          direction={{xs: "column", sm: "row"}}
+          spacing={2}
+        >
+          Lines:
+          <TextField
+            label="Stake"
+            type={"number"}
+            onChange={setStakeInput}
+            value={stakeInput}
+            style={{marginTop: "18px"}}
+          />
+          <Button
+            variant="outlined"
+            size="small"
+            disableElevation={true}
+            disabled={isLoading}
+            onClick={submitStake}
+          >
+            {isLoading ? "..." : "Stake"}
+          </Button>
+        </Stack>
       </div>
-    </div>
-  </>
+      <div hidden={visibility}>
+        <div className="flex flex-col">
+          <ul>
+            {staked.map((stake, index) => {
+              console.log(stake, index);
+              const months = [
+                "Jan",
+                "Feb",
+                "Mar",
+                "Apr",
+                "May",
+                "Jun",
+                "Jul",
+                "Sep",
+                "Oct",
+                "Nov",
+                "Dec",
+              ];
+              var d = new Date(stake.createdAt);
+              return (
+                <li key={index}>
+                  <div className="flex flex-row justify-between bg-yellow-50">
+                    <span className="-ml-2">
+                      <span className="mx-2">C1</span>
+                      <span className="mx-2">{stake.status}</span>
+                      <span>
+                        <span className="mx-2">
+                          {months[d.getMonth()]} {d.getDate()},{" "}
+                          {d.getFullYear()}
+                        </span>
+                        <span className="mx-2">
+                          {d.getHours()}:{d.getMinutes()}
+                        </span>
+                      </span>
+                    </span>
+                    <span className="-mr-1">
+                      <span className="mx-1">
+                        <FeedIcon />
+                      </span>
+                      <span className="mx-1">
+                        <ReceiptIcon />
+                      </span>
+                    </span>
+                  </div>
+                  <div className="flex flex-row justify-between mt-2">
+                    <span>ID: {stake.betslipId}</span>
+                    <span>Pot Win: {stake.totalPotWin}</span>
+                    <span
+                      className="uppercase border px-4 py-1 rounded-xl cursor-pointer"
+                      onClick={() => {
+                        doPrint(stake);
+                      }}
+                    >
+                      print
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </div>
+    </>
   );
 };
 
@@ -417,7 +462,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
 
   const submitFastBet = () => {
     if (
-      parseInt(fastBetId) < homeArray.length &&
+      parseInt(fastBetId) <= homeArray.length &&
       fastBetId !== "" &&
       parseInt(fastBetId) > 0
     ) {
@@ -440,9 +485,13 @@ const MiniMenu = (props: IMiniMenuProps) => {
     setisCheckBetLoading(false);
   };
 
-  const [ activeTab, setTab ] = useState('BetSlip');
+  const [activeTab, setTab] = useState("BetSlip");
   const activeStyleClass = "text-rose-600";
 
+  const onStakeChangeHandler = (totalStake: string) => {
+    setStakeInput(totalStake);
+    calculateBetslipWinnings();
+  };
   return (
     <div
       className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 bg-white py-4 px-4 min-w-[600px] max-w-[80vw] rounded shadow-md max-h-[60vh] overflow-y-scroll"
@@ -460,7 +509,12 @@ const MiniMenu = (props: IMiniMenuProps) => {
             setBetSlipVisible(!checkBetSlipVisible);
           }}
         >
-          {checkBetSlipVisible ? <i className="arrow right"></i> : <i className="arrow down"></i>} Check Betslip
+          {checkBetSlipVisible ? (
+            <i className="arrow right"></i>
+          ) : (
+            <i className="arrow down"></i>
+          )}{" "}
+          Check Betslip
         </span>
         <input
           onChange={e => {
@@ -510,7 +564,12 @@ const MiniMenu = (props: IMiniMenuProps) => {
       </div>
       <div className="flex flex-col border-y py-2 w-full cursor-pointer">
         <span onClick={() => setFastBetVisible(!checkFastBetVisible)}>
-          {checkFastBetVisible ? <i className="arrow right"></i> : <i className="arrow down"></i>} Fast Bet
+          {checkFastBetVisible ? (
+            <i className="arrow right"></i>
+          ) : (
+            <i className="arrow down"></i>
+          )}{" "}
+          Fast Bet
         </span>
         <input
           value={fastBetId}
@@ -527,33 +586,51 @@ const MiniMenu = (props: IMiniMenuProps) => {
       </div>
       <div className="flex flex-row justify-center w-full my-3">
         <ul className="flex flex-row list-none font-semibold">
-          <li className={`mr-3 ${activeTab === 'BetSlip' ? activeStyleClass : 'cursor-pointer'}`} onClick={() => {
-            setTab('BetSlip');
-          }}>BetSlip</li>
-          <li className={activeTab === 'MyBets' ? activeStyleClass : 'cursor-pointer'} onClick={() => {
-            setTab('MyBets');
-          }}>My Bets</li>
+          <li
+            className={`mr-3 ${
+              activeTab === "BetSlip" ? activeStyleClass : "cursor-pointer"
+            }`}
+            onClick={() => {
+              setTab("BetSlip");
+            }}
+          >
+            BetSlip
+          </li>
+          <li
+            className={
+              activeTab === "MyBets" ? activeStyleClass : "cursor-pointer"
+            }
+            onClick={() => {
+              setTab("MyBets");
+            }}
+          >
+            My Bets
+          </li>
         </ul>
       </div>
       <BetSlip
-        visibility={activeTab === 'BetSlip'}
+        visibility={activeTab === "BetSlip"}
         betData={betData}
         stakeInput={stakeInput}
-        setStakeInput={e => setStakeInput(e.target.value)}
+        setStakeInput={e => onStakeChangeHandler(e.target.value)}
       />
 
-      {(activeTab === 'BetSlip' &&
-        <><div>
-          <div className="mt-2">
-            <ul className="flex flex-row list-none justify-between w-full px-2">
-              {stakeValues.map((item, index) => (
-                <li className="border px-3 py-1 rounded" key={index}>
-                  <button onClick={() => setStakeInput(item)}>{item}</button>
-                </li>
-              ))}
-            </ul>
+      {activeTab === "BetSlip" && (
+        <>
+          <div>
+            <div className="mt-2">
+              <ul className="flex flex-row list-none justify-between w-full px-2">
+                {stakeValues.map((item, index) => (
+                  <li className="border px-3 py-1 rounded" key={index}>
+                    <button onClick={() => onStakeChangeHandler(item)}>
+                      {item}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
-        </div><div className="py-3">
+          <div className="py-3">
             <div className="flex flex-row justify-between my-2 py-3 px-3 bg-gray-100">
               <span>Betslip Id: {betId}</span>
             </div>
@@ -579,7 +656,8 @@ const MiniMenu = (props: IMiniMenuProps) => {
             <div className="font-medium my-2 py-3 px-3 bg-gray-100 text-center w-full">
               {totalPot}
             </div>
-          </div></>
+          </div>
+        </>
       )}
     </div>
   );
@@ -590,7 +668,6 @@ const Footer = () => {
   const {tempHomeArray, homeArray} = useContext<any>(SwapTableContext);
   return (
     <>
-    
       <footer className="block fixed inset-x-0 bottom-0 z-10 bg-white shadow-t">
         <div id="tabs" className="flex justify-between">
           <Link
