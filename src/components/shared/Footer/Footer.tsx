@@ -12,6 +12,7 @@ import {useEffect} from "react";
 import FeedIcon from "@mui/icons-material/Feed";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import {calculateBetslipWinnings} from "../../../utils/betslipHelper";
+import {UserContext} from "../../../contexts/AuthContext";
 
 // var axios = require('axios');
 
@@ -495,6 +496,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
     [key: string]: string | number;
   }>({});
 
+  const {isLoggedIn} = useContext(UserContext);
   const onAfterGetBetSlip = (data: any) => {
     setbetSlipData({...data.data.betslip});
     setShowBetSlip(true);
@@ -631,7 +633,7 @@ const MiniMenu = (props: IMiniMenuProps) => {
       </div>
       <BetSlip
         setTab={() => setTab("MyBets")}
-        showMyBets={activeTab === "MyBets"}
+        showMyBets={isLoggedIn === true && activeTab === "MyBets"}
         visibility={activeTab === "BetSlip"}
         betData={betData}
         stakeInput={stakeInput}
