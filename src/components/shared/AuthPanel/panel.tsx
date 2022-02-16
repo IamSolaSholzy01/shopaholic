@@ -1,6 +1,6 @@
 import {SyntheticEvent, useEffect, useState} from "react";
 import {Motion, spring} from "../../ReactMotion";
-import {PocketTab} from "../Nav/NavTabs";
+import {PocketTab, SocialTab} from "../Nav/NavTabs";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import {GetWithoutData} from "../../../api/fetch";
 import {URLAPI} from "../../../api/ApiMethods";
@@ -47,17 +47,6 @@ const AuthPanel = (visible: any) => {
         setPocketActive(true);
       },
     },
-    // {
-    //     text: 'social',
-    //     classList: `border-l border-white py-2 bg-white ${social_active ? 'text-blue-600 cursor-default' : 'text-black cursor-pointer'}`,
-    //     route: '#social',
-    //     click: (event: SyntheticEvent) => {
-    //         event.preventDefault()
-    //         setLoginActive(false)
-    //         setPocketActive(false)
-    //         setSocialActive(true)
-    //     }
-    // },
   ];
   const [userData, setUserData] = useState<{
     [key: string]: string | number;
@@ -68,31 +57,31 @@ const AuthPanel = (visible: any) => {
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
-    console.log('auth modal open')
     const omAfterGetUser = (data: any) => {
-      console.log('searching...')
+      console.log("searching...");
       if (data.success) {
         setUserData({...data.data.user});
-        setisLoading(false);
-        console.log({...data.data.user})
       } else {
         displayMsg("error", data.message);
       }
+      setisLoading(false);
     };
 
     const omAfterGetWallet = (data: any) => {
       if (data.success) {
         setUserWallet({...data.data.wallet});
-        setisLoading(false);
+      } else {
+        console.log(data.message);
       }
+      setisLoading(false);
     };
-    console.log('running')
     GetWithoutData(
       URLAPI.UserDetails.userId + `/${sessionStorage.getItem("user_id")}`,
       omAfterGetUser
     );
     GetWithoutData(
-      URLAPI.UserDetails.userId + `/${sessionStorage.getItem("user_id")}/wallet`,
+      URLAPI.UserDetails.userId +
+        `/${sessionStorage.getItem("user_id")}/wallet`,
       omAfterGetWallet
     );
   }, []);
@@ -127,10 +116,7 @@ const AuthPanel = (visible: any) => {
                     <span>User ID: {sessionStorage.getItem("user_id")}</span>
                   </div>
                 </div>
-                <div className="flex flex-row mt-3 text-black justify-between items-center px-2">
-                  <span>Trust Balance: {userWallet?.trust || "N/A"}</span>
-                  <span>Balance: {userWallet?.balance || "N/A"}</span>
-                </div>
+
                 <div
                   className={`mt-3 pt-4 grid grid-cols-${list.length} items-center h-max text-sm font-semibold capitalize text-center`}
                 >
@@ -146,7 +132,7 @@ const AuthPanel = (visible: any) => {
                   ))}
                 </div>
                 <PocketTab visible={login_active} userDetails={userData} />
-                {/* <SocialTab visible={pocket_active} /> */}
+                <SocialTab visible={pocket_active} userWallet={userWallet} />
               </>
             )}
             {/* <PocketTab visible={pocket_active} />

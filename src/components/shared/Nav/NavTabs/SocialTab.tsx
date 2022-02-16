@@ -1,12 +1,12 @@
-import React from "react";
-import {Link as RouterLink} from "react-router-dom";
-import {Link} from "@mui/material";
-const SocialTab = (visible: any) => {
-  let socialVisible = visible.visible;
-
+// import React from "react";
+// import {Link as RouterLink} from "react-router-dom";
+// import {Link} from "@mui/material";
+const SocialTab = (props: any) => {
+  let socialVisible = props.visible;
+  let userWallet = props.userWallet;
   return (
     <>
-      <div className={socialVisible ? "block" : "hidden"}>
+      {/* <div className={socialVisible ? "block" : "hidden"}>
         <>
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
@@ -68,6 +68,18 @@ const SocialTab = (visible: any) => {
             </div>
           </form>
         </>
+      </div> */}
+      <div
+        className={`${
+          socialVisible ? "flex" : "hidden"
+        } flex-row mt-3 text-black justify-between items-center px-2`}
+      >
+        <span>
+          Trust Balance: {userWallet?.trust >= 0 ? userWallet?.trust : "N/A"}
+        </span>
+        <span>
+          Balance: {userWallet?.balance >= 0 ? userWallet?.balance : "N/A"}
+        </span>
       </div>
     </>
   );
