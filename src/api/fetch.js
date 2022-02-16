@@ -28,7 +28,10 @@ export const Login = async (username, password, callbackfunction) => {
     .then(response => {
       let result = response.data;
       callbackfunction(result);
-      window.location.reload();
+      console.log(result);
+      if (result.success) {
+        window.location.reload();
+      }
     })
     .catch(error => {
       callbackfunction(error);

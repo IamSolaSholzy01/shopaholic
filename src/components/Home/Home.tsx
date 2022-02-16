@@ -147,7 +147,6 @@ const GameContainer = () => {
 
   const addToList = (item: GameObjectType) => {
     setListIds(prev => [...prev, item._id]);
-
     if (!listIds.includes(item._id)) {
       setLists((prev: GameObjectType[]) => [...prev, item]);
     } else {
@@ -158,6 +157,7 @@ const GameContainer = () => {
       setLists([...filteredList]);
     }
   };
+
   const [isLoading, setisLoading] = useState(true);
   useEffect(() => {
     const onAfterGetCurrent = (data: any) => {

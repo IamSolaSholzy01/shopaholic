@@ -88,11 +88,34 @@ const BetSlip = ({
   const [isMyBetsLoading, setMyBetsisLoading] = useState(true);
   const onAfterGetMyBets = (data: any) => {
     let newData = [...data.data.betslips];
-    console.log(data);
     setMyBetsisLoading(false);
     setStaked(newData);
   };
   const [isLoading, setisLoading] = useState(false);
+
+  const gameTypeValidator = (
+    type: string,
+    number: number,
+    listLength: number
+  ): {
+    result: boolean;
+    error: string;
+  } => {
+    let result, error;
+    if (type === "nap" && listLength !== number) {
+      result = false;
+      error = `Only ${number} games are allowed for NAP ${number} games`;
+    } else if (type !== "nap" && listLength <= number) {
+      result = false;
+      error = `Minimum of ${
+        number + 1
+      } games are allowed for ${type.toUpperCase()} ${number} games, add more games`;
+    } else {
+      result = true;
+      error = "";
+    }
+    return {result, error};
+  };
 
   const data = {
     gameType: gameSplit[0].toLowerCase(),
@@ -102,11 +125,20 @@ const BetSlip = ({
   };
 
   const submitStake = () => {
-    if (parseInt(stakeInput) > 0) {
+    let validator = gameTypeValidator(
+      data.gameType,
+      data.gameTypeNumber,
+      games.length
+    );
+    if (parseInt(stakeInput) > 0 && validator.result) {
       setisLoading(true);
       Post(data, URLAPI.BetSlip.Stake, onAfterStake);
+    } else {
+      if (!validator.result) displayMsg("error", validator.error);
+      else displayMsg("error", "Stake amount required");
     }
   };
+
   useEffect(() => {
     GetWithoutData(URLAPI.BetSlip.GetBetslip + "/mybets", onAfterGetMyBets);
   }, []);
