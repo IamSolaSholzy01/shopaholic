@@ -105,12 +105,12 @@ const BetSlip = ({
     let result, error;
     if (type === "nap" && listLength !== number) {
       result = false;
-      error = `Only ${number} games are allowed for NAP ${number} games `;
+      error = `Only ${number} games are allowed for NAP ${number} games`;
     } else if (type !== "nap" && listLength <= number) {
       result = false;
       error = `Minimum of ${
         number + 1
-      } games are allowed for ${type.toUpperCase()} ${number} games `;
+      } games are allowed for ${type.toUpperCase()} ${number} games, add more games`;
     } else {
       result = true;
       error = "";
@@ -137,7 +137,8 @@ const BetSlip = ({
       setisLoading(true);
       Post(data, URLAPI.BetSlip.Stake, onAfterStake);
     } else {
-      displayMsg("error", validator.error);
+      if (!validator.result) displayMsg("error", validator.error);
+      else displayMsg("error", "Stake amount required");
     }
   };
 
