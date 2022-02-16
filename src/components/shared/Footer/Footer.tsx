@@ -94,6 +94,31 @@ const BetSlip = ({
   };
   const [isLoading, setisLoading] = useState(false);
 
+  const gameTypeValidator = (
+    type: string,
+    number: number,
+    listLength: number
+  ): {
+    result: boolean;
+    error: string;
+  } => {
+    let result, error;
+    if (type === "nap" && listLength !== number) {
+      result = false;
+      error = `Only ${number} games are allowed for NAP ${number} games `;
+    } else if (type !== "nap" && listLength < number) {
+      result = true;
+      error = `Minimum of ${
+        number + 1
+      } games are allowed for ${type.toUpperCase()} ${number + 1} games `;
+    } else {
+      result = true;
+      error = "";
+    }
+    console.log(type, number, listLength);
+    return {result, error};
+  };
+
   const data = {
     gameType: gameSplit[0].toLowerCase(),
     gameTypeNumber: parseInt(gameSplit[1]),
@@ -102,11 +127,20 @@ const BetSlip = ({
   };
 
   const submitStake = () => {
-    if (parseInt(stakeInput) > 0) {
+    let validator = gameTypeValidator(
+      data.gameType,
+      data.gameTypeNumber,
+      games.length
+    );
+    console.log(validator);
+    if (parseInt(stakeInput) > 0 && validator.result) {
       setisLoading(true);
       Post(data, URLAPI.BetSlip.Stake, onAfterStake);
+    } else {
+      displayMsg("error", validator.error);
     }
   };
+
   useEffect(() => {
     GetWithoutData(URLAPI.BetSlip.GetBetslip + "/mybets", onAfterGetMyBets);
   }, []);

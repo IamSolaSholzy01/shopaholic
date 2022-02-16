@@ -1,5 +1,5 @@
 import * as Yup from "yup";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import {Icon} from "@iconify/react";
 import {useFormik, Form, FormikProvider} from "formik";
 import eyeFill from "@iconify/icons-eva/eye-fill";
@@ -20,12 +20,16 @@ import {LoadingButton} from "../../buttons";
 import {URLAPI} from "../../../api/ApiMethods";
 import {Post} from "../../../api/fetch";
 import displayMsg from "../../../ui-component/Toast";
+import {UserContext} from "../../../contexts/AuthContext";
 
 // ----------------------------------------------------------------------
 
 export default function RegisterForm() {
+  const {setIsLoggedIn} = useContext(UserContext);
+
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   // const [data, setData] = useState({
   //   firstName: '',
   //   lastName: '',
@@ -34,19 +38,24 @@ export default function RegisterForm() {
   // })
 
   const register = (data: any) => {
+    setIsSubmitting(true);
     Post(data, URLAPI.Users.Register, onAfterRegister);
   };
 
   const onAfterRegister = (data: any) => {
     console.log(data);
     if (data.success) {
+      displayMsg("success", data.message);
       sessionStorage.setItem("loggedIn", "true");
       sessionStorage.setItem("token", data.token);
-      displayMsg("success", data.message);
+      sessionStorage.setItem("user_id", data.data.user._id);
+      sessionStorage.setItem("username", data.data.user.username);
+      setIsLoggedIn(true);
       navigate("/", {replace: true});
     } else {
       displayMsg("error", data.message);
     }
+    setIsSubmitting(false);
   };
 
   const RegisterSchema = Yup.object().shape({
@@ -54,6 +63,10 @@ export default function RegisterForm() {
       .min(2, "Too Short!")
       .max(50, "Too Long!")
       .required("First name required"),
+    username: Yup.string()
+      .min(2, "Too Short!")
+      .max(10, "Too Long!")
+      .required("Username is required"),
     lastName: Yup.string()
       .min(2, "Too Short!")
       .max(50, "Too Long!")
@@ -62,6 +75,14 @@ export default function RegisterForm() {
       .email("Email must be a valid email address")
       .required("Email is required"),
     password: Yup.string().required("Password is required"),
+    state: Yup.string().required("State is required"),
+    localGovt: Yup.string().required("Local Government is required"),
+    gender: Yup.string().required("Gender is required"),
+    dob: Yup.string().required("Date Of Birth is required"),
+    phoneNumber: Yup.string()
+      .min(11, "Too Short!")
+      .max(15, "Too Long!")
+      .required("Phone number is required"),
   });
 
   const formik = useFormik({
@@ -84,14 +105,7 @@ export default function RegisterForm() {
     },
   });
 
-  const {
-    errors,
-    touched,
-    handleSubmit,
-    isSubmitting,
-    getFieldProps,
-    handleChange,
-  } = formik;
+  const {errors, touched, handleSubmit, getFieldProps, handleChange} = formik;
 
   return (
     <FormikProvider value={formik}>
@@ -111,6 +125,7 @@ export default function RegisterForm() {
               error={Boolean(touched.firstName && errors.firstName)}
               helperText={touched.firstName && errors.firstName}
               onChange={handleChange}
+              required
               value={formik.values.firstName}
             />
 
@@ -121,6 +136,7 @@ export default function RegisterForm() {
               error={Boolean(touched.lastName && errors.lastName)}
               helperText={touched.lastName && errors.lastName}
               onChange={handleChange}
+              required
               value={formik.values.lastName}
             />
           </Stack>
@@ -129,6 +145,7 @@ export default function RegisterForm() {
             <TextField
               fullWidth
               label="State"
+              required
               {...getFieldProps("state")}
               error={Boolean(touched.state && errors.state)}
               helperText={touched.state && errors.state}
@@ -140,6 +157,7 @@ export default function RegisterForm() {
               fullWidth
               label="Local Govt"
               {...getFieldProps("localGovt")}
+              required
               error={Boolean(touched.localGovt && errors.localGovt)}
               helperText={touched.localGovt && errors.localGovt}
               onChange={handleChange}
@@ -152,6 +170,7 @@ export default function RegisterForm() {
               // autoComplete="username"
               fullWidth
               label="Username"
+              required
               {...getFieldProps("username")}
               error={Boolean(touched.username && errors.username)}
               helperText={touched.username && errors.username}
@@ -164,6 +183,7 @@ export default function RegisterForm() {
                 {...getFieldProps("gender")}
                 labelId="gender-label"
                 id="gender"
+                required
                 value={formik.values.gender}
                 label="Gender"
                 onChange={handleChange}
@@ -179,6 +199,8 @@ export default function RegisterForm() {
               fullWidth
               label="Date of Birth"
               {...getFieldProps("dob")}
+              required
+              type="date"
               error={Boolean(touched.dob && errors.dob)}
               helperText={touched.dob && errors.dob}
               onChange={handleChange}
@@ -189,6 +211,8 @@ export default function RegisterForm() {
               fullWidth
               label="Phone Number"
               {...getFieldProps("phoneNumber")}
+              required
+              type={"tel"}
               error={Boolean(touched.phoneNumber && errors.phoneNumber)}
               helperText={touched.phoneNumber && errors.phoneNumber}
               onChange={handleChange}
@@ -202,6 +226,7 @@ export default function RegisterForm() {
             type="email"
             label="Email address"
             {...getFieldProps("email")}
+            required
             error={Boolean(touched.email && errors.email)}
             helperText={touched.email && errors.email}
             onChange={handleChange}
@@ -213,6 +238,7 @@ export default function RegisterForm() {
             // autoComplete="current-password"
             type={showPassword ? "text" : "password"}
             label="Password"
+            required
             {...getFieldProps("password")}
             InputProps={{
               endAdornment: (
