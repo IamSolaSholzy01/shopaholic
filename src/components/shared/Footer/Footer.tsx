@@ -106,11 +106,11 @@ const BetSlip = ({
     if (type === "nap" && listLength !== number) {
       result = false;
       error = `Only ${number} games are allowed for NAP ${number} games `;
-    } else if (type !== "nap" && listLength < number) {
-      result = true;
+    } else if (type !== "nap" && listLength <= number) {
+      result = false;
       error = `Minimum of ${
         number + 1
-      } games are allowed for ${type.toUpperCase()} ${number + 1} games `;
+      } games are allowed for ${type.toUpperCase()} ${number} games `;
     } else {
       result = true;
       error = "";
