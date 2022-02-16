@@ -88,7 +88,6 @@ const BetSlip = ({
   const [isMyBetsLoading, setMyBetsisLoading] = useState(true);
   const onAfterGetMyBets = (data: any) => {
     let newData = [...data.data.betslips];
-    console.log(data);
     setMyBetsisLoading(false);
     setStaked(newData);
   };
@@ -115,7 +114,6 @@ const BetSlip = ({
       result = true;
       error = "";
     }
-    console.log(type, number, listLength);
     return {result, error};
   };
 
@@ -132,7 +130,6 @@ const BetSlip = ({
       data.gameTypeNumber,
       games.length
     );
-    console.log(validator);
     if (parseInt(stakeInput) > 0 && validator.result) {
       setisLoading(true);
       Post(data, URLAPI.BetSlip.Stake, onAfterStake);
